@@ -36,7 +36,8 @@ export default class Card extends React.Component {
   }
 }
 
-export const cardWidth = Dimensions.get('window').width / 4;
+// Subtract a small amount so that they all fit on 1 row
+export const cardWidth = (Dimensions.get('window').width / 7) - 0.000001;
 export const cardHeight = cardWidth * 1.5;
 
 const textSpacingFromEdge = 3;

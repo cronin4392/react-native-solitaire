@@ -1,21 +1,15 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 
-import CardStack from '../CardStack';
+import Pile from '../Pile';
 
 export default class PlayField extends React.Component {
   render() {
-    const { deck } = this.props;
-    if (!deck || deck.length <= 0) {
-      return null;
-    }
+    const { piles } = this.props;
 
     return (
       <View style={styles.playField}>
-        <CardStack stack={deck} />
-        <CardStack stack={[]} />
-        <CardStack stack={[]} />
-        <CardStack stack={[]} />
+        {piles.map((pile, index) => <Pile key={index} pile={pile} />)}
       </View>
     );
   }
@@ -25,6 +19,7 @@ const styles = StyleSheet.create({
   playField: {
     flex: 1,
     flexDirection: 'row',
+    flexWrap: 'wrap',
     width: Dimensions.get('window').width,
   },
 });

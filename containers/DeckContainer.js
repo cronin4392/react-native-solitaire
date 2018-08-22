@@ -2,24 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Text, View } from 'react-native';
 
-import { createDeck } from '../actions';
+import { createCards, generateDeck, generatePiles, shuffleDeck } from '../actions';
 
 import { DECK } from '../constants/cards';
-import { shuffle } from '../helpers/cards';
 
 import PlayField from '../components/PlayField';
 
 class DeckContainer extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
-    const deck = shuffle(DECK);
-    dispatch(createDeck(deck));
+    dispatch(createCards(DECK));
+    dispatch(generateDeck());
+    dispatch(shuffleDeck());
+    dispatch(generatePiles());
   }
 
   render() {
-    const { deck } = this.props;
+    const { piles } = this.props;
 
-    if (!deck || deck.length <= 0) {
+    if (!piles || piles.length <= 0) {
       return (
         <View>
           <Text>Loading...</Text>
@@ -28,14 +29,14 @@ class DeckContainer extends React.Component {
     }
 
     return (
-      <PlayField deck={deck} />
+      <PlayField piles={piles} />
     );
   }
 }
 
 const mapStateToProps = state => {
   return ({
-    deck: state.solitaire.deck
+    piles: state.solitaire.piles,
   });
 }
 
