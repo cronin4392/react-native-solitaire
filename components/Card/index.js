@@ -2,6 +2,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 
+import { CLUBS, DIAMONDS, HEARTS, SPADES } from '../../constants/cards';
 import { symbol } from '../../helpers/cards';
 
 export default class Card extends React.Component {
@@ -15,10 +16,21 @@ export default class Card extends React.Component {
   render() {
     const { card } = this.props;
     const { pip, suit } = card;
+    const isRed = [DIAMONDS, HEARTS].indexOf(suit) >= 0;
+
+    const cardStyle = [styles.card, isRed && styles.redCard];
+    const cardTextStyle = [styles.cardText, isRed && styles.redCardText];
 
     return (
-      <View style={styles.card}>
-        <Text>{symbol(pip)} {symbol(suit)}</Text>
+      <View style={cardStyle}>
+        <View style={styles.cardSuitTop}>
+          <Text style={cardTextStyle}>{symbol(pip)}</Text>
+          <Text style={cardTextStyle}>{symbol(suit)}</Text>
+        </View>
+        <View style={styles.cardSuitBottom}>
+          <Text style={cardTextStyle}>{symbol(pip)}</Text>
+          <Text style={cardTextStyle}>{symbol(suit)}</Text>
+        </View>
       </View>
     )
   }
@@ -26,6 +38,8 @@ export default class Card extends React.Component {
 
 export const cardWidth = Dimensions.get('window').width / 4;
 export const cardHeight = cardWidth * 1.5;
+
+const textSpacingFromEdge = 3;
 
 const styles = StyleSheet.create({
   card: {
@@ -38,4 +52,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  redCard: {
+    borderColor: '#f00'
+  },
+  cardSuitTop: {
+    position: 'absolute',
+    top: textSpacingFromEdge,
+    left: textSpacingFromEdge,
+    alignItems: 'center',
+  },
+  cardSuitBottom: {
+    position: 'absolute',
+    right: textSpacingFromEdge,
+    bottom: textSpacingFromEdge,
+    alignItems: 'center',
+    transform: [{
+      rotate: '180deg'
+    }],
+  },
+  cardText: {
+    fontFamily: 'Menlo-Regular',
+    fontSize: 11,
+    lineHeight: 11
+  },
+  redCardText: {
+    color: '#f00'
+  }
 });
