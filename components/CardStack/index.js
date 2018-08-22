@@ -2,12 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import Card from '../Card';
+import EmptyCardSpace from '../EmptyCardSpace';
 
 export default class CardStack extends React.Component {
   render() {
     const { stack } = this.props;
     return (
       <View style={styles.cardStack}>
+        <EmptyCardSpace absolute={stack.length > 0} />
         {stack.map((card, index) => <Card key={index} card={card} />)}
       </View>
     )
@@ -16,8 +18,6 @@ export default class CardStack extends React.Component {
 
 const styles = StyleSheet.create({
   cardStack: {
-    flex: 1,
     flexDirection: 'column',
-    // flexWrap: 'wrap',
   },
 });

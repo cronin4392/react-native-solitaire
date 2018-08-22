@@ -24,14 +24,16 @@ export default class Card extends React.Component {
   }
 }
 
-const cardWidth = Dimensions.get('window').width / 4;
+export const cardWidth = Dimensions.get('window').width / 4;
+export const cardHeight = cardWidth * 1.5;
 
 const styles = StyleSheet.create({
   card: {
+    backgroundColor: '#fff',
     borderColor: '#000',
     borderWidth: 1,
     overflow: 'hidden',
-    height: cardWidth * 1.5,
+    height: cardHeight,
     width: cardWidth,
     alignItems: 'center',
     justifyContent: 'center',
