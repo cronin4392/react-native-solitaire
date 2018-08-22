@@ -14,3 +14,7 @@ export const generateDeck = () => ({
 export const shuffleDeck = () => ({
   type: 'SHUFFLE_DECK'
 });
+
+export const flipFirstCardInPiles = () => ({
+  type: 'FLIP_FIRST_CARD_IN_PILES'
+});

@@ -2,7 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Text, View } from 'react-native';
 
-import { createCards, generateDeck, generatePiles, shuffleDeck } from '../actions';
+import {
+  createCards,
+  flipFirstCardInPiles,
+  generateDeck,
+  generatePiles,
+  shuffleDeck
+} from '../actions';
 
 import { DECK } from '../constants/cards';
 
@@ -15,6 +21,7 @@ class DeckContainer extends React.Component {
     dispatch(generateDeck());
     dispatch(shuffleDeck());
     dispatch(generatePiles());
+    dispatch(flipFirstCardInPiles());
   }
 
   render() {

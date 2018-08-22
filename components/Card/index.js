@@ -10,13 +10,22 @@ export default class Card extends React.Component {
     card: PropTypes.shape({
       suit: PropTypes.string.isRequired,
       pip: PropTypes.string.isRequired,
+      faceUp: PropTypes.bool
     }).isRequired
   };
 
   render() {
-    const { card } = this.props;
+    const { card, faceUp } = this.props;
     const { pip, suit } = card;
     const isRed = [DIAMONDS, HEARTS].indexOf(suit) >= 0;
+
+    if (!faceUp) {
+      return (
+        <View style={styles.card}>
+          <Text style={styles.cardText}>Down</Text>
+        </View>
+      );
+    }
 
     const cardStyle = [styles.card, isRed && styles.redCard];
     const cardTextStyle = [styles.cardText, isRed && styles.redCardText];

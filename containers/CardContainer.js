@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 
 import Card from '../components/Card';
 
-const CardContainer = ({ card }) => <Card card={card} />
+const CardContainer = (props) => <Card {...props} />
 
 const mapStateToProps = (state, { cardId }) => {
-  const card = state.solitaire.cards[cardId];
+  const { solitaire } = state;
+  const card = solitaire.cards[cardId];
+  const faceUp = solitaire.cardsFaceUp[cardId] === true;
+
   return ({
-    card
+    card,
+    faceUp
   });
 }
 

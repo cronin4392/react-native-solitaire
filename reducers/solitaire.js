@@ -1,8 +1,10 @@
 import { shuffle } from '../helpers/cards';
 
 const INITIAL_STATE = {
+  cards: {},
   deck: [],
   piles: [],
+  cardsFaceUp: {}
 };
 
 const createPiles = ([deck, ...rest], pileSize) => {
@@ -19,32 +21,53 @@ const createPiles = ([deck, ...rest], pileSize) => {
 
 const solitaire = (state = INITIAL_STATE, action) => {
   switch(action.type) {
-    case 'CREATE_CARDS':
+    case 'CREATE_CARDS': {
       return {
         ...state,
         cards: action.cards,
       }
-    case 'GENERATE_DECK':
+    }
+    case 'GENERATE_DECK': {
       const deck = state.cards.map((card, index) => index);
 
       return {
         ...state,
         deck
       }
-    case 'GENERATE_PILES':
+    }
+    case 'GENERATE_PILES': {
       const [pickup, ...piles] = createPiles([state.deck], 7);
 
       return {
         ...state,
-        piles: piles
+        piles
       }
-    case 'SHUFFLE_DECK':
+    }
+    case 'FLIP_FIRST_CARD_IN_PILES': {
+      const { cardsFaceUp, piles } = state;
+      const newCardsFaceUp = piles.reduce((acc, value) => {
+        const cardId = value[value.length - 1];
+        acc[cardId] = true;
+        return acc;
+      }, {});
+
+      return {
+        ...state,
+        cardsFaceUp: {
+          ...cardsFaceUp,
+          ...newCardsFaceUp,
+        },
+      }
+    }
+    case 'SHUFFLE_DECK': {
       return {
         ...state,
         deck: shuffle(state.deck),
       }
-    default:
+    }
+    default: {
       return state;
+    }
   }
 };
 
