@@ -7,7 +7,10 @@ const INITIAL_STATE = {
   deck: [],
   pickup: [],
   piles: [],
-  cardsFaceUp: {}
+  waste: [],
+  cardsFaceUp: {},
+  cardPlacements: {},
+  wasteSize: 3,
 };
 
 const createPiles = ([deck, ...rest], pileSize) => {
@@ -41,26 +44,42 @@ const solitaire = (state = INITIAL_STATE, action) => {
         piles
       }
     }
-    case 'FLIP_FIRST_CARD_IN_PILES': {
-      const { cardsFaceUp, piles } = state;
-      const newCardsFaceUp = piles.reduce((acc, value) => {
-        const cardId = value[value.length - 1];
-        acc[cardId] = true;
-        return acc;
-      }, {});
-
-      return {
-        ...state,
-        cardsFaceUp: {
-          ...cardsFaceUp,
-          ...newCardsFaceUp,
-        },
-      }
-    }
     case 'SHUFFLE_DECK': {
       return {
         ...state,
         deck: shuffle(state.deck),
+      }
+    }
+    case 'FLIP_CARD_UP': {
+      const { cardsFaceUp } = state;
+      const { id } = action;
+      return {
+        ...state,
+        cardsFaceUp: {
+          ...cardsFaceUp,
+          [id]: true,
+        }
+      }
+    }
+    case 'ADD_CARD_WASTE': {
+      const { waste } = state;
+      const { id } = action;
+
+      return {
+        ...state,
+        waste: [
+          ...waste,
+          id
+        ],
+      }
+    }
+    case 'REMOVE_CARD_PICKUP': {
+      const { pickup } = state;
+      const { id } = action;
+
+      return {
+        ...state,
+        pickup: pickup.filter(item => item !== id),
       }
     }
     default: {

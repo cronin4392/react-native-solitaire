@@ -1,19 +1,34 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import PropTypes from 'prop-types';
 
 import CardContainer from '../../containers/CardContainer';
 import EmptyCardSpace from '../EmptyCardSpace';
 
-import { cardHeight } from '../Card';
+import { cardHeight, cardWidth } from '../Card';
+
+import { HORIZONTAL, VERTICAL } from '../../constants/cards';
 
 export default class SpreadPile extends React.Component {
+  static defaultProps = {
+    direction: VERTICAL,
+  };
+
+  static propTypes = {
+    direction: PropTypes.oneOf([VERTICAL, HORIZONTAL])
+  };
+
   render() {
-    const { pile } = this.props;
+    const { direction, pile } = this.props;
+
+    const pileStyle = direction === VERTICAL ? styles.pileVertical : styles.pileHorizontal;
+    const pileItemStyle = direction === VERTICAL ? styles.pileItemVertical : styles.pileItemHorizontal;
+
     return (
-      <View style={styles.pile}>
+      <View style={pileStyle}>
         <EmptyCardSpace absolute={pile.length > 0} />
         {pile.map((card, index) =>
-          <View key={index} style={index !== pile.length -1 && styles.pileItem}>
+          <View key={index} style={index !== pile.length - 1 && pileItemStyle}>
             <CardContainer cardId={card} />
           </View>
         )}
@@ -22,12 +37,21 @@ export default class SpreadPile extends React.Component {
   }
 };
 
+const SPREAD_OFFSET = 20;
+
 const styles = StyleSheet.create({
-  pile: {
+  pileVertical: {
     flexDirection: 'column',
     overflow: 'hidden',
   },
-  pileItem: {
-    marginBottom: (-1 * cardHeight) + 30
-  }
+  pileHorizontal: {
+    flexDirection: 'row',
+    overflow: 'hidden',
+  },
+  pileItemVertical: {
+    marginBottom: (-1 * cardHeight) + SPREAD_OFFSET
+  },
+  pileItemHorizontal: {
+    marginRight: (-1 * cardWidth) + SPREAD_OFFSET
+  },
 });

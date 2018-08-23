@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { Text, View } from 'react-native';
 
 import {
-  flipFirstCardInPiles,
+  flipFirstCardUpInPiles,
   generateDeck,
   generatePiles,
+  movePickupIntoWaste,
   shuffleDeck
 } from '../actions';
 
@@ -18,11 +19,13 @@ class DeckContainer extends React.Component {
     dispatch(generateDeck());
     dispatch(shuffleDeck());
     dispatch(generatePiles());
-    dispatch(flipFirstCardInPiles());
+    dispatch(flipFirstCardUpInPiles());
+
+    dispatch(movePickupIntoWaste());
   }
 
   render() {
-    const { pickup, piles } = this.props;
+    const { pickup, piles, waste } = this.props;
 
     if (!piles || piles.length <= 0) {
       return (
@@ -34,7 +37,7 @@ class DeckContainer extends React.Component {
 
     return (
       <Fragment>
-        <OffField pickup={pickup} />
+        <OffField pickup={pickup} waste={waste} />
         <PlayField piles={piles} />
       </Fragment>
     );
@@ -43,9 +46,11 @@ class DeckContainer extends React.Component {
 
 const mapStateToProps = state => {
   const { solitaire } = state;
+  const { pickup, piles, waste } = solitaire;
   return ({
-    pickup: solitaire.pickup,
-    piles: solitaire.piles,
+    pickup,
+    piles,
+    waste,
   });
 }
 

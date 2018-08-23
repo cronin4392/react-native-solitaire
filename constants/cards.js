@@ -50,3 +50,8 @@ export const SYMBOLS = {
   [QUEEN]: 'Q',
   [KING]: 'K',
 };
+
+// Directions
+
+export const HORIZONTAL = 'horizontal';
+export const VERITCAL = 'vertical';

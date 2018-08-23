@@ -4,8 +4,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import CardContainer from '../../containers/CardContainer';
 import EmptyCardSpace from '../EmptyCardSpace';
 
-import { cardHeight } from '../Card';
-
 export default class StackedPile extends React.Component {
   render() {
     const { pile } = this.props;
