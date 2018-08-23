@@ -13,12 +13,16 @@ const store = createStore(
 import DeckContainer from './containers/DeckContainer';
 
 export default class App extends React.Component {
+  componentDidMount() {
+    // Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.LANDSCAPE_RIGHT);
+  }
+
   render() {
     return (
       <Provider store={store}>
         <View style={styles.container}>
           <SafeAreaView style={styles.safeZone}>
-            <ScrollView style={styles.scrollingField}>
+            <ScrollView style={styles.scrollingField} alwaysBounceVertical={false}>
               <DeckContainer />
             </ScrollView>
           </SafeAreaView>
