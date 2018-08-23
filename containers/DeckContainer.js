@@ -3,21 +3,17 @@ import { connect } from 'react-redux';
 import { Text, View } from 'react-native';
 
 import {
-  createCards,
   flipFirstCardInPiles,
   generateDeck,
   generatePiles,
   shuffleDeck
 } from '../actions';
 
-import { DECK } from '../constants/cards';
-
 import PlayField from '../components/PlayField';
 
 class DeckContainer extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(createCards(DECK));
     dispatch(generateDeck());
     dispatch(shuffleDeck());
     dispatch(generatePiles());

@@ -1,7 +1,9 @@
 import { shuffle } from '../helpers/cards';
 
+import { DECK } from '../constants/cards';
+
 const INITIAL_STATE = {
-  cards: {},
+  cards: DECK,
   deck: [],
   piles: [],
   cardsFaceUp: {}
@@ -21,12 +23,6 @@ const createPiles = ([deck, ...rest], pileSize) => {
 
 const solitaire = (state = INITIAL_STATE, action) => {
   switch(action.type) {
-    case 'CREATE_CARDS': {
-      return {
-        ...state,
-        cards: action.cards,
-      }
-    }
     case 'GENERATE_DECK': {
       const deck = state.cards.map((card, index) => index);
 
