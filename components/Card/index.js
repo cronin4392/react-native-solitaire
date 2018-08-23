@@ -22,7 +22,7 @@ export default class Card extends React.Component {
     if (!faceUp) {
       return (
         <View style={styles.card}>
-          <Text style={styles.cardText}>Down</Text>
+          <View style={styles.cardBack}></View>
         </View>
       );
     }
@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     width: cardWidth,
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: 3,
   },
   redCard: {
     borderColor: '#f00'
@@ -87,5 +88,15 @@ const styles = StyleSheet.create({
   },
   redCardText: {
     color: '#f00'
+  },
+  cardBack: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    bottom: 5,
+    left: 5,
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 2,
   }
 });
