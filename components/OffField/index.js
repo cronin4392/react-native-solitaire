@@ -1,15 +1,15 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 
-import SpreadPile from '../SpreadPile';
+import StackedPile from '../StackedPile';
 
-export default class PlayField extends React.Component {
+export default class OffField extends React.Component {
   render() {
-    const { piles } = this.props;
+    const { pickup } = this.props;
 
     return (
       <View style={styles.playField}>
-        {piles.map((pile, index) => <SpreadPile key={index} pile={pile} />)}
+        <StackedPile pile={pickup} />
       </View>
     );
   }

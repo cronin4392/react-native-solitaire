@@ -5,6 +5,7 @@ import { DECK } from '../constants/cards';
 const INITIAL_STATE = {
   cards: DECK,
   deck: [],
+  pickup: [],
   piles: [],
   cardsFaceUp: {}
 };
@@ -36,6 +37,7 @@ const solitaire = (state = INITIAL_STATE, action) => {
 
       return {
         ...state,
+        pickup,
         piles
       }
     }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Text, View } from 'react-native';
 
@@ -9,6 +9,7 @@ import {
   shuffleDeck
 } from '../actions';
 
+import OffField from '../components/OffField';
 import PlayField from '../components/PlayField';
 
 class DeckContainer extends React.Component {
@@ -21,7 +22,7 @@ class DeckContainer extends React.Component {
   }
 
   render() {
-    const { piles } = this.props;
+    const { pickup, piles } = this.props;
 
     if (!piles || piles.length <= 0) {
       return (
@@ -32,14 +33,19 @@ class DeckContainer extends React.Component {
     }
 
     return (
-      <PlayField piles={piles} />
+      <Fragment>
+        <OffField pickup={pickup} />
+        <PlayField piles={piles} />
+      </Fragment>
     );
   }
 }
 
 const mapStateToProps = state => {
+  const { solitaire } = state;
   return ({
-    piles: state.solitaire.piles,
+    pickup: solitaire.pickup,
+    piles: solitaire.piles,
   });
 }
 

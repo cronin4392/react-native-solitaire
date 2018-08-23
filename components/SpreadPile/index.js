@@ -6,7 +6,7 @@ import EmptyCardSpace from '../EmptyCardSpace';
 
 import { cardHeight } from '../Card';
 
-export default class Pile extends React.Component {
+export default class SpreadPile extends React.Component {
   render() {
     const { pile } = this.props;
     return (
