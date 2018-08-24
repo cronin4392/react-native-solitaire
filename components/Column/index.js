@@ -3,16 +3,24 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import OnLayout from 'react-native-on-layout';
 
 export default class Column extends React.Component {
+  static defaultProps = {
+    padding: 0,
+  };
+
   render() {
     const {
       columns,
       columnSpan,
       render,
+      padding,
       ...props
     } = this.props;
 
+    const columnWidth = (Dimensions.get('window').width / columns) - 0.000001;
+
     const styles = {
-      width: ((Dimensions.get('window').width / columns) - 0.000001) * columnSpan,
+      width: columnWidth * columnSpan,
+      padding: padding / 2,
     };
 
     return (
@@ -20,7 +28,7 @@ export default class Column extends React.Component {
         <OnLayout>
           {({ width }) => (
             render({
-              columnWidth: width / columnSpan
+              columnWidth: ((width - (padding * (columnSpan - 1))) / columnSpan)
             })
           )}
         </OnLayout>

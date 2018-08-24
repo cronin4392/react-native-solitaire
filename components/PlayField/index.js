@@ -1,9 +1,10 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import OnLayout from 'react-native-on-layout';
 
 import Column from '../Column';
 import SpreadPile from '../SpreadPile';
+
+import { PADDING } from '../../constants/layout';
 
 export default class PlayField extends React.Component {
   render() {
@@ -15,6 +16,7 @@ export default class PlayField extends React.Component {
           <Column
             columns={7}
             columnSpan={1}
+            padding={PADDING}
             render={({ columnWidth }) =>
               <SpreadPile key={index} pile={pile} columnWidth={columnWidth} />
             }

@@ -6,6 +6,7 @@ import StackedPile from '../StackedPile';
 import SpreadPile from '../SpreadPile';
 
 import { HORIZONTAL } from '../../constants/cards';
+import { PADDING } from '../../constants/layout';
 
 export default class OffField extends React.Component {
   _onPickupPress = () => {
@@ -21,6 +22,7 @@ export default class OffField extends React.Component {
         <Column
           columns={7}
           columnSpan={1}
+          padding={PADDING}
           render={({ columnWidth }) =>
             <TouchableOpacity onPress={this._onPickupPress}>
               <StackedPile pile={pickup} columnWidth={columnWidth} />
@@ -30,6 +32,7 @@ export default class OffField extends React.Component {
         <Column
           columns={7}
           columnSpan={2}
+          padding={PADDING}
           render={({ columnWidth }) =>
             <SpreadPile pile={waste} direction={HORIZONTAL} columnWidth={columnWidth} />
           }
