@@ -1,6 +1,8 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import OnLayout from 'react-native-on-layout';
 
+import Column from '../Column';
 import SpreadPile from '../SpreadPile';
 
 export default class PlayField extends React.Component {
@@ -9,7 +11,15 @@ export default class PlayField extends React.Component {
 
     return (
       <View style={styles.playField}>
-        {piles.map((pile, index) => <SpreadPile key={index} pile={pile} />)}
+        {piles.map((pile, index) =>
+          <Column
+            columns={7}
+            columnSpan={1}
+            render={({ columnWidth }) =>
+              <SpreadPile key={index} pile={pile} columnWidth={columnWidth} />
+            }
+          />
+        )}
       </View>
     );
   }

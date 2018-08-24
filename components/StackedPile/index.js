@@ -5,8 +5,12 @@ import CardContainer from '../../containers/CardContainer';
 import EmptyCardSpace from '../EmptyCardSpace';
 
 export default class StackedPile extends React.Component {
+  static defaultProps = {
+    columnWidth: null,
+  };
+
   render() {
-    const { pile } = this.props;
+    const { columnWidth, pile } = this.props;
     return (
       <View style={styles.pile}>
         <View style={styles.debugOverlay} pointerEvents={'none'}>
@@ -17,7 +21,7 @@ export default class StackedPile extends React.Component {
         <EmptyCardSpace absolute={pile.length > 0} />
         {pile.slice(pile.length - 1).map((card, index) =>
           <View key={index}>
-            <CardContainer cardId={card} />
+            <CardContainer cardId={card} columnWidth={columnWidth} />
           </View>
         )}
       </View>
@@ -35,10 +39,6 @@ const styles = StyleSheet.create({
     zIndex: 2,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  debugOverlayInner: {
-    padding: 3,
-    backgroundColor: 'rgba(255, 255, 255, 0.85)'
   },
   debugOverlayText: {
     fontFamily: 'Menlo-Regular',

@@ -5,12 +5,14 @@ import Card from '../components/Card';
 
 const CardContainer = (props) => <Card {...props} />
 
-const mapStateToProps = (state, { cardId }) => {
+const mapStateToProps = (state, props) => {
+  const { cardId } = props;
   const { solitaire } = state;
   const card = solitaire.cards[cardId];
   const faceUp = solitaire.cardsFaceUp[cardId] === true;
 
   return ({
+    ...props,
     card,
     faceUp
   });

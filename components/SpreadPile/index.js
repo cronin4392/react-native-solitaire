@@ -8,10 +8,12 @@ import EmptyCardSpace from '../EmptyCardSpace';
 import { cardHeight, cardWidth } from '../Card';
 
 import { HORIZONTAL, VERTICAL } from '../../constants/cards';
+const SPREAD_OFFSET = 20;
 
 export default class SpreadPile extends React.Component {
   static defaultProps = {
     direction: VERTICAL,
+    columnWidth: null,
   };
 
   static propTypes = {
@@ -19,25 +21,32 @@ export default class SpreadPile extends React.Component {
   };
 
   render() {
-    const { direction, pile } = this.props;
+    const { columnWidth, direction, pile, } = this.props;
+    const isVertical = direction === VERTICAL;
+    const cardWidth = columnWidth;
+    const cardHeight = cardWidth * 1.5;
 
-    const pileStyle = direction === VERTICAL ? styles.pileVertical : styles.pileHorizontal;
-    const pileItemStyle = direction === VERTICAL ? styles.pileItemVertical : styles.pileItemHorizontal;
+    const pileStyle = isVertical ? styles.pileVertical : styles.pileHorizontal;
+    console.log((-1 * cardWidth) + SPREAD_OFFSET);
+
+    const pileItemStyle = isVertical ? {
+      marginBottom: (-1 * cardHeight) + SPREAD_OFFSET
+    } : {
+      marginRight: (-1 * cardWidth) + SPREAD_OFFSET
+    };
 
     return (
       <View style={pileStyle}>
         <EmptyCardSpace absolute={pile.length > 0} />
         {pile.map((card, index) =>
           <View key={index} style={index !== pile.length - 1 && pileItemStyle}>
-            <CardContainer cardId={card} />
+            <CardContainer cardId={card} columnWidth={columnWidth} />
           </View>
         )}
       </View>
     )
   }
 };
-
-const SPREAD_OFFSET = 20;
 
 const styles = StyleSheet.create({
   pileVertical: {
