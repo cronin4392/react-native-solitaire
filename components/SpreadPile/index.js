@@ -19,7 +19,7 @@ export default class SpreadPile extends React.Component {
   };
 
   render() {
-    const { columnWidth, direction, pile, } = this.props;
+    const { columnWidth, direction, pile } = this.props;
     const isVertical = direction === VERTICAL;
     const cardWidth = columnWidth;
     const cardHeight = cardWidth * 1.5;

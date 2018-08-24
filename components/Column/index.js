@@ -11,7 +11,6 @@ export default class Column extends React.Component {
     const {
       columns,
       columnSpan,
-      render,
       padding,
       ...props
     } = this.props;
@@ -27,7 +26,7 @@ export default class Column extends React.Component {
       <View {...props} style={styles}>
         <OnLayout>
           {({ width }) => (
-            render({
+            this.props.children({
               columnWidth: ((width - (padding * (columnSpan - 1))) / columnSpan)
             })
           )}

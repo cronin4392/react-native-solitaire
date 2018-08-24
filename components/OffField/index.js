@@ -16,18 +16,20 @@ export default class OffField extends React.Component {
           columns={7}
           columnSpan={1}
           padding={PADDING}
-          render={({ columnWidth }) =>
+        >
+          {({ columnWidth }) =>
             <PickupContainer columnWidth={columnWidth} />
           }
-        />
+        </Column>
         <Column
           columns={7}
           columnSpan={2}
           padding={PADDING}
-          render={({ columnWidth }) =>
+        >
+          {({ columnWidth }) =>
             <WasteContainer columnWidth={columnWidth} />
           }
-        />
+        </Column>
       </View>
     );
   }

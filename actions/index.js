@@ -125,6 +125,9 @@ export const moveWasteIntoPickup = () => (dispatch, getState) => {
   dispatch(addCardsPickup(waste));
 };
 
+export const moveSelectedToZone = location => (dispatch, getState) => {
+  console.log(location);
+}
 
 /* ADD REMOVE CARDS */
 

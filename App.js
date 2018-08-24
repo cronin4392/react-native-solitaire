@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
   },
   scrollingField: {
     flex: 1,
-    padding: PADDING,
+    // padding: PADDING,
   },
 });

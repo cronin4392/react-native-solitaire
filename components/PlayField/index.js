@@ -1,5 +1,8 @@
-import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import React, { Fragment } from 'react';
+import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
+
+import DropZoneContainer from '../../containers/DropZoneContainer';
+import SelectedContainer from '../../containers/SelectedContainer';
 
 import Column from '../Column';
 import SpreadPile from '../SpreadPile';
@@ -19,14 +22,22 @@ export default class PlayField extends React.Component {
             columns={7}
             columnSpan={1}
             padding={PADDING}
-            render={({ columnWidth }) =>
-              <SpreadPile
-                pile={pile}
-                columnWidth={columnWidth}
-                location={PILES[index]}
-              />
-            }
-          />
+          >
+              {({ columnWidth }) =>
+                <SelectedContainer>
+                  {({ selected }) =>
+                    <Fragment>
+                      <DropZoneContainer selected={selected} location={PILES[index]} />
+                      <SpreadPile
+                        pile={pile}
+                        columnWidth={columnWidth}
+                        location={PILES[index]}
+                      />
+                    </Fragment>
+                  }
+                </SelectedContainer>
+              }
+          </Column>
         )}
       </View>
     );
@@ -39,5 +50,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     width: Dimensions.get('window').width,
+  },
+  dropZone: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 2,
+    // backgroundColor: '#f00',
+  },
+  dropZoneButton: {
+    ...StyleSheet.absoluteFillObject,
   },
 });
