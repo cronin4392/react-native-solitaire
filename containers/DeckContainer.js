@@ -4,6 +4,7 @@ import { Text, View } from 'react-native';
 
 import {
   flipFirstCardUpInPiles,
+  flipCardUp,
   generateDeck,
   generatePiles,
   movePickupIntoWaste,
@@ -15,17 +16,26 @@ import PlayField from '../components/PlayField';
 
 class DeckContainer extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(generateDeck());
-    dispatch(shuffleDeck());
-    dispatch(generatePiles());
-    dispatch(flipFirstCardUpInPiles());
+    const {
+      flipFirstCardUpInPiles,
+      generateDeck,
+      generatePiles,
+      shuffleDeck,
+    } = this.props;
 
-    dispatch(movePickupIntoWaste());
+    generateDeck();
+    shuffleDeck();
+    generatePiles();
+    flipFirstCardUpInPiles();
   }
 
   render() {
-    const { pickup, piles, waste } = this.props;
+    const {
+      pickup,
+      piles,
+      waste,
+      movePickupIntoWaste,
+    } = this.props;
 
     if (!piles || piles.length <= 0) {
       return (
@@ -37,7 +47,11 @@ class DeckContainer extends React.Component {
 
     return (
       <Fragment>
-        <OffField pickup={pickup} waste={waste} />
+        <OffField
+          pickup={pickup}
+          waste={waste}
+          onPickupPress={movePickupIntoWaste}
+        />
         <PlayField piles={piles} />
       </Fragment>
     );
@@ -52,6 +66,17 @@ const mapStateToProps = state => {
     piles,
     waste,
   });
-}
+};
 
-export default connect(mapStateToProps)(DeckContainer);
+const mapDispatchToProps = (dispatch) => ({
+  flipFirstCardUpInPiles: () => dispatch(flipFirstCardUpInPiles()),
+  generateDeck: () => dispatch(generateDeck()),
+  generatePiles: () => dispatch(generatePiles()),
+  shuffleDeck: () => dispatch(shuffleDeck()),
+  movePickupIntoWaste: () => dispatch(movePickupIntoWaste()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DeckContainer);
