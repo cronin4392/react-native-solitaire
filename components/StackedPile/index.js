@@ -21,7 +21,7 @@ export default class StackedPile extends React.Component {
         <EmptyCardSpace absolute={pile.length > 0} columnWidth={columnWidth} />
         {pile.slice(pile.length - 1).map((card, index) =>
           <View key={index}>
-            <CardContainer cardId={card} {...this.props} />
+            <CardContainer id={card} {...this.props} />
           </View>
         )}
       </View>

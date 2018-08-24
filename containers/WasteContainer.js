@@ -1,19 +1,16 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import SpreadPile from '../components/SpreadPile';
 
-import { removeCardWaste } from '../actions';
+import { HORIZONTAL, WASTE } from '../constants/cards';
 
-import { HORIZONTAL } from '../constants/cards';
-
-const WasteContainer = ({ columnWidth, waste, removeCardWaste }) => (
+const WasteContainer = ({ columnWidth, waste }) => (
   <SpreadPile
     pile={waste.slice(-3)}
     direction={HORIZONTAL}
     columnWidth={columnWidth}
-    onCardClick={removeCardWaste}
+    location={WASTE}
   />
 );
 
@@ -27,8 +24,4 @@ const mapStateToProps = (state, props) => {
   });
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  removeCardWaste: () => dispatch(removeCardWaste()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(WasteContainer);
+export default connect(mapStateToProps)(WasteContainer);

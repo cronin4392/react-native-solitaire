@@ -37,7 +37,7 @@ export default class SpreadPile extends React.Component {
         <EmptyCardSpace absolute={pile.length > 0} columnWidth={columnWidth} />
         {pile.map((card, index) =>
           <View key={index} style={index !== pile.length - 1 && pileItemStyle}>
-            <CardContainer cardId={card} {...this.props} />
+            <CardContainer id={card} {...this.props} />
           </View>
         )}
       </View>

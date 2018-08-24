@@ -10,24 +10,26 @@ export default class Card extends React.Component {
     card: PropTypes.shape({
       suit: PropTypes.string.isRequired,
       pip: PropTypes.string.isRequired,
-      faceUp: PropTypes.bool
+      isFaceUp: PropTypes.bool
     }).isRequired
   };
 
   static defaultProps = {
-    onCardClick: () => {}
+    onCardClick: () => {},
+    location: null,
   };
 
   _onClick = () => {
-    const { cardId, onCardClick } = this.props;
-    onCardClick(cardId);
+    const { id, location, onCardClick } = this.props;
+    onCardClick({ id, location });
   }
 
   render() {
     const {
       card,
       columnWidth,
-      faceUp,
+      isFaceUp,
+      isSelected,
     } = this.props;
     const { pip, suit } = card;
     const isRed = [DIAMONDS, HEARTS].indexOf(suit) >= 0;
@@ -35,12 +37,16 @@ export default class Card extends React.Component {
       width: columnWidth,
       height: columnWidth * 1.5,
     };
+    const selectedStyles = isSelected ? {opacity: 0.2} : {};
 
-    if (!faceUp) {
+    if (!isFaceUp) {
       return (
-        <View style={[dimensions, styles.card]}>
-          <View style={styles.cardBack}></View>
-        </View>
+        <TouchableOpacity onPress={this._onClick} activeOpacity={1}>
+          <View style={[dimensions, styles.card]}>
+            <View style={[styles.selectedOverlay, selectedStyles]}></View>
+            <View style={styles.cardBack}></View>
+          </View>
+        </TouchableOpacity>
       );
     }
 
@@ -50,6 +56,7 @@ export default class Card extends React.Component {
     return (
       <TouchableOpacity onPress={this._onClick} activeOpacity={1}>
         <View style={cardStyle}>
+          <View style={[styles.selectedOverlay, selectedStyles]}></View>
           <View style={styles.cardSuitTop}>
             <Text style={cardTextStyle}>{symbol(pip)}</Text>
             <Text style={cardTextStyle}>{symbol(suit)}</Text>
@@ -111,5 +118,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#000',
     borderRadius: 2,
+  },
+  selectedOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: '#000',
+    opacity: 0,
+    zIndex: 2,
   }
 });

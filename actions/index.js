@@ -47,6 +47,39 @@ export const flipCardDown = id => ({
   id,
 });
 
+/* SELECT CARDS */
+
+export const cardClicked = (payload) => (dispatch, getState) => {
+  const { solitaire } = getState();
+  const { faceup, selected } = solitaire;
+  const { id } = payload;
+
+  if (!faceup[id]) {
+    return;
+  }
+
+  if (selected[id]) {
+    return dispatch(deselectCard(payload));
+  }
+
+  dispatch(deselectAllCards());
+  dispatch(selectCard(payload));
+};
+
+export const deselectAllCards = () => ({
+  type: 'DESELECT_ALL_CARDS',
+});
+
+export const selectCard = payload => ({
+  type: 'SELECT_CARD',
+  ...payload,
+});
+
+export const deselectCard = payload => ({
+  type: 'DESELECT_CARD',
+  ...payload,
+});
+
 /*
   MOVE CARDS
 */

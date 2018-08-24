@@ -55,3 +55,17 @@ export const SYMBOLS = {
 
 export const HORIZONTAL = 'horizontal';
 export const VERITCAL = 'vertical';
+
+// Locations
+
+export const WASTE = 'waste';
+export const PICKUP = 'pickup';
+export const PILES = [
+  'pile1',
+  'pile2',
+  'pile3',
+  'pile4',
+  'pile5',
+  'pile6',
+  'pile7',
+];

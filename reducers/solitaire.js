@@ -8,7 +8,8 @@ const INITIAL_STATE = {
   pickup: [],
   piles: [],
   waste: [],
-  isFaceUp: {},
+  faceup: {},
+  selected: {},
   wasteSize: 3,
 };
 
@@ -50,23 +51,23 @@ const solitaire = (state = INITIAL_STATE, action) => {
       }
     }
     case 'FLIP_CARD_UP': {
-      const { isFaceUp } = state;
+      const { faceup } = state;
       const { id } = action;
       return {
         ...state,
-        isFaceUp: {
-          ...isFaceUp,
+        faceup: {
+          ...faceup,
           [id]: true,
         }
       }
     }
     case 'FLIP_CARD_DOWN': {
-      const { isFaceUp } = state;
+      const { faceup } = state;
       const { id } = action;
       return {
         ...state,
-        isFaceUp: {
-          ...isFaceUp,
+        faceup: {
+          ...faceup,
           [id]: false,
         }
       }
@@ -123,6 +124,36 @@ const solitaire = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         pickup: [],
+      }
+    }
+    case 'SELECT_CARD': {
+      const { selected } = state;
+      const { id, location } = action;
+
+      return {
+        ...state,
+        selected: {
+          ...selected,
+          [id]: location,
+        }
+      }
+    }
+    case 'DESELECT_CARD': {
+      const { selected } = state;
+      const { id } = action;
+
+      return {
+        ...state,
+        selected: {
+          ...selected,
+          [id]: null,
+        }
+      }
+    }
+    case 'DESELECT_ALL_CARDS': {
+      return {
+        ...state,
+        selected: {}
       }
     }
     default: {
