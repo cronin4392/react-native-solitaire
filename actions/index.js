@@ -1,3 +1,5 @@
+import { WASTE } from '../constants/cards';
+
 const applyToArray = (array, func) => array.map(item => func(item));
 
 /*
@@ -51,20 +53,34 @@ export const flipCardDown = id => ({
 
 export const cardClicked = (payload) => (dispatch, getState) => {
   const { solitaire } = getState();
-  const { faceup, selected } = solitaire;
-  const { id } = payload;
+  const {
+    faceup,
+    selected,
+    waste,
+  } = solitaire;
+  const { id, location } = payload;
 
   if (!faceup[id]) {
     return;
   }
 
+  if (location === WASTE) {
+    if (!isTopCard(id, waste)) {
+      return;
+    }
+  }
+
+  // Clicked card that was selected
   if (selected[id]) {
     return dispatch(deselectCard(payload));
   }
 
+  // Select card
   dispatch(deselectAllCards());
   dispatch(selectCard(payload));
 };
+
+const isTopCard = (id, pile) => ( id === pile[pile.length - 1] )
 
 export const deselectAllCards = () => ({
   type: 'DESELECT_ALL_CARDS',
