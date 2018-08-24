@@ -4,10 +4,10 @@ import { Text, View } from 'react-native';
 
 import {
   flipFirstCardUpInPiles,
-  flipCardUp,
   generateDeck,
   generatePiles,
   movePickupIntoWaste,
+  removeCardWaste,
   shuffleDeck
 } from '../actions';
 
@@ -35,6 +35,7 @@ class DeckContainer extends React.Component {
       piles,
       waste,
       movePickupIntoWaste,
+      removeCardWaste,
     } = this.props;
 
     if (!piles || piles.length <= 0) {
@@ -51,6 +52,7 @@ class DeckContainer extends React.Component {
           pickup={pickup}
           waste={waste}
           onPickupPress={movePickupIntoWaste}
+          onWasteCardClick={removeCardWaste}
         />
         <PlayField piles={piles} />
       </Fragment>
@@ -74,6 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
   generatePiles: () => dispatch(generatePiles()),
   shuffleDeck: () => dispatch(shuffleDeck()),
   movePickupIntoWaste: () => dispatch(movePickupIntoWaste()),
+  removeCardWaste: id => dispatch(removeCardWaste(id)),
 });
 
 export default connect(

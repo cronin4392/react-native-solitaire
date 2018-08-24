@@ -14,6 +14,11 @@ export default class OffField extends React.Component {
     onPickupPress();
   }
 
+  _onWasteCardClick = (id) => {
+    const { onWasteCardClick } = this.props;
+    onWasteCardClick(id);
+  }
+
   render() {
     const { pickup, waste } = this.props;
 
@@ -24,7 +29,7 @@ export default class OffField extends React.Component {
           columnSpan={1}
           padding={PADDING}
           render={({ columnWidth }) =>
-            <TouchableOpacity onPress={this._onPickupPress}>
+            <TouchableOpacity onPress={this._onPickupPress} activeOpacity={1}>
               <StackedPile pile={pickup} columnWidth={columnWidth} />
             </TouchableOpacity>
           }
@@ -34,7 +39,12 @@ export default class OffField extends React.Component {
           columnSpan={2}
           padding={PADDING}
           render={({ columnWidth }) =>
-            <SpreadPile pile={waste} direction={HORIZONTAL} columnWidth={columnWidth} />
+            <SpreadPile
+              pile={waste.slice(-3)}
+              direction={HORIZONTAL}
+              columnWidth={columnWidth}
+              onCardClick={this._onWasteCardClick}
+            />
           }
         />
       </View>

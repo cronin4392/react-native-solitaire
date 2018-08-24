@@ -41,20 +41,40 @@ export const flipCardUp = id => ({
   id,
 });
 
+export const flipCardsDown = ids => dispatch => applyToArray(ids, (id => dispatch(flipCardDown(id))));
+export const flipCardDown = id => ({
+  type: 'FLIP_CARD_DOWN',
+  id,
+});
+
 /*
   MOVE CARDS
 */
 
 export const movePickupIntoWaste = () => (dispatch, getState) => {
   const { solitaire } = getState();
-  const { pickup, waste, wasteSize } = solitaire;
+  const { pickup, wasteSize } = solitaire;
 
-  const slicePoint = pickup.length - wasteSize;
-  const cards = pickup.slice(slicePoint);
+  if(pickup.length === 0) {
+    dispatch(moveWasteIntoPickup());
+    return;
+  }
+
+  // const slicePoint = pickup.length - wasteSize;
+  const cards = pickup.slice(0, wasteSize);
 
   dispatch(removeCardsPickup(cards));
   dispatch(addCardsWaste(cards));
   dispatch(flipCardsUp(cards));
+};
+
+export const moveWasteIntoPickup = () => (dispatch, getState) => {
+  const { solitaire } = getState();
+  const { waste } = solitaire;
+
+  dispatch(removeCardsWaste(waste));
+  dispatch(flipCardsDown(waste));
+  dispatch(addCardsPickup(waste));
 };
 
 
@@ -63,6 +83,18 @@ export const movePickupIntoWaste = () => (dispatch, getState) => {
 export const addCardsWaste = ids => dispatch => applyToArray(ids, (id => dispatch(addCardWaste(id))));
 export const addCardWaste = id => ({
   type: 'ADD_CARD_WASTE',
+  id
+});
+
+export const removeCardsWaste = ids => dispatch => applyToArray(ids, (id => dispatch(removeCardWaste(id))));
+export const removeCardWaste = id => ({
+  type: 'REMOVE_CARD_WASTE',
+  id
+});
+
+export const addCardsPickup = ids => dispatch => applyToArray(ids, (id => dispatch(addCardPickup(id))));
+export const addCardPickup = id => ({
+  type: 'ADD_CARD_PICKUP',
   id
 });
 

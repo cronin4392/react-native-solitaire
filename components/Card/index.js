@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import PropTypes from 'prop-types';
 
 import { CLUBS, DIAMONDS, HEARTS, SPADES } from '../../constants/cards';
@@ -14,8 +14,21 @@ export default class Card extends React.Component {
     }).isRequired
   };
 
+  static defaultProps = {
+    onCardClick: () => {}
+  };
+
+  _onClick = () => {
+    const { cardId, onCardClick } = this.props;
+    onCardClick(cardId);
+  }
+
   render() {
-    const { card, columnWidth, faceUp } = this.props;
+    const {
+      card,
+      columnWidth,
+      faceUp,
+    } = this.props;
     const { pip, suit } = card;
     const isRed = [DIAMONDS, HEARTS].indexOf(suit) >= 0;
     const dimensions = {
@@ -35,16 +48,18 @@ export default class Card extends React.Component {
     const cardTextStyle = [styles.cardText, isRed && styles.redCardText];
 
     return (
-      <View style={cardStyle}>
-        <View style={styles.cardSuitTop}>
-          <Text style={cardTextStyle}>{symbol(pip)}</Text>
-          <Text style={cardTextStyle}>{symbol(suit)}</Text>
+      <TouchableOpacity onPress={this._onClick} activeOpacity={1}>
+        <View style={cardStyle}>
+          <View style={styles.cardSuitTop}>
+            <Text style={cardTextStyle}>{symbol(pip)}</Text>
+            <Text style={cardTextStyle}>{symbol(suit)}</Text>
+          </View>
+          <View style={styles.cardSuitBottom}>
+            <Text style={cardTextStyle}>{symbol(pip)}</Text>
+            <Text style={cardTextStyle}>{symbol(suit)}</Text>
+          </View>
         </View>
-        <View style={styles.cardSuitBottom}>
-          <Text style={cardTextStyle}>{symbol(pip)}</Text>
-          <Text style={cardTextStyle}>{symbol(suit)}</Text>
-        </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 }

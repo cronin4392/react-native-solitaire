@@ -14,11 +14,12 @@ export default class PlayField extends React.Component {
       <View style={styles.playField}>
         {piles.map((pile, index) =>
           <Column
+            key={index}
             columns={7}
             columnSpan={1}
             padding={PADDING}
             render={({ columnWidth }) =>
-              <SpreadPile key={index} pile={pile} columnWidth={columnWidth} />
+              <SpreadPile pile={pile} columnWidth={columnWidth} />
             }
           />
         )}

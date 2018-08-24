@@ -61,6 +61,17 @@ const solitaire = (state = INITIAL_STATE, action) => {
         }
       }
     }
+    case 'FLIP_CARD_DOWN': {
+      const { cardsFaceUp } = state;
+      const { id } = action;
+      return {
+        ...state,
+        cardsFaceUp: {
+          ...cardsFaceUp,
+          [id]: false,
+        }
+      }
+    }
     case 'ADD_CARD_WASTE': {
       const { waste } = state;
       const { id } = action;
@@ -69,6 +80,27 @@ const solitaire = (state = INITIAL_STATE, action) => {
         ...state,
         waste: [
           ...waste,
+          id
+        ],
+      }
+    }
+    case 'REMOVE_CARD_WASTE': {
+      const { waste } = state;
+      const { id } = action;
+
+      return {
+        ...state,
+        waste: waste.filter(item => item !== id),
+      }
+    }
+    case 'ADD_CARD_PICKUP': {
+      const { pickup } = state;
+      const { id } = action;
+
+      return {
+        ...state,
+        pickup: [
+          ...pickup,
           id
         ],
       }
