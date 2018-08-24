@@ -6,13 +6,11 @@ import {
   flipFirstCardUpInPiles,
   generateDeck,
   generatePiles,
-  movePickupIntoWaste,
-  removeCardWaste,
   shuffleDeck
 } from '../actions';
 
 import OffField from '../components/OffField';
-import PlayField from '../components/PlayField';
+import PilesContainer from '../containers/PilesContainer';;
 
 class DeckContainer extends React.Component {
   componentDidMount() {
@@ -30,56 +28,23 @@ class DeckContainer extends React.Component {
   }
 
   render() {
-    const {
-      pickup,
-      piles,
-      waste,
-      movePickupIntoWaste,
-      removeCardWaste,
-    } = this.props;
-
-    if (!piles || piles.length <= 0) {
-      return (
-        <View>
-          <Text>Loading...</Text>
-        </View>
-      );
-    }
-
     return (
       <Fragment>
-        <OffField
-          pickup={pickup}
-          waste={waste}
-          onPickupPress={movePickupIntoWaste}
-          onWasteCardClick={removeCardWaste}
-        />
-        <PlayField piles={piles} />
+        <OffField />
+        <PilesContainer />
       </Fragment>
     );
   }
 }
-
-const mapStateToProps = state => {
-  const { solitaire } = state;
-  const { pickup, piles, waste } = solitaire;
-  return ({
-    pickup,
-    piles,
-    waste,
-  });
-};
 
 const mapDispatchToProps = (dispatch) => ({
   flipFirstCardUpInPiles: () => dispatch(flipFirstCardUpInPiles()),
   generateDeck: () => dispatch(generateDeck()),
   generatePiles: () => dispatch(generatePiles()),
   shuffleDeck: () => dispatch(shuffleDeck()),
-  movePickupIntoWaste: () => dispatch(movePickupIntoWaste()),
-  removeCardWaste: id => dispatch(removeCardWaste(id)),
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(DeckContainer);

@@ -1,27 +1,15 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import Column from '../Column';
-import StackedPile from '../StackedPile';
-import SpreadPile from '../SpreadPile';
+import PickupContainer from '../../containers/PickupContainer';
+import WasteContainer from '../../containers/WasteContainer';
 
-import { HORIZONTAL } from '../../constants/cards';
+import Column from '../Column';
+
 import { PADDING } from '../../constants/layout';
 
 export default class OffField extends React.Component {
-  _onPickupPress = () => {
-    const { onPickupPress } = this.props;
-    onPickupPress();
-  }
-
-  _onWasteCardClick = (id) => {
-    const { onWasteCardClick } = this.props;
-    onWasteCardClick(id);
-  }
-
   render() {
-    const { pickup, waste } = this.props;
-
     return (
       <View style={styles.offField}>
         <Column
@@ -29,9 +17,7 @@ export default class OffField extends React.Component {
           columnSpan={1}
           padding={PADDING}
           render={({ columnWidth }) =>
-            <TouchableOpacity onPress={this._onPickupPress} activeOpacity={1}>
-              <StackedPile pile={pickup} columnWidth={columnWidth} />
-            </TouchableOpacity>
+            <PickupContainer columnWidth={columnWidth} />
           }
         />
         <Column
@@ -39,12 +25,7 @@ export default class OffField extends React.Component {
           columnSpan={2}
           padding={PADDING}
           render={({ columnWidth }) =>
-            <SpreadPile
-              pile={waste.slice(-3)}
-              direction={HORIZONTAL}
-              columnWidth={columnWidth}
-              onCardClick={this._onWasteCardClick}
-            />
+            <WasteContainer columnWidth={columnWidth} />
           }
         />
       </View>

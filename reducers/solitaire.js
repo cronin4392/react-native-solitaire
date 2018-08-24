@@ -72,15 +72,15 @@ const solitaire = (state = INITIAL_STATE, action) => {
         }
       }
     }
-    case 'ADD_CARD_WASTE': {
+    case 'ADD_CARDS_WASTE': {
       const { waste } = state;
-      const { id } = action;
+      const { ids } = action;
 
       return {
         ...state,
         waste: [
           ...waste,
-          id
+          ...ids,
         ],
       }
     }
@@ -93,15 +93,21 @@ const solitaire = (state = INITIAL_STATE, action) => {
         waste: waste.filter(item => item !== id),
       }
     }
-    case 'ADD_CARD_PICKUP': {
+    case 'REMOVE_ALL_CARDS_WASTE': {
+      return {
+        ...state,
+        waste: [],
+      }
+    }
+    case 'ADD_CARDS_PICKUP': {
       const { pickup } = state;
-      const { id } = action;
+      const { ids } = action;
 
       return {
         ...state,
         pickup: [
           ...pickup,
-          id
+          ...ids,
         ],
       }
     }
@@ -112,6 +118,12 @@ const solitaire = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         pickup: pickup.filter(item => item !== id),
+      }
+    }
+    case 'REMOVE_ALL_CARDS_PICKUP': {
+      return {
+        ...state,
+        pickup: [],
       }
     }
     default: {
