@@ -9,7 +9,7 @@ const mapStateToProps = (state, props) => {
   const { cardId } = props;
   const { solitaire } = state;
   const card = solitaire.cards[cardId];
-  const faceUp = solitaire.cardsFaceUp[cardId] === true;
+  const faceUp = solitaire.isFaceUp[cardId] === true;
 
   return ({
     ...props,

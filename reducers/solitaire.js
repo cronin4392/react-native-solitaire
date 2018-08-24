@@ -8,8 +8,7 @@ const INITIAL_STATE = {
   pickup: [],
   piles: [],
   waste: [],
-  cardsFaceUp: {},
-  cardPlacements: {},
+  isFaceUp: {},
   wasteSize: 3,
 };
 
@@ -51,23 +50,23 @@ const solitaire = (state = INITIAL_STATE, action) => {
       }
     }
     case 'FLIP_CARD_UP': {
-      const { cardsFaceUp } = state;
+      const { isFaceUp } = state;
       const { id } = action;
       return {
         ...state,
-        cardsFaceUp: {
-          ...cardsFaceUp,
+        isFaceUp: {
+          ...isFaceUp,
           [id]: true,
         }
       }
     }
     case 'FLIP_CARD_DOWN': {
-      const { cardsFaceUp } = state;
+      const { isFaceUp } = state;
       const { id } = action;
       return {
         ...state,
-        cardsFaceUp: {
-          ...cardsFaceUp,
+        isFaceUp: {
+          ...isFaceUp,
           [id]: false,
         }
       }
