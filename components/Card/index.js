@@ -15,19 +15,23 @@ export default class Card extends React.Component {
   };
 
   render() {
-    const { card, faceUp } = this.props;
+    const { card, columnWidth, faceUp } = this.props;
     const { pip, suit } = card;
     const isRed = [DIAMONDS, HEARTS].indexOf(suit) >= 0;
+    const dimensions = {
+      width: columnWidth,
+      height: columnWidth * 1.5,
+    };
 
     if (!faceUp) {
       return (
-        <View style={styles.card}>
+        <View style={[dimensions, styles.card]}>
           <View style={styles.cardBack}></View>
         </View>
       );
     }
 
-    const cardStyle = [styles.card, isRed && styles.redCard];
+    const cardStyle = [dimensions, styles.card, isRed && styles.redCard];
     const cardTextStyle = [styles.cardText, isRed && styles.redCardText];
 
     return (
@@ -45,10 +49,6 @@ export default class Card extends React.Component {
   }
 }
 
-// Subtract a small amount so that they all fit on 1 row
-export const cardWidth = (Dimensions.get('window').width / 7) - 0.000001;
-export const cardHeight = cardWidth * 1.5;
-
 const textSpacingFromEdge = 3;
 
 const styles = StyleSheet.create({
@@ -57,8 +57,6 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderWidth: 1,
     overflow: 'hidden',
-    height: cardHeight,
-    width: cardWidth,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 3,
