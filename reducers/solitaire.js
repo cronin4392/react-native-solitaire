@@ -59,7 +59,6 @@ const solitaire = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         pickup,
-        piles,
         pile_1: piles[0],
         pile_2: piles[1],
         pile_3: piles[2],
@@ -128,6 +127,7 @@ const solitaire = (state = INITIAL_STATE, action) => {
     case 'SELECT_CARD': {
       const { selected } = state;
       const { id, location } = action;
+      const selectedLength = Object.keys(selected).length;
 
       return {
         ...state,
@@ -136,6 +136,7 @@ const solitaire = (state = INITIAL_STATE, action) => {
           [id]: {
             id,
             location,
+            order: selectedLength,
           }
         }
       }
@@ -148,7 +149,7 @@ const solitaire = (state = INITIAL_STATE, action) => {
         ...state,
         selected: {
           ...selected,
-          [id]: null,
+          [id]: null, // TODO: unset this entirely
         }
       }
     }

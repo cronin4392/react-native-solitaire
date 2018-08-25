@@ -1,5 +1,6 @@
 import {
   ACE,
+  KING,
   AREAS,
   FOUNDATION,
   FOUNDATION_1,
@@ -51,12 +52,17 @@ export const shuffleDeck = () => ({
 
 export const flipFirstCardUpInPiles = () => (dispatch, getState) => {
   const { solitaire } = getState();
-  const { piles } = solitaire;
 
-  piles.map(pile => {
-    const firstCard = pile[pile.length - 1];
-    dispatch(flipCardUp(firstCard));
+  PILES.map(location => {
+    const pile = solitaire[location];
+    return dispatch(flipCardUp(pile[pile.length - 1]))
   });
+};
+
+export const flipAllCardsUpInPiles = () => (dispatch, getState) => {
+  const { solitaire } = getState();
+
+  PILES.map(location => solitaire[location].map(card => dispatch(flipCardUp(card))));
 };
 
 export const flipCardsUp = ids => dispatch => applyToArray(ids, (id => dispatch(flipCardUp(id))));
@@ -73,56 +79,61 @@ export const flipCardDown = id => ({
 
 /* SELECT CARDS */
 
-export const cardClicked = (payload) => (dispatch, getState) => {
+export const cardClicked = ({ id, location }) => (dispatch, getState) => {
   const { solitaire } = getState();
   const {
     faceup,
     selected,
   } = solitaire;
-  const { id, location } = payload;
   const pile = solitaire[location];
 
-  if (!faceup[id]) {
-    if (AREAS[location] !== PILE) {
+  if (AREAS[location] === PILE) {
+    if (!faceup[id]) {
+      if (isTopCard(id, pile)) {
+        return dispatch(flipCardUp(id));
+      }
       return;
     }
     if (!isTopCard(id, pile)) {
-      return;
+      const index = pile.indexOf(id);
+      return dispatch(selectCards({ ids: pile.slice(index), location }));
     }
-    return dispatch(flipCardUp(id));
   }
 
   if (AREAS[location] === FOUNDATION) {
     return;
   }
 
-  if (location === WASTE) {
+  if (AREAS[location] === WASTE) {
     if (!isTopCard(id, pile)) {
       return;
     }
   }
 
-  if (selected[id]) {
-    return dispatch(deselectCard(payload));
-  }
+  // if (selected[id]) {
+  //   return dispatch(deselectAllCards());
+  // }
 
-  // Select card
   dispatch(deselectAllCards());
-  dispatch(selectCard(payload));
+  dispatch(selectCard({ id, location }));
 };
+
+// TODO: this recieves and object while other functions like addCardLocation recieve a list
+export const selectCards = ({ ids, location }) => dispatch => applyToArray(ids, (id => dispatch(selectCard({ id, location }))));
+export const selectCard = ({ id, location }) => ({
+  type: 'SELECT_CARD',
+  id,
+  location,
+});
+
+// export const deselectCard = ({ id, location }) => ({
+//   type: 'DESELECT_CARD',
+//   id,
+//   location,
+// });
 
 export const deselectAllCards = () => ({
   type: 'DESELECT_ALL_CARDS',
-});
-
-export const selectCard = payload => ({
-  type: 'SELECT_CARD',
-  ...payload,
-});
-
-export const deselectCard = payload => ({
-  type: 'DESELECT_CARD',
-  ...payload,
 });
 
 /*
@@ -201,7 +212,12 @@ const isValidMove = ({
 export const moveSelectedToLocation = location => (dispatch, getState) => {
   const { solitaire } = getState();
   const { cards, selected } = solitaire;
-  const selectedArray = Object.keys(selected).reduce((acc, key) => (!!selected[key] ? [...acc, selected[key]['id']] : acc), []);
+  const selectedArray = Object.keys(selected)
+    .reduce((acc, key) => (
+      [...acc, selected[key]]
+    ), [])
+    .sort((a, b) => a.order - b.order)
+    .map(item => item.id);
 
   const fromLocation = selected[Object.keys(selected)[0]].location;
 

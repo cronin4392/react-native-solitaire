@@ -15,9 +15,9 @@ export default class PlayField extends React.PureComponent {
   render() {
     return (
       <View style={styles.playField}>
-        {PILES.map((location, index) =>
+        {PILES.map(location =>
           <Column
-            key={index}
+            key={location}
             columns={7}
             columnSpan={1}
             padding={PADDING}
