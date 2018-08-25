@@ -3,7 +3,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { Platform, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 
 import reducers from './reducers';
 
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
   },
   safeZone: {
     flex: 1,
+    paddingTop: Platform.OS === 'android' ? 25 : 0,
   },
   scrollingField: {
     flex: 1,
