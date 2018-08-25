@@ -1,11 +1,16 @@
 import {
+  ACE,
+  AREAS,
+  FOUNDATION,
   FOUNDATION_1,
   FOUNDATION_2,
   FOUNDATION_3,
   FOUNDATION_4,
   PICKUP,
+  PILE,
   PILES,
   WASTE,
+  RANK,
 } from '../constants/cards';
 
 const applyToArray = (array, func) => array.map(item => func(item));
@@ -13,8 +18,6 @@ const applyToArray = (array, func) => array.map(item => func(item));
 /* Card Helpers */
 
 const isTopCard = (id, pile) => ( id === pile[pile.length - 1] );
-
-const isFoundationLocation = location => [FOUNDATION_1, FOUNDATION_2, FOUNDATION_3, FOUNDATION_4].indexOf(location) >= 0
 
 /*
   CREATION ACTIONS
@@ -75,10 +78,13 @@ export const cardClicked = (payload) => (dispatch, getState) => {
   const { id, location } = payload;
 
   if (!faceup[id]) {
-    return;
+    if (AREAS[location] !== PILE) {
+      return;
+    }
+    console.log(payload);
   }
 
-  if (isFoundationLocation(location)) {
+  if (AREAS[location] === FOUNDATION) {
     return;
   }
 
@@ -140,14 +146,29 @@ export const moveWasteIntoPickup = () => (dispatch, getState) => {
   dispatch(addCardsLocation(waste, PICKUP));
 };
 
-const attemptMoveSelectedToLocation = (selected, location) => dispatch => {
+const attemptMoveSelectedToLocation = (selected, location) => (dispatch, getState) => {
+  const { solitaire } = getState();
+  const { cards } = solitaire;
+  const topCard = cards[selected[0]];
+
   const pileIndex = PILES.indexOf(location);
   if (pileIndex >= 0) {
     return dispatch(addCardsPile(selected, pileIndex));
   }
 
-  if (isFoundationLocation(location)) {
-    return dispatch(addCardsLocation(selected, location));
+  if (AREAS[location] === FOUNDATION) {
+    const existing = solitaire[location];
+    if (existing.length === 0) {
+      if (topCard.pip === ACE) {
+        return dispatch(addCardsLocation(selected, location));
+      }
+      return false;
+    }
+    const lastCardLocation = cards[existing[existing.length - 1]];
+    if (topCard.suit === lastCardLocation.suit) {
+      return dispatch(addCardsLocation(selected, location));
+    }
+    console.log(lastCardLocation);
   }
 
   return false;
