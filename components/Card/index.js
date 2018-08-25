@@ -3,7 +3,7 @@ import { Dimensions, Platform, StyleSheet, Text, TouchableOpacity, View } from '
 import PropTypes from 'prop-types';
 
 import { RED, SUIT_COLOR } from '../../constants/cards';
-import { MONOSPACE_FONT } from '../../constants/cards';
+import { MONOSPACE_FONT } from '../../constants/styles';
 import { symbol } from '../../helpers/cards';
 
 export default class Card extends React.PureComponent {

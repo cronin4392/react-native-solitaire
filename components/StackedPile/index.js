@@ -5,7 +5,7 @@ import CardContainer from '../../containers/CardContainer';
 import Card from '../Card';
 import EmptyCardSpace from '../EmptyCardSpace';
 
-import { MONOSPACE_FONT } from '../../constants/cards';
+import { MONOSPACE_FONT } from '../../constants/styles';
 
 export default class StackedPile extends React.PureComponent {
   static defaultProps = {
