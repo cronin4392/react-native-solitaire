@@ -8,7 +8,7 @@ import Column from '../Column';
 import SpreadPile from '../SpreadPile';
 
 import { PILES } from '../../constants/cards';
-import { PADDING } from '../../constants/layout';
+import { PADDING } from '../../constants/styles';
 
 export default class PlayField extends React.Component {
   render() {

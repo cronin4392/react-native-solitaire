@@ -5,6 +5,8 @@ import CardContainer from '../../containers/CardContainer';
 import Card from '../Card';
 import EmptyCardSpace from '../EmptyCardSpace';
 
+import { MONOSPACE_FONT } from '../../constants/cards';
+
 export default class StackedPile extends React.Component {
   static defaultProps = {
     columnWidth: null,
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   debugOverlayText: {
-    fontFamily: 'Menlo-Regular',
+    fontFamily: MONOSPACE_FONT,
     fontSize: 9,
     lineHeight: 9,
     textAlign: 'center',

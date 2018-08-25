@@ -7,7 +7,7 @@ import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 
 import reducers from './reducers';
 
-import { PADDING } from './constants/layout';
+import { PADDING } from './constants/styles';
 
 const middleware = [
   thunk,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    
+
   },
   safeZone: {
     flex: 1,

@@ -6,7 +6,7 @@ import WasteContainer from '../../containers/WasteContainer';
 
 import Column from '../Column';
 
-import { PADDING } from '../../constants/layout';
+import { PADDING } from '../../constants/styles';
 
 export default class OffField extends React.Component {
   render() {

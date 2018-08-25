@@ -1,8 +1,9 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import PropTypes from 'prop-types';
 
 import { RED, SUIT_COLOR } from '../../constants/cards';
+import { MONOSPACE_FONT } from '../../constants/cards';
 import { symbol } from '../../helpers/cards';
 
 export default class Card extends React.Component {
@@ -102,9 +103,9 @@ const styles = StyleSheet.create({
     }],
   },
   cardText: {
-    fontFamily: 'Menlo-Regular',
+    fontFamily: MONOSPACE_FONT,
     fontSize: 11,
-    lineHeight: 11
+    lineHeight: 11,
   },
   redCardText: {
     color: '#f00'
