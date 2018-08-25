@@ -126,6 +126,41 @@ const solitaire = (state = INITIAL_STATE, action) => {
         pickup: [],
       }
     }
+    case 'ADD_CARDS_PILE': {
+      const { piles } = state;
+      const { ids, index } = action;
+      const pile = piles[index];
+      const beforePiles = piles.slice(0, index);
+      const afterPiles = piles.slice(index + 1);
+
+      return {
+        ...state,
+        piles: [
+          ...beforePiles,
+          [
+            ...pile,
+            ...ids,
+          ],
+          ...afterPiles,
+        ]
+      }
+    }
+    case 'REMOVE_CARD_PILE': {
+      const { piles } = state;
+      const { id, index } = action;
+      const pile = piles[index];
+      const beforePiles = piles.slice(0, index);
+      const afterPiles = piles.slice(index + 1);
+
+      return {
+        ...state,
+        piles: [
+          ...beforePiles,
+          pile.filter(item => item !== id),
+          ...afterPiles,
+        ]
+      }
+    }
     case 'SELECT_CARD': {
       const { selected } = state;
       const { id, location } = action;
@@ -134,7 +169,10 @@ const solitaire = (state = INITIAL_STATE, action) => {
         ...state,
         selected: {
           ...selected,
-          [id]: location,
+          [id]: {
+            id,
+            location,
+          }
         }
       }
     }

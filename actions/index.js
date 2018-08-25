@@ -1,4 +1,7 @@
-import { WASTE } from '../constants/cards';
+import {
+  PILES,
+  WASTE
+} from '../constants/cards';
 
 const applyToArray = (array, func) => array.map(item => func(item));
 
@@ -126,7 +129,30 @@ export const moveWasteIntoPickup = () => (dispatch, getState) => {
 };
 
 export const moveSelectedToZone = location => (dispatch, getState) => {
-  console.log(location);
+  const { solitaire } = getState();
+  const { selected } = solitaire;
+  const selectedArray = Object.keys(selected).reduce((acc, val) => (!!selected[val] ? [...acc, val] : acc), []);
+
+  // Add cards
+  const pileIndex = PILES.indexOf(location);
+  if (pileIndex >= 0) {
+    dispatch(addCardsPile(selectedArray, pileIndex));
+  }
+
+  // Remove cards
+  Object.keys(selected).map(key => {
+    const { location, id } = selected[key];
+    const pileIndex = PILES.indexOf(location);
+
+    if (pileIndex >= 0) {
+      return dispatch(removeCardPile(id, pileIndex));
+    }
+    if (location === WASTE) {
+      return dispatch(removeCardWaste(id));
+    }
+  });
+
+  dispatch(deselectAllCards());
 }
 
 /* ADD REMOVE CARDS */
@@ -159,4 +185,16 @@ export const removeCardsPickup = ids => dispatch => applyToArray(ids, (id => dis
 export const removeCardPickup = id => ({
   type: 'REMOVE_CARD_PICKUP',
   id
+});
+
+export const removeCardsPile = (ids, index) => dispatch => applyToArray(ids, (id => dispatch(removeCardPile(id, index))));
+export const removeCardPile = (id, index) => ({
+  type: 'REMOVE_CARD_PILE',
+  id,
+  index
+});
+export const addCardsPile = (ids, index) => ({
+  type: 'ADD_CARDS_PILE',
+  ids,
+  index
 });
