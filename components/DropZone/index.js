@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   dropZone: {
     ...StyleSheet.absoluteFillObject,
     zIndex: 2,
-    backgroundColor: 'rgba(255,0,0,0.3)',
+    // backgroundColor: 'rgba(255,0,0,0.3)',
   },
   dropZoneButton: {
     ...StyleSheet.absoluteFillObject,
