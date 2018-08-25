@@ -71,13 +71,13 @@ export const VERITCAL = 'vertical';
 export const WASTE = 'waste';
 export const PICKUP = 'pickup';
 export const PILES = [
-  'pile1',
-  'pile2',
-  'pile3',
-  'pile4',
-  'pile5',
-  'pile6',
-  'pile7',
+  'pile_1',
+  'pile_2',
+  'pile_3',
+  'pile_4',
+  'pile_5',
+  'pile_6',
+  'pile_7',
 ];
 export const FOUNDATION_1 = 'foundation_1';
 export const FOUNDATION_2 = 'foundation_2';

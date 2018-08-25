@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import DropZoneContainer from '../../containers/DropZoneContainer';
 import LocationContainer from '../../containers/LocationContainer';
 import PickupContainer from '../../containers/PickupContainer';
+import SelectedContainer from '../../containers/SelectedContainer';
 
 import SpreadPile from '../SpreadPile';
 import StackedPile from '../StackedPile';
@@ -49,74 +51,34 @@ export default class OffField extends React.PureComponent {
             </LocationContainer>
           }
         </Column>
-        <Column
-          columns={7}
-          columnSpan={1}
-          padding={PADDING}
-        >
-          {({ columnWidth }) =>
-            <LocationContainer location={FOUNDATION_1}>
-              {({ cards }) =>
-                <StackedPile
-                  pile={cards}
-                  columnWidth={columnWidth}
-                  location={FOUNDATION_1}
-                />
-              }
-            </LocationContainer>
-          }
-        </Column>
-        <Column
-          columns={7}
-          columnSpan={1}
-          padding={PADDING}
-        >
-          {({ columnWidth }) =>
-            <LocationContainer location={FOUNDATION_2}>
-              {({ cards }) =>
-                <StackedPile
-                  pile={cards}
-                  columnWidth={columnWidth}
-                  location={FOUNDATION_2}
-                />
-              }
-            </LocationContainer>
-          }
-        </Column>
-        <Column
-          columns={7}
-          columnSpan={1}
-          padding={PADDING}
-        >
-          {({ columnWidth }) =>
-            <LocationContainer location={FOUNDATION_3}>
-              {({ cards }) =>
-                <StackedPile
-                  pile={cards}
-                  columnWidth={columnWidth}
-                  location={FOUNDATION_3}
-                />
-              }
-            </LocationContainer>
-          }
-        </Column>
-        <Column
-          columns={7}
-          columnSpan={1}
-          padding={PADDING}
-        >
-          {({ columnWidth }) =>
-            <LocationContainer location={FOUNDATION_4}>
-              {({ cards }) =>
-                <StackedPile
-                  pile={cards}
-                  columnWidth={columnWidth}
-                  location={FOUNDATION_4}
-                />
-              }
-            </LocationContainer>
-          }
-        </Column>
+        {[FOUNDATION_1, FOUNDATION_2, FOUNDATION_3, FOUNDATION_4].map(location =>
+          <Column
+            columns={7}
+            columnSpan={1}
+            padding={PADDING}
+            key={location}
+          >
+            {({ columnWidth }) =>
+              <LocationContainer location={location}>
+                {({ cards }) =>
+                  <SelectedContainer>
+                    {({ selected }) =>
+                      <Fragment>
+                        <DropZoneContainer selected={selected} location={location} />
+                        <StackedPile
+                          pile={cards}
+                          columnWidth={columnWidth}
+                          location={location}
+                        />
+                      </Fragment>
+                    }
+                  </SelectedContainer>
+
+                }
+              </LocationContainer>
+            }
+          </Column>
+        )}
       </View>
     );
   }

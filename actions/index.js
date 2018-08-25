@@ -1,9 +1,20 @@
 import {
+  FOUNDATION_1,
+  FOUNDATION_2,
+  FOUNDATION_3,
+  FOUNDATION_4,
+  PICKUP,
   PILES,
-  WASTE
+  WASTE,
 } from '../constants/cards';
 
 const applyToArray = (array, func) => array.map(item => func(item));
+
+/* Card Helpers */
+
+const isTopCard = (id, pile) => ( id === pile[pile.length - 1] );
+
+const isFoundationLocation = location => [FOUNDATION_1, FOUNDATION_2, FOUNDATION_3, FOUNDATION_4].indexOf(location) >= 0
 
 /*
   CREATION ACTIONS
@@ -67,13 +78,16 @@ export const cardClicked = (payload) => (dispatch, getState) => {
     return;
   }
 
+  if (isFoundationLocation(location)) {
+    return;
+  }
+
   if (location === WASTE) {
     if (!isTopCard(id, waste)) {
       return;
     }
   }
 
-  // Clicked card that was selected
   if (selected[id]) {
     return dispatch(deselectCard(payload));
   }
@@ -82,8 +96,6 @@ export const cardClicked = (payload) => (dispatch, getState) => {
   dispatch(deselectAllCards());
   dispatch(selectCard(payload));
 };
-
-const isTopCard = (id, pile) => ( id === pile[pile.length - 1] )
 
 export const deselectAllCards = () => ({
   type: 'DESELECT_ALL_CARDS',
@@ -114,8 +126,8 @@ export const movePickupIntoWaste = () => (dispatch, getState) => {
 
   const cards = pickup.slice(0, wasteSize);
 
-  dispatch(removeCardsPickup(cards));
-  dispatch(addCardsWaste(cards));
+  dispatch(removeCardsLocation(cards, PICKUP));
+  dispatch(addCardsLocation(cards, WASTE));
   dispatch(flipCardsUp(cards));
 };
 
@@ -123,20 +135,31 @@ export const moveWasteIntoPickup = () => (dispatch, getState) => {
   const { solitaire } = getState();
   const { waste } = solitaire;
 
-  dispatch(removeAllCardsWaste());
+  dispatch(removeAllCardsLocation(WASTE));
   dispatch(flipCardsDown(waste));
-  dispatch(addCardsPickup(waste));
+  dispatch(addCardsLocation(waste, PICKUP));
 };
 
-export const moveSelectedToZone = location => (dispatch, getState) => {
+const attemptMoveSelectedToLocation = (selected, location) => dispatch => {
+  const pileIndex = PILES.indexOf(location);
+  if (pileIndex >= 0) {
+    return dispatch(addCardsPile(selected, pileIndex));
+  }
+
+  if (isFoundationLocation(location)) {
+    return dispatch(addCardsLocation(selected, location));
+  }
+
+  return false;
+}
+
+export const moveSelectedToLocation = location => (dispatch, getState) => {
   const { solitaire } = getState();
   const { selected } = solitaire;
   const selectedArray = Object.keys(selected).reduce((acc, val) => (!!selected[val] ? [...acc, val] : acc), []);
 
-  // Add cards
-  const pileIndex = PILES.indexOf(location);
-  if (pileIndex >= 0) {
-    dispatch(addCardsPile(selectedArray, pileIndex));
+  if (!dispatch(attemptMoveSelectedToLocation(selectedArray, location)) ) {
+    return;
   }
 
   // Remove cards
@@ -147,9 +170,7 @@ export const moveSelectedToZone = location => (dispatch, getState) => {
     if (pileIndex >= 0) {
       return dispatch(removeCardPile(id, pileIndex));
     }
-    if (location === WASTE) {
-      return dispatch(removeCardWaste(id));
-    }
+    return dispatch(removeCardLocation(id, location));
   });
 
   dispatch(deselectAllCards());
@@ -157,34 +178,23 @@ export const moveSelectedToZone = location => (dispatch, getState) => {
 
 /* ADD REMOVE CARDS */
 
-export const addCardWaste = id => dispatch => dispatch(addCardsWaste([id]));
-export const addCardsWaste = ids => ({
-  type: 'ADD_CARDS_WASTE',
-  ids
+export const addCardLocation = (id, location) => dispatch => dispatch(addCardsLocation([id], location));
+export const addCardsLocation = (ids, location) => ({
+  type: 'ADD_CARDS_LOCATION',
+  ids,
+  location,
 });
 
-export const removeAllCardsWaste = () => ({
-  type: 'REMOVE_ALL_CARDS_WASTE'
-});
-export const removeCardsWaste = ids => dispatch => applyToArray(ids, (id => dispatch(removeCardWaste(id))));
-export const removeCardWaste = id => ({
-  type: 'REMOVE_CARD_WASTE',
-  id
+export const removeCardsLocation = (ids, location) => dispatch => applyToArray(ids, (id => dispatch(removeCardLocation(id, location))));
+export const removeCardLocation = (id, location) => ({
+  type: 'REMOVE_CARD_LOCATION',
+  id,
+  location,
 });
 
-export const addCardPickup = id => dispatch => dispatch(addCardsPickup([id]));
-export const addCardsPickup = ids => ({
-  type: 'ADD_CARDS_PICKUP',
-  ids
-});
-
-export const removeAllCardsPickup = () => ({
-  type: 'REMOVE_ALL_CARDS_PICKUP'
-});
-export const removeCardsPickup = ids => dispatch => applyToArray(ids, (id => dispatch(removeCardPickup(id))));
-export const removeCardPickup = id => ({
-  type: 'REMOVE_CARD_PICKUP',
-  id
+export const removeAllCardsLocation = location => ({
+  type: 'REMOVE_ALL_CARDS_LOCATION',
+  location
 });
 
 export const removeCardsPile = (ids, index) => dispatch => applyToArray(ids, (id => dispatch(removeCardPile(id, index))));

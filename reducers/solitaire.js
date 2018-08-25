@@ -9,10 +9,10 @@ const INITIAL_STATE = {
   pickup: [],
   waste: [],
   piles: [],
-  foundation1: [1,2,3,4,5],
-  foundation2: [],
-  foundation3: [],
-  foundation4: [],
+  foundation_1: [],
+  foundation_2: [],
+  foundation_3: [],
+  foundation_4: [],
   // state
   faceup: {},
   selected: {},
@@ -79,58 +79,32 @@ const solitaire = (state = INITIAL_STATE, action) => {
         }
       }
     }
-    case 'ADD_CARDS_WASTE': {
-      const { waste } = state;
-      const { ids } = action;
+    case 'ADD_CARDS_LOCATION': {
+      const { ids, location } = action;
+      const existingIds = state[location];
 
       return {
         ...state,
-        waste: [
-          ...waste,
+        [location]: [
+          ...existingIds,
           ...ids,
         ],
       }
     }
-    case 'REMOVE_CARD_WASTE': {
-      const { waste } = state;
-      const { id } = action;
+    case 'REMOVE_CARD_LOCATION': {
+      const { id, location } = action;
+      const existingIds = state[location];
 
       return {
         ...state,
-        waste: waste.filter(item => item !== id),
+        [location]: existingIds.filter(item => item !== id),
       }
     }
-    case 'REMOVE_ALL_CARDS_WASTE': {
+    case 'REMOVE_ALL_CARDS_LOCATION': {
+      const { location } = action;
       return {
         ...state,
-        waste: [],
-      }
-    }
-    case 'ADD_CARDS_PICKUP': {
-      const { pickup } = state;
-      const { ids } = action;
-
-      return {
-        ...state,
-        pickup: [
-          ...pickup,
-          ...ids,
-        ],
-      }
-    }
-    case 'REMOVE_CARD_PICKUP': {
-      const { pickup } = state;
-      const { id } = action;
-
-      return {
-        ...state,
-        pickup: pickup.filter(item => item !== id),
-      }
-    }
-    case 'REMOVE_ALL_CARDS_PICKUP': {
-      return {
-        ...state,
-        pickup: [],
+        [location]: [],
       }
     }
     case 'ADD_CARDS_PILE': {

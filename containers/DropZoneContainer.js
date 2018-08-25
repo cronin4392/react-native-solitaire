@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 
 import DropZone from '../components/DropZone';
 
-import { moveSelectedToZone } from '../actions';
+import { moveSelectedToLocation } from '../actions';
 
 const mapDispatchToProps = (dispatch) => ({
-  onDropzoneClick: zone => dispatch(moveSelectedToZone(zone))
+  onDropzoneClick: zone => dispatch(moveSelectedToLocation(zone))
 });
 
 export default connect(null, mapDispatchToProps)(DropZone);
