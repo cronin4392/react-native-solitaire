@@ -7,7 +7,9 @@ import Card from '../Card';
 import EmptyCardSpace from '../EmptyCardSpace';
 
 import { HORIZONTAL, VERTICAL } from '../../constants/cards';
-const SPREAD_OFFSET = 20;
+
+const SMALL_SPREAD_OFFSET = 12;
+const LARGE_SPREAD_OFFSET = 20;
 
 export default class SpreadPile extends React.Component {
   static defaultProps = {
@@ -27,21 +29,29 @@ export default class SpreadPile extends React.Component {
 
     const pileStyle = isVertical ? styles.pileVertical : styles.pileHorizontal;
 
-    const pileItemStyle = isVertical ? {
-      marginBottom: (-1 * cardHeight) + SPREAD_OFFSET
+    const smallOffsetStyle = isVertical ? {
+      marginBottom: (-1 * cardHeight) + SMALL_SPREAD_OFFSET
     } : {
-      marginRight: (-1 * cardWidth) + SPREAD_OFFSET
+      marginRight: (-1 * cardWidth) + SMALL_SPREAD_OFFSET
+    };
+
+    const largeOffsetStyle = isVertical ? {
+      marginBottom: (-1 * cardHeight) + LARGE_SPREAD_OFFSET
+    } : {
+      marginRight: (-1 * cardWidth) + LARGE_SPREAD_OFFSET
     };
 
     return (
       <View style={pileStyle}>
         <EmptyCardSpace absolute={pile.length > 0} columnWidth={columnWidth} />
         {pile.map((id, index) =>
-          <View key={index} style={index !== pile.length - 1 && pileItemStyle}>
-            <CardContainer id={id}>
-              {data => <Card {...this.props} {...data} />}
-            </CardContainer>
-          </View>
+          <CardContainer id={id} key={index}>
+            {data =>
+              <View style={index !== pile.length - 1 && (data.isFaceUp ? largeOffsetStyle : smallOffsetStyle)}>
+                <Card {...this.props} {...data} />
+              </View>
+            }
+          </CardContainer>
         )}
       </View>
     )
