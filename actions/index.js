@@ -10,14 +10,19 @@ import {
   PILE,
   PILES,
   WASTE,
-  RANK,
 } from '../constants/cards';
+
+import {
+  color,
+  rank
+} from '../helpers/cards';
 
 const applyToArray = (array, func) => array.map(item => func(item));
 
 /* Card Helpers */
 
 const isTopCard = (id, pile) => ( id === pile[pile.length - 1] );
+const isBottomCard = (id, pile) => ( id === pile[0] );
 
 /*
   CREATION ACTIONS
@@ -73,15 +78,18 @@ export const cardClicked = (payload) => (dispatch, getState) => {
   const {
     faceup,
     selected,
-    waste,
   } = solitaire;
   const { id, location } = payload;
+  const pile = solitaire[location];
 
   if (!faceup[id]) {
     if (AREAS[location] !== PILE) {
       return;
     }
-    console.log(payload);
+    if (!isTopCard(id, pile)) {
+      return;
+    }
+    return dispatch(flipCardUp(id));
   }
 
   if (AREAS[location] === FOUNDATION) {
@@ -89,7 +97,7 @@ export const cardClicked = (payload) => (dispatch, getState) => {
   }
 
   if (location === WASTE) {
-    if (!isTopCard(id, waste)) {
+    if (!isTopCard(id, pile)) {
       return;
     }
   }
@@ -146,39 +154,65 @@ export const moveWasteIntoPickup = () => (dispatch, getState) => {
   dispatch(addCardsLocation(waste, PICKUP));
 };
 
-const attemptMoveSelectedToLocation = (selected, location) => (dispatch, getState) => {
-  const { solitaire } = getState();
-  const { cards } = solitaire;
-  const topCard = cards[selected[0]];
+const isValidMove = ({
+  cards,
+  fromCards,
+  fromLocation,
+  toLocation,
+  toCards
+}) => {
+  const topFromCard = cards[fromCards[0]];
+  const bottomToCard = cards[toCards[toCards.length - 1]];
 
-  if (AREAS[location] === PILE) {
-    return dispatch(addCardsLocation(selected, location));
-  }
-
-  if (AREAS[location] === FOUNDATION) {
-    const existing = solitaire[location];
-    if (existing.length === 0) {
-      if (topCard.pip === ACE) {
-        return dispatch(addCardsLocation(selected, location));
+  if (AREAS[toLocation] === PILE) {
+    if (toCards.length === 0) {
+      if (topFromCard.pip === KING) {
+        return true;
       }
-      return false;
     }
-    const lastCardLocation = cards[existing[existing.length - 1]];
-    if (topCard.suit === lastCardLocation.suit) {
-      return dispatch(addCardsLocation(selected, location));
+    else {
+      if (
+        rank(topFromCard.pip) - rank(bottomToCard.pip) === -1 &&
+        color(topFromCard.suit) !== color(bottomToCard.suit)
+      ) {
+        return true;
+      }
     }
-    console.log(lastCardLocation);
+  }
+  if (AREAS[toLocation] === FOUNDATION) {
+    if (toCards.length === 0) {
+      if (topFromCard.pip === ACE) {
+        return true;
+      }
+    }
+    else {
+      if (
+        rank(topFromCard.pip) - rank(bottomToCard.pip) === 1 &&
+        topFromCard.suit === bottomToCard.suit
+      ) {
+        return true;
+      }
+    }
   }
 
   return false;
-}
+};
 
 export const moveSelectedToLocation = location => (dispatch, getState) => {
   const { solitaire } = getState();
-  const { selected } = solitaire;
-  const selectedArray = Object.keys(selected).reduce((acc, val) => (!!selected[val] ? [...acc, val] : acc), []);
+  const { cards, selected } = solitaire;
+  const selectedArray = Object.keys(selected).reduce((acc, key) => (!!selected[key] ? [...acc, selected[key]['id']] : acc), []);
 
-  if (!dispatch(attemptMoveSelectedToLocation(selectedArray, location)) ) {
+  const fromLocation = selected[Object.keys(selected)[0]].location;
+
+  if ( !isValidMove({
+    cards,
+    fromCards: selectedArray,
+    fromLocation: fromLocation,
+    toLocation: location,
+    toCards: solitaire[location],
+  }) ) {
+    dispatch(deselectAllCards());
     return;
   }
 
@@ -187,6 +221,8 @@ export const moveSelectedToLocation = location => (dispatch, getState) => {
     const { location, id } = selected[key];
     return dispatch(removeCardLocation(id, location));
   });
+
+  dispatch(addCardsLocation(selectedArray, location));
 
   dispatch(deselectAllCards());
 }

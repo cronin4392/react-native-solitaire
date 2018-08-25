@@ -1,4 +1,8 @@
-import { SYMBOLS } from '../constants/cards';
+import {
+  RANKS,
+  SUIT_COLOR,
+  SYMBOLS
+} from '../constants/cards';
 
 export const shuffle = (a) => {
   const b = [...a];
@@ -12,4 +16,6 @@ export const shuffle = (a) => {
   return b;
 }
 
-export const symbol = (suitName) => SYMBOLS[suitName] || suitName;
+export const symbol = (name) => SYMBOLS[name] || name;
+export const rank = (pip) => RANKS[pip] || -1;
+export const color = (suit) => SUIT_COLOR[suit];
