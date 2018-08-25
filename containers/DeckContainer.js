@@ -10,7 +10,11 @@ import {
 } from '../actions';
 
 import OffField from '../components/OffField';
-import PilesContainer from '../containers/PilesContainer';
+import PlayField from '../components/PlayField';
+
+import LocationContainer from '../containers/LocationContainer';
+
+import { PILES } from '../constants/cards';
 
 class DeckContainer extends React.PureComponent {
   componentDidMount() {
@@ -31,7 +35,9 @@ class DeckContainer extends React.PureComponent {
     return (
       <Fragment>
         <OffField />
-        <PilesContainer />
+        <LocationContainer location={'piles'}>
+          {({ cards }) => <PlayField piles={cards} />}
+        </LocationContainer>
       </Fragment>
     );
   }
