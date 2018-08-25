@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-export default class DropZone extends React.Component {
+export default class DropZone extends React.PureComponent {
   _onDropZoneClicked = () => {
     const { location, onDropzoneClick } = this.props;
 

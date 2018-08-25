@@ -6,7 +6,7 @@ import { RED, SUIT_COLOR } from '../../constants/cards';
 import { MONOSPACE_FONT } from '../../constants/cards';
 import { symbol } from '../../helpers/cards';
 
-export default class Card extends React.Component {
+export default class Card extends React.PureComponent {
   static propTypes = {
     card: PropTypes.shape({
       suit: PropTypes.string.isRequired,

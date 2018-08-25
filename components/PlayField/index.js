@@ -10,7 +10,7 @@ import SpreadPile from '../SpreadPile';
 import { PILES } from '../../constants/cards';
 import { PADDING } from '../../constants/styles';
 
-export default class PlayField extends React.Component {
+export default class PlayField extends React.PureComponent {
   render() {
     const { piles } = this.props;
 

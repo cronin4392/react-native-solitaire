@@ -7,7 +7,7 @@ import EmptyCardSpace from '../EmptyCardSpace';
 
 import { MONOSPACE_FONT } from '../../constants/cards';
 
-export default class StackedPile extends React.Component {
+export default class StackedPile extends React.PureComponent {
   static defaultProps = {
     columnWidth: null,
   };

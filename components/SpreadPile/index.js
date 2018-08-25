@@ -11,7 +11,7 @@ import { HORIZONTAL, VERTICAL } from '../../constants/cards';
 const SMALL_SPREAD_OFFSET = 12;
 const LARGE_SPREAD_OFFSET = 20;
 
-export default class SpreadPile extends React.Component {
+export default class SpreadPile extends React.PureComponent {
   static defaultProps = {
     direction: VERTICAL,
     columnWidth: null,

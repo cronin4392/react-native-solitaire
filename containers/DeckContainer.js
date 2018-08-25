@@ -12,7 +12,7 @@ import {
 import OffField from '../components/OffField';
 import PilesContainer from '../containers/PilesContainer';;
 
-class DeckContainer extends React.Component {
+class DeckContainer extends React.PureComponent {
   componentDidMount() {
     const {
       flipFirstCardUpInPiles,

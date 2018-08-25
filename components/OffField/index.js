@@ -8,7 +8,7 @@ import Column from '../Column';
 
 import { PADDING } from '../../constants/styles';
 
-export default class OffField extends React.Component {
+export default class OffField extends React.PureComponent {
   render() {
     return (
       <View style={styles.offField}>
