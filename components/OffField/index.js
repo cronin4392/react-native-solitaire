@@ -3,13 +3,19 @@ import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 
 import LocationContainer from '../../containers/LocationContainer';
 import PickupContainer from '../../containers/PickupContainer';
-import WasteContainer from '../../containers/WasteContainer';
 
+import SpreadPile from '../SpreadPile';
 import StackedPile from '../StackedPile';
 
 import Column from '../Column';
 
-import { FOUNDATION_1, FOUNDATION_2, FOUNDATION_3, FOUNDATION_4 } from '../../constants/cards';
+import {
+  FOUNDATION_1,
+  FOUNDATION_2,
+  FOUNDATION_3,
+  FOUNDATION_4,
+  HORIZONTAL,
+  WASTE } from '../../constants/cards';
 import { PADDING } from '../../constants/styles';
 
 export default class OffField extends React.PureComponent {
@@ -31,7 +37,16 @@ export default class OffField extends React.PureComponent {
           padding={PADDING}
         >
           {({ columnWidth }) =>
-            <WasteContainer columnWidth={columnWidth} />
+            <LocationContainer location={WASTE}>
+              {({ cards }) =>
+                <SpreadPile
+                  pile={cards.slice(-3)}
+                  direction={HORIZONTAL}
+                  columnWidth={columnWidth}
+                  location={WASTE}
+                />
+              }
+            </LocationContainer>
           }
         </Column>
         <Column
