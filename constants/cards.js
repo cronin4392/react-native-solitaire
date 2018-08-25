@@ -7,21 +7,31 @@ export const HEARTS = 'HEARTS';
 
 export const SUITS = [SPADES, CLUBS, DIAMONDS, HEARTS];
 
+export const BLACK = 'BLACK';
+export const RED = 'RED';
+
+export const SUIT_COLOR = {
+  [SPADES]: BLACK,
+  [CLUBS]: BLACK,
+  [DIAMONDS]: RED,
+  [HEARTS]: RED,
+};
+
 // Pips
 
-export const ACE = "ACE";
-export const TWO = "TWO";
-export const THREE = "THREE";
-export const FOUR = "FOUR";
-export const FIVE = "FIVE";
-export const SIX = "SIX";
-export const SEVEN = "SEVEN";
-export const EIGHT = "EIGHT";
-export const NINE = "NINE";
-export const TEN = "TEN";
-export const JACK = "JACK";
-export const QUEEN = "QUEEN";
-export const KING = "KING";
+export const ACE = 'ACE';
+export const TWO = 'TWO';
+export const THREE = 'THREE';
+export const FOUR = 'FOUR';
+export const FIVE = 'FIVE';
+export const SIX = 'SIX';
+export const SEVEN = 'SEVEN';
+export const EIGHT = 'EIGHT';
+export const NINE = 'NINE';
+export const TEN = 'TEN';
+export const JACK = 'JACK';
+export const QUEEN = 'QUEEN';
+export const KING = 'KING';
 
 export const PIPS = [ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING];
 

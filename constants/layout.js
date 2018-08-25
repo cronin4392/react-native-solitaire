@@ -1,1 +1,1 @@
-export const PADDING = 6;
+export const PADDING = 12;

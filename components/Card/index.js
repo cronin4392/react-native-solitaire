@@ -2,7 +2,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import PropTypes from 'prop-types';
 
-import { CLUBS, DIAMONDS, HEARTS, SPADES } from '../../constants/cards';
+import { RED, SUIT_COLOR } from '../../constants/cards';
 import { symbol } from '../../helpers/cards';
 
 export default class Card extends React.Component {
@@ -32,7 +32,7 @@ export default class Card extends React.Component {
       isSelected,
     } = this.props;
     const { pip, suit } = card;
-    const isRed = [DIAMONDS, HEARTS].indexOf(suit) >= 0;
+    const isRed = SUIT_COLOR[suit] === RED;
     const dimensions = {
       width: columnWidth,
       height: columnWidth * 1.5,
