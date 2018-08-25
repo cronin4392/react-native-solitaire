@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import CardContainer from '../../containers/CardContainer';
+import Card from '../Card';
 import EmptyCardSpace from '../EmptyCardSpace';
 
 export default class StackedPile extends React.Component {
@@ -19,9 +20,11 @@ export default class StackedPile extends React.Component {
           </View>
         </View>
         <EmptyCardSpace absolute={pile.length > 0} columnWidth={columnWidth} />
-        {pile.slice(pile.length - 1).map((card, index) =>
+        {pile.slice(pile.length - 1).map((id, index) =>
           <View key={index}>
-            <CardContainer id={card} {...this.props} />
+            <CardContainer id={id}>
+              {data => <Card {...this.props} {...data} />}
+            </CardContainer>
           </View>
         )}
       </View>

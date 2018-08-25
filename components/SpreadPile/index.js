@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 
 import CardContainer from '../../containers/CardContainer';
+import Card from '../Card';
 import EmptyCardSpace from '../EmptyCardSpace';
 
 import { HORIZONTAL, VERTICAL } from '../../constants/cards';
@@ -35,9 +36,11 @@ export default class SpreadPile extends React.Component {
     return (
       <View style={pileStyle}>
         <EmptyCardSpace absolute={pile.length > 0} columnWidth={columnWidth} />
-        {pile.map((card, index) =>
+        {pile.map((id, index) =>
           <View key={index} style={index !== pile.length - 1 && pileItemStyle}>
-            <CardContainer id={card} {...this.props} />
+            <CardContainer id={id}>
+              {data => <Card {...this.props} {...data} />}
+            </CardContainer>
           </View>
         )}
       </View>

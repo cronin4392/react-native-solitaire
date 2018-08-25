@@ -5,7 +5,7 @@ import Card from '../components/Card';
 
 import { cardClicked } from '../actions';
 
-const CardContainer = (props) => <Card {...props} />
+const CardContainer = (props) => props.children(props)
 
 const mapStateToProps = (state, props) => {
   const { id } = props;
