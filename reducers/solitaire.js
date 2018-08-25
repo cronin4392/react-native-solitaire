@@ -4,12 +4,19 @@ import { DECK } from '../constants/cards';
 
 const INITIAL_STATE = {
   cards: DECK,
+  // locations
   deck: [],
   pickup: [],
-  piles: [],
   waste: [],
+  piles: [],
+  foundation1: [1,2,3,4,5],
+  foundation2: [],
+  foundation3: [],
+  foundation4: [],
+  // state
   faceup: {},
   selected: {},
+  // settings
   wasteSize: 3,
 };
 

@@ -10,7 +10,7 @@ import {
 } from '../actions';
 
 import OffField from '../components/OffField';
-import PilesContainer from '../containers/PilesContainer';;
+import PilesContainer from '../containers/PilesContainer';
 
 class DeckContainer extends React.PureComponent {
   componentDidMount() {

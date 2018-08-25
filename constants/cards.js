@@ -79,3 +79,7 @@ export const PILES = [
   'pile6',
   'pile7',
 ];
+export const FOUNDATION_1 = 'foundation_1';
+export const FOUNDATION_2 = 'foundation_2';
+export const FOUNDATION_3 = 'foundation_3';
+export const FOUNDATION_4 = 'foundation_4';

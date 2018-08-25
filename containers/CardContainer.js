@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Card from '../components/Card';
-
 import { cardClicked } from '../actions';
 
 const CardContainer = (props) => props.children(props)
