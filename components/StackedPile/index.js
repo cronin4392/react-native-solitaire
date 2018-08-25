@@ -16,11 +16,11 @@ export default class StackedPile extends React.PureComponent {
     const { columnWidth, pile } = this.props;
     return (
       <View style={styles.pile}>
-        <View style={styles.debugOverlay} pointerEvents={'none'}>
+        {/*<View style={styles.debugOverlay} pointerEvents={'none'}>
           <View style={styles.debugOverlayInner}>
             <Text style={styles.debugOverlayText}>{pile.length} cards</Text>
           </View>
-        </View>
+        </View>*/}
         <EmptyCardSpace absolute={pile.length > 0} columnWidth={columnWidth} />
         {pile.slice(pile.length - 1).map((id, index) =>
           <View key={index}>

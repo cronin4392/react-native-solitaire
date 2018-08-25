@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { MONOSPACE_FONT } from '../../constants/styles';
+
 const EmptyCardSpace = ({ absolute, columnWidth }) => (
   <View style={[
     absolute ? styles.emptyCardSpaceAbsolute : styles.emptyCardSpace,
@@ -9,7 +11,7 @@ const EmptyCardSpace = ({ absolute, columnWidth }) => (
       height: columnWidth * 1.5,
     }
   ]}>
-    <Text style={styles.emptyCardText}>Empty</Text>
+    {/* <Text style={styles.emptyCardText}>empty</Text> */ }
   </View>
 )
 
@@ -19,6 +21,7 @@ const defaultStyles = {
   overflow: 'hidden',
   alignItems: 'center',
   justifyContent: 'center',
+  borderRadius: 3,
 };
 
 const styles = StyleSheet.create({
@@ -30,6 +33,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   emptyCardText: {
+    fontFamily: MONOSPACE_FONT,
+    fontSize: 11,
+    lineHeight: 11,
     color: '#ccc',
   }
 });
