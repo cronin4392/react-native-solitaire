@@ -4,18 +4,29 @@ import { DECK } from '../constants/cards';
 
 const INITIAL_STATE = {
   cards: DECK,
+
   // locations
   deck: [],
   pickup: [],
   waste: [],
-  piles: [],
+
+  pile_1: [],
+  pile_2: [],
+  pile_3: [],
+  pile_4: [],
+  pile_5: [],
+  pile_6: [],
+  pile_7: [],
+
   foundation_1: [],
   foundation_2: [],
   foundation_3: [],
   foundation_4: [],
+
   // state
   faceup: {},
   selected: {},
+
   // settings
   wasteSize: 3,
 };
@@ -48,7 +59,14 @@ const solitaire = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         pickup,
-        piles
+        piles,
+        pile_1: piles[0],
+        pile_2: piles[1],
+        pile_3: piles[2],
+        pile_4: piles[3],
+        pile_5: piles[4],
+        pile_6: piles[5],
+        pile_7: piles[6],
       }
     }
     case 'SHUFFLE_DECK': {
@@ -105,41 +123,6 @@ const solitaire = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         [location]: [],
-      }
-    }
-    case 'ADD_CARDS_PILE': {
-      const { piles } = state;
-      const { ids, index } = action;
-      const pile = piles[index];
-      const beforePiles = piles.slice(0, index);
-      const afterPiles = piles.slice(index + 1);
-
-      return {
-        ...state,
-        piles: [
-          ...beforePiles,
-          [
-            ...pile,
-            ...ids,
-          ],
-          ...afterPiles,
-        ]
-      }
-    }
-    case 'REMOVE_CARD_PILE': {
-      const { piles } = state;
-      const { id, index } = action;
-      const pile = piles[index];
-      const beforePiles = piles.slice(0, index);
-      const afterPiles = piles.slice(index + 1);
-
-      return {
-        ...state,
-        piles: [
-          ...beforePiles,
-          pile.filter(item => item !== id),
-          ...afterPiles,
-        ]
       }
     }
     case 'SELECT_CARD': {

@@ -151,9 +151,8 @@ const attemptMoveSelectedToLocation = (selected, location) => (dispatch, getStat
   const { cards } = solitaire;
   const topCard = cards[selected[0]];
 
-  const pileIndex = PILES.indexOf(location);
-  if (pileIndex >= 0) {
-    return dispatch(addCardsPile(selected, pileIndex));
+  if (AREAS[location] === PILE) {
+    return dispatch(addCardsLocation(selected, location));
   }
 
   if (AREAS[location] === FOUNDATION) {
@@ -186,11 +185,6 @@ export const moveSelectedToLocation = location => (dispatch, getState) => {
   // Remove cards
   Object.keys(selected).map(key => {
     const { location, id } = selected[key];
-    const pileIndex = PILES.indexOf(location);
-
-    if (pileIndex >= 0) {
-      return dispatch(removeCardPile(id, pileIndex));
-    }
     return dispatch(removeCardLocation(id, location));
   });
 
@@ -216,16 +210,4 @@ export const removeCardLocation = (id, location) => ({
 export const removeAllCardsLocation = location => ({
   type: 'REMOVE_ALL_CARDS_LOCATION',
   location
-});
-
-export const removeCardsPile = (ids, index) => dispatch => applyToArray(ids, (id => dispatch(removeCardPile(id, index))));
-export const removeCardPile = (id, index) => ({
-  type: 'REMOVE_CARD_PILE',
-  id,
-  index
-});
-export const addCardsPile = (ids, index) => ({
-  type: 'ADD_CARDS_PILE',
-  ids,
-  index
 });

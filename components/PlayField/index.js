@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import DropZoneContainer from '../../containers/DropZoneContainer';
+import LocationContainer from '../../containers/LocationContainer';
 import SelectedContainer from '../../containers/SelectedContainer';
 
 import Column from '../Column';
@@ -12,31 +13,33 @@ import { PADDING } from '../../constants/styles';
 
 export default class PlayField extends React.PureComponent {
   render() {
-    const { piles } = this.props;
-
     return (
       <View style={styles.playField}>
-        {piles.map((pile, index) =>
+        {PILES.map((location, index) =>
           <Column
             key={index}
             columns={7}
             columnSpan={1}
             padding={PADDING}
           >
-              {({ columnWidth }) =>
-                <SelectedContainer>
-                  {({ selected }) =>
-                    <Fragment>
-                      <DropZoneContainer selected={selected} location={PILES[index]} />
-                      <SpreadPile
-                        pile={pile}
-                        columnWidth={columnWidth}
-                        location={PILES[index]}
-                      />
-                    </Fragment>
-                  }
-                </SelectedContainer>
-              }
+            {({ columnWidth }) =>
+              <LocationContainer location={location}>
+                {({ cards }) =>
+                  <SelectedContainer>
+                    {({ selected }) =>
+                      <Fragment>
+                        <DropZoneContainer selected={selected} location={location} />
+                        <SpreadPile
+                          pile={cards}
+                          columnWidth={columnWidth}
+                          location={location}
+                        />
+                      </Fragment>
+                    }
+                  </SelectedContainer>
+                }
+              </LocationContainer>
+            }
           </Column>
         )}
       </View>
