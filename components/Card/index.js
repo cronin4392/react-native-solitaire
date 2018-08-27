@@ -13,8 +13,9 @@ export default class Card extends React.PureComponent {
     card: PropTypes.shape({
       suit: PropTypes.string.isRequired,
       pip: PropTypes.string.isRequired,
-      isFaceUp: PropTypes.bool
-    }).isRequired
+    }).isRequired,
+    isFaceUp: PropTypes.bool,
+    columnWidth: PropTypes.number.isRequired,
   };
 
   static defaultProps = {

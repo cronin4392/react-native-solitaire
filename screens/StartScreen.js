@@ -4,6 +4,9 @@ import Layout from './Layout';
 
 import StartGameContainer from '../containers/StartGameContainer';
 
+import Card from '../components/Card';
+
+import { DIAMONDS, KING } from '../constants/cards';
 import { MONOSPACE_FONT } from '../constants/styles';
 
 class StartGameButton extends React.Component {
@@ -28,14 +31,26 @@ class StartScreen extends React.Component {
     return (
       <Layout>
         <View style={styles.container}>
+          <View style={styles.card}>
+            <Card
+              card={{
+                suit: DIAMONDS,
+                pip:KING,
+              }}
+              isFaceUp={true}
+              columnWidth={100}
+            />
+          </View>
           <View style={styles.header}>
             <Text style={styles.headerText}>SOLITAIRE</Text>
           </View>
-          <StartGameContainer>
-            {({ startNewGame }) => (
-              <StartGameButton navigation={this.props.navigation} startNewGame={startNewGame} />
-            )}
-          </StartGameContainer>
+          <View style={styles.buttonContainer}>
+            <StartGameContainer>
+              {({ startNewGame }) => (
+                <StartGameButton navigation={this.props.navigation} startNewGame={startNewGame} />
+              )}
+            </StartGameContainer>
+          </View>
         </View>
       </Layout>
     );
@@ -48,7 +63,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  card: {
+    width: 100,
+  },
   header: {
+    marginTop: 54,
     marginBottom: 54,
   },
   headerText: {
@@ -60,6 +79,9 @@ const styles = StyleSheet.create({
     padding: 11,
     paddingBottom: 8,
     borderWidth: 1,
+  },
+  buttonContainer: {
+    marginBottom: 54,
   },
   buttonText: {
     fontFamily: MONOSPACE_FONT,
