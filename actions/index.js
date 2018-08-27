@@ -46,12 +46,21 @@ export const shuffleDeck = () => ({
   type: 'SHUFFLE_DECK'
 });
 
+export const pauseGame = () => dispatch => {
+  dispatch(setGameState('PAUSED'));
+}
+
+export const continueGame = () => dispatch => {
+  dispatch(setGameState('PLAYING'));
+}
+
 export const startNewGame = () => dispatch => {
   dispatch(clearState());
   dispatch(generateDeck());
   dispatch(shuffleDeck());
   dispatch(generatePiles());
   dispatch(flipFirstCardUpInPiles());
+  dispatch(setGameState('PLAYING'));
 }
 
 /*
@@ -270,4 +279,9 @@ export const removeCardLocation = (id, location) => ({
 export const removeAllCardsLocation = location => ({
   type: 'REMOVE_ALL_CARDS_LOCATION',
   location
+});
+
+export const setGameState = gameState => ({
+  type: 'SET_GAME_STATE',
+  gameState
 });

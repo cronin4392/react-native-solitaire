@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Layout from './Layout';
 
-import StartGameContainer from '../containers/StartGameContainer';
+import GameStateContainer from '../containers/GameStateContainer';
 
 import Card from '../components/Card';
 
@@ -11,15 +11,6 @@ import { MONOSPACE_FONT } from '../constants/styles';
 
 class StartGameButton extends React.Component {
   _onClick = () => {
-    const { navigation, startNewGame } = this.props;
-    const { navigate } = navigation;
-    startNewGame();
-    navigate('Game');
-  }
-
-  // FOR DEBUGGING
-  componentDidMount() {
-    return;
     const { navigation, startNewGame } = this.props;
     const { navigate } = navigation;
     startNewGame();
@@ -35,7 +26,33 @@ class StartGameButton extends React.Component {
   }
 }
 
+class ContinueGameButton extends React.Component {
+  _onClick = () => {
+    const { navigation, continueGame } = this.props;
+    const { navigate } = navigation;
+    continueGame();
+    navigate('Game');
+  }
+
+  render() {
+    return (
+      <TouchableOpacity onPress={this._onClick} style={styles.button}>
+        <Text style={styles.buttonText}>CONTINUE GAME</Text>
+      </TouchableOpacity>
+    );
+  }
+}
+
 class StartScreen extends React.Component {
+  // FOR DEBUGGING
+  componentDidMount() {
+    return;
+    const { navigation, startNewGame } = this.props;
+    const { navigate } = navigation;
+    startNewGame();
+    navigate('Game');
+  }
+
   render() {
     return (
       <Layout>
@@ -44,7 +61,7 @@ class StartScreen extends React.Component {
             <Card
               card={{
                 suit: DIAMONDS,
-                pip:KING,
+                pip: KING,
               }}
               isFaceUp={true}
               columnWidth={100}
@@ -54,11 +71,14 @@ class StartScreen extends React.Component {
             <Text style={styles.headerText}>SOLITAIRE</Text>
           </View>
           <View style={styles.buttonContainer}>
-            <StartGameContainer>
-              {({ startNewGame }) => (
-                <StartGameButton navigation={this.props.navigation} startNewGame={startNewGame} />
+            <GameStateContainer>
+              {({ continueGame, startNewGame, gameState }) => (
+                <Fragment>
+                  { gameState === 'PAUSED' && <ContinueGameButton navigation={this.props.navigation} continueGame={continueGame} /> }
+                  <StartGameButton navigation={this.props.navigation} startNewGame={startNewGame} />
+                </Fragment>
               )}
-            </StartGameContainer>
+            </GameStateContainer>
           </View>
         </View>
       </Layout>
@@ -84,18 +104,20 @@ const styles = StyleSheet.create({
     fontSize: 36,
     lineHeight: 42,
   },
+  buttonContainer: {
+    marginBottom: 54,
+  },
   button: {
     padding: 11,
     paddingBottom: 8,
     borderWidth: 1,
-  },
-  buttonContainer: {
-    marginBottom: 54,
+    marginBottom: 10,
   },
   buttonText: {
     fontFamily: MONOSPACE_FONT,
     fontSize: 11,
     lineHeight: 11,
+    textAlign: 'center',
   }
 });
 
