@@ -2,6 +2,8 @@ import React from 'react';
 import { Dimensions, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import PropTypes from 'prop-types';
 
+import CardBack from './CardBack';
+
 import { RED, SUIT_COLOR } from '../../constants/cards';
 import { MONOSPACE_FONT } from '../../constants/styles';
 import { symbol } from '../../helpers/cards';
@@ -45,7 +47,7 @@ export default class Card extends React.PureComponent {
         <TouchableOpacity onPress={this._onClick} activeOpacity={1}>
           <View style={[dimensions, styles.card]}>
             <View style={[styles.selectedOverlay, selectedStyles]}></View>
-            <View style={styles.cardBack}></View>
+            <CardBack dimensions={dimensions} />
           </View>
         </TouchableOpacity>
       );
@@ -109,16 +111,6 @@ const styles = StyleSheet.create({
   },
   redCardText: {
     color: '#f00'
-  },
-  cardBack: {
-    position: 'absolute',
-    top: 5,
-    right: 5,
-    bottom: 5,
-    left: 5,
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 2,
   },
   selectedOverlay: {
     ...StyleSheet.absoluteFillObject,

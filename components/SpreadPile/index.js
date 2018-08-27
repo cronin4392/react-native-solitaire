@@ -8,9 +8,6 @@ import EmptyCardSpace from '../EmptyCardSpace';
 
 import { HORIZONTAL, VERTICAL } from '../../constants/cards';
 
-const SMALL_SPREAD_OFFSET = 12;
-const LARGE_SPREAD_OFFSET = 20;
-
 export default class SpreadPile extends React.PureComponent {
   static defaultProps = {
     direction: VERTICAL,
@@ -30,15 +27,15 @@ export default class SpreadPile extends React.PureComponent {
     const pileStyle = isVertical ? styles.pileVertical : styles.pileHorizontal;
 
     const smallOffsetStyle = isVertical ? {
-      marginBottom: (-1 * cardHeight) + SMALL_SPREAD_OFFSET
+      marginBottom: (-1 * cardHeight) + 3
     } : {
-      marginRight: (-1 * cardWidth) + SMALL_SPREAD_OFFSET
+      marginRight: (-1 * cardWidth) + 3
     };
 
     const largeOffsetStyle = isVertical ? {
-      marginBottom: (-1 * cardHeight) + LARGE_SPREAD_OFFSET
+      marginBottom: (-1 * cardHeight) + 20
     } : {
-      marginRight: (-1 * cardWidth) + LARGE_SPREAD_OFFSET
+      marginRight: (-1 * cardWidth) + 15
     };
 
     return (

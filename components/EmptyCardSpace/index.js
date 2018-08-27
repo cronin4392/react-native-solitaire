@@ -16,8 +16,7 @@ const EmptyCardSpace = ({ absolute, columnWidth }) => (
 )
 
 const defaultStyles = {
-  borderColor: '#ccc',
-  borderWidth: 1,
+  backgroundColor: '#efefef',
   overflow: 'hidden',
   alignItems: 'center',
   justifyContent: 'center',
