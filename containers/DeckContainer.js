@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Text, View } from 'react-native';
 
 import {
   flipFirstCardUpInPiles,

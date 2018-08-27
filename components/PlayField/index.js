@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import DropZoneContainer from '../../containers/DropZoneContainer';
 import LocationContainer from '../../containers/LocationContainer';
@@ -49,10 +49,8 @@ export default class PlayField extends React.PureComponent {
 
 const styles = StyleSheet.create({
   playField: {
-    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    width: Dimensions.get('window').width,
   },
   dropZone: {
     ...StyleSheet.absoluteFillObject,

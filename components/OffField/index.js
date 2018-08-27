@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import DropZoneContainer from '../../containers/DropZoneContainer';
 import LocationContainer from '../../containers/LocationContainer';
@@ -86,9 +86,7 @@ export default class OffField extends React.PureComponent {
 
 const styles = StyleSheet.create({
   offField: {
-    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    width: Dimensions.get('window').width,
   },
 });
