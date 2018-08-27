@@ -17,6 +17,15 @@ class StartGameButton extends React.Component {
     navigate('Game');
   }
 
+  // FOR DEBUGGING
+  componentDidMount() {
+    return;
+    const { navigation, startNewGame } = this.props;
+    const { navigate } = navigation;
+    startNewGame();
+    navigate('Game');
+  }
+
   render() {
     return (
       <TouchableOpacity onPress={this._onClick} style={styles.button}>

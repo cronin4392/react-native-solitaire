@@ -42,6 +42,7 @@ export default class Card extends React.PureComponent {
       height: columnWidth * 1.5,
     };
     const selectedStyles = isSelected ? {opacity: 0.2} : {};
+    const styles = generateStyles(dimensions);
 
     if (!isFaceUp) {
       return (
@@ -75,48 +76,52 @@ export default class Card extends React.PureComponent {
   }
 }
 
-const textSpacingFromEdge = 3;
+const generateStyles = ({ width }) => {
+  const scale = Math.min(54, width);
+  const textSpacingFromEdge = scale * (3 / 44);
+  const fontSize = scale * (11 / 44);
 
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: '#fff',
-    borderColor: '#000',
-    borderWidth: 1,
-    overflow: 'hidden',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 3,
-  },
-  redCard: {
-    borderColor: '#f00'
-  },
-  cardSuitTop: {
-    position: 'absolute',
-    top: textSpacingFromEdge,
-    left: textSpacingFromEdge,
-    alignItems: 'center',
-  },
-  cardSuitBottom: {
-    position: 'absolute',
-    right: textSpacingFromEdge,
-    bottom: textSpacingFromEdge,
-    alignItems: 'center',
-    transform: [{
-      rotate: '180deg'
-    }],
-  },
-  cardText: {
-    fontFamily: MONOSPACE_FONT,
-    fontSize: 11,
-    lineHeight: 11,
-  },
-  redCardText: {
-    color: '#f00'
-  },
-  selectedOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#000',
-    opacity: 0,
-    zIndex: 2,
-  }
-});
+  return StyleSheet.create({
+    card: {
+      backgroundColor: '#fff',
+      borderColor: '#000',
+      borderWidth: 1,
+      overflow: 'hidden',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 3,
+    },
+    redCard: {
+      borderColor: '#f00'
+    },
+    cardSuitTop: {
+      position: 'absolute',
+      top: textSpacingFromEdge,
+      left: textSpacingFromEdge,
+      alignItems: 'center',
+    },
+    cardSuitBottom: {
+      position: 'absolute',
+      right: textSpacingFromEdge,
+      bottom: textSpacingFromEdge,
+      alignItems: 'center',
+      transform: [{
+        rotate: '180deg'
+      }],
+    },
+    cardText: {
+      fontFamily: MONOSPACE_FONT,
+      fontSize: fontSize,
+      lineHeight: fontSize,
+    },
+    redCardText: {
+      color: '#f00'
+    },
+    selectedOverlay: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: '#000',
+      opacity: 0,
+      zIndex: 2,
+    }
+  });
+};
