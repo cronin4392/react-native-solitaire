@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { Platform, SafeAreaView, StyleSheet } from 'react-native';
 
 const Layout = ({ children }) => (
   <SafeAreaView style={styles.container}>
@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     flex: 1,
+    paddingTop: Platform.OS === 'android' ? 25 : 0,
   },
 });
 

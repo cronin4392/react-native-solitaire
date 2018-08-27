@@ -1,6 +1,6 @@
 import React from 'react';
-import Layout from './Layout';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Layout from './Layout';
 
 import StartGameContainer from '../containers/StartGameContainer';
 
@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    // marginTop: 54,
     marginBottom: 54,
   },
   headerText: {
