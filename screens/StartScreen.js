@@ -2,14 +2,28 @@ import React from 'react';
 import Layout from './Layout';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import StartGameContainer from '../containers/StartGameContainer';
+
 import { MONOSPACE_FONT } from '../constants/styles';
 
-class StartScreen extends React.Component {
+class StartGameButton extends React.Component {
   _onClick = () => {
-    const { navigate } = this.props.navigation;
+    const { navigation, startNewGame } = this.props;
+    const { navigate } = navigation;
     navigate('Game');
+    startNewGame();
   }
 
+  render() {
+    return (
+      <TouchableOpacity onPress={this._onClick} style={styles.button}>
+        <Text style={styles.buttonText}>NEW GAME</Text>
+      </TouchableOpacity>
+    );
+  }
+}
+
+class StartScreen extends React.Component {
   render() {
     return (
       <Layout>
@@ -17,9 +31,11 @@ class StartScreen extends React.Component {
           <View style={styles.header}>
             <Text style={styles.headerText}>SOLITAIRE</Text>
           </View>
-          <TouchableOpacity onPress={this._onClick} style={styles.button}>
-            <Text style={styles.buttonText}>NEW GAME</Text>
-          </TouchableOpacity>
+          <StartGameContainer>
+            {({ startNewGame }) => (
+              <StartGameButton navigation={this.props.navigation} startNewGame={startNewGame} />
+            )}
+          </StartGameContainer>
         </View>
       </Layout>
     );

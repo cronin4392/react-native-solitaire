@@ -46,6 +46,13 @@ export const shuffleDeck = () => ({
   type: 'SHUFFLE_DECK'
 });
 
+export const startNewGame = () => dispatch => {
+  dispatch(generateDeck());
+  dispatch(shuffleDeck());
+  dispatch(generatePiles());
+  dispatch(flipFirstCardUpInPiles());
+}
+
 /*
   FLIP CARDS
 */
