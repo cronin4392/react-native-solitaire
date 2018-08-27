@@ -14,8 +14,11 @@ class StartScreen extends React.Component {
     return (
       <Layout>
         <View style={styles.container}>
-          <TouchableOpacity onPress={this._onClick}>
-            <Text style={styles.buttonStyle}>New game</Text>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>SOLITAIRE</Text>
+          </View>
+          <TouchableOpacity onPress={this._onClick} style={styles.button}>
+            <Text style={styles.buttonText}>NEW GAME</Text>
           </TouchableOpacity>
         </View>
       </Layout>
@@ -29,7 +32,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonStyle: {
+  header: {
+    // marginTop: 54,
+    marginBottom: 54,
+  },
+  headerText: {
+    fontFamily: MONOSPACE_FONT,
+    fontSize: 36,
+    lineHeight: 42,
+  },
+  button: {
+    padding: 11,
+    paddingBottom: 8,
+    borderWidth: 1,
+  },
+  buttonText: {
     fontFamily: MONOSPACE_FONT,
     fontSize: 11,
     lineHeight: 11,
