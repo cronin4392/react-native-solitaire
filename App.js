@@ -9,6 +9,10 @@ import reducers from './reducers';
 
 import { PADDING } from './constants/styles';
 
+import GameScreen from './screens/GameScreen';
+import StartScreen from './screens/StartScreen';
+import Screens from './screens';
+
 const middleware = [
   thunk,
 ];
@@ -19,8 +23,6 @@ const store = createStore(
     applyMiddleware(...middleware),
   ),
 );
-
-import DeckContainer from './containers/DeckContainer';
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -33,7 +35,7 @@ export default class App extends React.Component {
         <View style={styles.container}>
           <SafeAreaView style={styles.safeZone}>
             <ScrollView style={styles.scrollingField} alwaysBounceVertical={false}>
-              <DeckContainer />
+              <Screens />
             </ScrollView>
           </SafeAreaView>
         </View>
