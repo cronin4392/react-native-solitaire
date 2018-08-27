@@ -45,6 +45,11 @@ const createPiles = ([deck, ...rest], pileSize) => {
 
 const solitaire = (state = INITIAL_STATE, action) => {
   switch(action.type) {
+    case 'CLEAR_STATE': {
+      return {
+        ...INITIAL_STATE
+      }
+    }
     case 'GENERATE_DECK': {
       const deck = state.cards.map((card, index) => index);
 

@@ -3,10 +3,6 @@ import {
   KING,
   AREAS,
   FOUNDATION,
-  FOUNDATION_1,
-  FOUNDATION_2,
-  FOUNDATION_3,
-  FOUNDATION_4,
   PICKUP,
   PILE,
   PILES,
@@ -29,6 +25,10 @@ const isBottomCard = (id, pile) => ( id === pile[0] );
   CREATION ACTIONS
 */
 
+export const clearState = () => ({
+  type: 'CLEAR_STATE'
+});
+
 export const createCards = cards => ({
   type: 'CREATE_CARDS',
   cards,
@@ -47,6 +47,7 @@ export const shuffleDeck = () => ({
 });
 
 export const startNewGame = () => dispatch => {
+  dispatch(clearState());
   dispatch(generateDeck());
   dispatch(shuffleDeck());
   dispatch(generatePiles());

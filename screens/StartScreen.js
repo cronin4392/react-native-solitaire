@@ -10,8 +10,8 @@ class StartGameButton extends React.Component {
   _onClick = () => {
     const { navigation, startNewGame } = this.props;
     const { navigate } = navigation;
-    navigate('Game');
     startNewGame();
+    navigate('Game');
   }
 
   render() {
