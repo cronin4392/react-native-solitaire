@@ -10,7 +10,7 @@ class SelectedContainer extends React.Component {
 const mapStateToProps = (state, props) => {
   const { solitaire } = state;
   const { selected } = solitaire;
-  const selectedArray = Object.keys(selected);
+  const selectedArray = Object.keys(selected).map(key => selected[key]);
 
   return ({
     ...props,

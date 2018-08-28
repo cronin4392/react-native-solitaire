@@ -1,28 +1,53 @@
 import React, { Fragment } from 'react';
-import { Animated } from 'react-native';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 
+import Card from '../Card';
+
+import CardContainer from '../../containers/CardContainer';
 import GetDragContainer from '../../containers/GetDragContainer';
 import SelectedContainer from '../../containers/SelectedContainer';
-import SpreadPile from '../SpreadPile';
+
+const SelectedCard = ({ id, width, height, px, py }) => (
+  <View style={{
+    position: 'absolute',
+    left: px,
+    top: py,
+  }}>
+    <CardContainer id={id}>
+      {cardData =>
+        <Card {...cardData} columnWidth={width} />
+      }
+    </CardContainer>
+  </View>
+);
 
 const SelectedCards = () => (
-    <SelectedContainer>
-      {({ selected }) => (
-        <GetDragContainer>
-          {({ dragger }) => (
-            <Animated.View style={{
-              transform: dragger.getTranslateTransform(),
-            }}>
-              <SpreadPile
-                pile={selected}
-                columnWidth={44}
-                location={'SELECTED'}
-              />
-            </Animated.View>
-          )}
-        </GetDragContainer>
+    <GetDragContainer>
+      {({ dragger }) => (
+        <Animated.View
+          pointerEvents='none'
+          style={[
+            styles.container,
+            { transform: dragger.getTranslateTransform() }
+          ]
+        }>
+          <SelectedContainer>
+            {({ selected }) => (
+              <Fragment>
+                {selected.map(data => <SelectedCard key={data.id} {...data} />)}
+              </Fragment>
+            )}
+          </SelectedContainer>
+        </Animated.View>
       )}
-    </SelectedContainer>
+    </GetDragContainer>
+
 );
+
+const styles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFillObject,
+  },
+});
 
 export default SelectedCards;
