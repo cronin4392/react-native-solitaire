@@ -57,16 +57,16 @@ class SetDragContainer extends React.PureComponent {
       return null;
     }
 
-    const panStyle = true ? {
+    const panStyle = {
       transform: this.props.dragger.getTranslateTransform()
-    } : this.props.dragger.getLayout();
+    };
 
     return (
       <View
         {...panResponder.panHandlers}
-        style={{ backgroundColor: 'transparent' }}
+        style={{ backgroundColor: 'transparent', flex: 1 }} /* TODO: move these styles out of the component? */
       >
-        { this.props.children({ panStyle }) }
+        { this.props.children }
       </View>
     )
   }
@@ -86,4 +86,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetDragContainer);
-// export default SetDragContainer;
