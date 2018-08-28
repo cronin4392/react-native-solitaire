@@ -10,6 +10,15 @@ import { DIAMONDS, KING } from '../constants/cards';
 import { MONOSPACE_FONT } from '../constants/styles';
 
 class StartGameButton extends React.Component {
+  // FOR DEBUGGING
+  componentDidMount() {
+    // return;
+    const { navigation, startNewGame } = this.props;
+    const { navigate } = navigation;
+    startNewGame();
+    navigate('Game');
+  }
+
   _onClick = () => {
     const { navigation, startNewGame } = this.props;
     const { navigate } = navigation;
@@ -44,15 +53,6 @@ class ContinueGameButton extends React.Component {
 }
 
 class StartScreen extends React.Component {
-  // FOR DEBUGGING
-  componentDidMount() {
-    return;
-    const { navigation, startNewGame } = this.props;
-    const { navigate } = navigation;
-    startNewGame();
-    navigate('Game');
-  }
-
   render() {
     return (
       <Layout>
