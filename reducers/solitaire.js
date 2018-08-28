@@ -131,7 +131,7 @@ const solitaire = (state = INITIAL_STATE, action) => {
     }
     case 'SELECT_CARD': {
       const { selected } = state;
-      const { id, location } = action;
+      const { id } = action;
       const selectedLength = Object.keys(selected).length;
 
       return {
@@ -139,9 +139,8 @@ const solitaire = (state = INITIAL_STATE, action) => {
         selected: {
           ...selected,
           [id]: {
-            id,
-            location,
             order: selectedLength,
+            ...action,
           }
         }
       }

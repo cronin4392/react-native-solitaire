@@ -23,9 +23,26 @@ export default class Card extends React.PureComponent {
     location: null,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.cardRef = React.createRef();
+  }
+
   _onClick = () => {
     const { id, location, onCardClick } = this.props;
-    onCardClick({ id, location });
+    const node = this.cardRef.current;
+
+    node.measure( (fx, fy, width, height, px, py) => {
+      onCardClick({
+        id,
+        location,
+        width,
+        height,
+        px,
+        py,
+      });
+    });
   }
 
   render() {
@@ -46,7 +63,7 @@ export default class Card extends React.PureComponent {
 
     if (!isFaceUp) {
       return (
-        <TouchableOpacity onPressIn={this._onClick} activeOpacity={1}>
+        <TouchableOpacity onPressIn={this._onClick} activeOpacity={1} ref={this.cardRef}>
           <View style={[dimensions, styles.card]}>
             <View style={[styles.selectedOverlay, selectedStyles]}></View>
             <CardBack dimensions={dimensions} />
@@ -59,7 +76,7 @@ export default class Card extends React.PureComponent {
     const cardTextStyle = [styles.cardText, isRed && styles.redCardText];
 
     return (
-      <TouchableOpacity onPressIn={this._onClick} activeOpacity={1}>
+      <TouchableOpacity onPressIn={this._onClick} activeOpacity={1} ref={this.cardRef}>
         <View style={cardStyle}>
           <View style={[styles.selectedOverlay, selectedStyles]}></View>
           <View style={styles.cardSuitTop}>
