@@ -281,7 +281,19 @@ export const removeAllCardsLocation = location => ({
   location
 });
 
+
+// TODO: Everything below should be broken out to own files
+
+/* GAME STATE */
+
 export const setGameState = gameState => ({
   type: 'SET_GAME_STATE',
   gameState
+});
+
+/* DRAGGER */
+
+export const createDragger = dragger => ({
+  type: 'CREATE_DRAGGER',
+  dragger
 });
