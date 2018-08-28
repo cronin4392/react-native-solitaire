@@ -9,11 +9,11 @@ export default class DropZone extends React.PureComponent {
   }
 
   render() {
-    const { selected } = this.props;
+    const { active } = this.props;
 
     return (
       <View
-        pointerEvents={selected ? 'auto' : 'none'}
+        pointerEvents={active ? 'auto' : 'none'}
         style={styles.dropZone}
       >
         <TouchableOpacity

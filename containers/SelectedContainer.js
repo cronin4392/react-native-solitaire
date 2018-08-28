@@ -10,11 +10,11 @@ class SelectedContainer extends React.Component {
 const mapStateToProps = (state, props) => {
   const { solitaire } = state;
   const { selected } = solitaire;
-  const isSelected = Object.keys(selected).reduce((acc, val) => (!!selected[val] ? true : acc), false);
+  const selectedArray = Object.keys(selected);
 
   return ({
     ...props,
-    selected: isSelected,
+    selected: selectedArray,
   });
 };
 

@@ -64,7 +64,7 @@ export default class OffField extends React.PureComponent {
                   <SelectedContainer>
                     {({ selected }) =>
                       <Fragment>
-                        <DropZoneContainer selected={selected} location={location} />
+                        <DropZoneContainer active={selected.length > 0} location={location} />
                         <StackedPile
                           pile={cards}
                           columnWidth={columnWidth}

@@ -28,7 +28,7 @@ export default class PlayField extends React.PureComponent {
                   <SelectedContainer>
                     {({ selected }) =>
                       <Fragment>
-                        <DropZoneContainer selected={selected} location={location} />
+                        <DropZoneContainer active={selected.length > 0} location={location} />
                         <SpreadPile
                           pile={cards}
                           columnWidth={columnWidth}
