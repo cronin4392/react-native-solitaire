@@ -18,39 +18,11 @@ export default class Card extends React.PureComponent {
     columnWidth: PropTypes.number.isRequired,
   };
 
-  static defaultProps = {
-    onCardClick: () => {},
-    location: null,
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.cardRef = React.createRef();
-  }
-
-  _onClick = () => {
-    const { id, location, onCardClick } = this.props;
-    const node = this.cardRef.current;
-
-    node.measure( (fx, fy, width, height, px, py) => {
-      onCardClick({
-        id,
-        location,
-        width,
-        height,
-        px,
-        py,
-      });
-    });
-  }
-
   render() {
     const {
       card,
       columnWidth,
       isFaceUp,
-      isSelected,
     } = this.props;
     const { pip, suit } = card;
     const isRed = SUIT_COLOR[suit] === RED;
@@ -58,37 +30,37 @@ export default class Card extends React.PureComponent {
       width: columnWidth,
       height: columnWidth * 1.5,
     };
-    const selectedStyles = isSelected ? {opacity: 0.2} : {};
     const styles = generateStyles(dimensions);
+
+    const cardStyle = [
+      dimensions,
+      styles.card,
+      isFaceUp && isRed && styles.redCard
+    ];
+    const cardTextStyle = [
+      styles.cardText,
+      isFaceUp && isRed && styles.redCardText
+    ];
 
     if (!isFaceUp) {
       return (
-        <TouchableOpacity onPressIn={this._onClick} activeOpacity={1} ref={this.cardRef}>
-          <View style={[dimensions, styles.card]}>
-            <View style={[styles.selectedOverlay, selectedStyles]}></View>
-            <CardBack dimensions={dimensions} />
-          </View>
-        </TouchableOpacity>
+        <View style={cardStyle}>
+          <CardBack dimensions={dimensions} />
+        </View>
       );
     }
 
-    const cardStyle = [dimensions, styles.card, isRed && styles.redCard];
-    const cardTextStyle = [styles.cardText, isRed && styles.redCardText];
-
     return (
-      <TouchableOpacity onPressIn={this._onClick} activeOpacity={1} ref={this.cardRef}>
-        <View style={cardStyle}>
-          <View style={[styles.selectedOverlay, selectedStyles]}></View>
-          <View style={styles.cardSuitTop}>
-            <Text style={cardTextStyle}>{symbol(pip)}</Text>
-            <Text style={cardTextStyle}>{symbol(suit)}</Text>
-          </View>
-          <View style={styles.cardSuitBottom}>
-            <Text style={cardTextStyle}>{symbol(pip)}</Text>
-            <Text style={cardTextStyle}>{symbol(suit)}</Text>
-          </View>
+      <View style={cardStyle}>
+        <View style={styles.cardSuitTop}>
+          <Text style={cardTextStyle}>{symbol(pip)}</Text>
+          <Text style={cardTextStyle}>{symbol(suit)}</Text>
         </View>
-      </TouchableOpacity>
+        <View style={styles.cardSuitBottom}>
+          <Text style={cardTextStyle}>{symbol(pip)}</Text>
+          <Text style={cardTextStyle}>{symbol(suit)}</Text>
+        </View>
+      </View>
     )
   }
 }

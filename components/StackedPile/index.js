@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import CardContainer from '../../containers/CardContainer';
-import Card from '../Card';
+import ClickableCard from '../ClickableCard';
 import EmptyCardSpace from '../EmptyCardSpace';
 
 import { MONOSPACE_FONT } from '../../constants/styles';
@@ -25,7 +25,7 @@ export default class StackedPile extends React.PureComponent {
         {pile.slice(pile.length - 1).map((id, index) =>
           <View key={index}>
             <CardContainer id={id}>
-              {data => <Card {...this.props} {...data} />}
+              {data => <ClickableCard {...this.props} {...data} />}
             </CardContainer>
           </View>
         )}

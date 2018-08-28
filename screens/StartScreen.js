@@ -12,7 +12,7 @@ import { MONOSPACE_FONT } from '../constants/styles';
 class StartGameButton extends React.Component {
   // FOR DEBUGGING
   componentDidMount() {
-    // return;
+    return;
     const { navigation, startNewGame } = this.props;
     const { navigate } = navigation;
     startNewGame();

@@ -96,7 +96,7 @@ export const flipCardDown = id => ({
 
 /* SELECT CARDS */
 
-export const cardClicked = (payload) => (dispatch, getState) => {
+export const cardClicked = payload => (dispatch, getState) => {
   const { id, location } = payload;
   const { solitaire } = getState();
   const {
@@ -112,9 +112,8 @@ export const cardClicked = (payload) => (dispatch, getState) => {
       return;
     }
     if (!isTopCard(id, pile)) {
-      // const index = pile.indexOf(id);
-      // return dispatch(selectCards({ ids: pile.slice(index), location }));
-      return; // TODO: Come back to this
+      const index = pile.indexOf(id);
+      return dispatch(selectCards({ ids: pile.slice(index), location }));
     }
   }
 
@@ -136,9 +135,14 @@ export const cardClicked = (payload) => (dispatch, getState) => {
   dispatch(selectCard(payload));
 };
 
+export const updateSelectedPosition = payload => ({
+  type: 'UPDATE_SELECTED_POSITION',
+  ...payload
+});
+
 // TODO: this recieves and object while other functions like addCardLocation recieve a list
 export const selectCards = ({ ids, location }) => dispatch => applyToArray(ids, (id => dispatch(selectCard({ id, location }))));
-export const selectCard = (payload) => ({
+export const selectCard = payload => ({
   type: 'SELECT_CARD',
   ...payload
 });

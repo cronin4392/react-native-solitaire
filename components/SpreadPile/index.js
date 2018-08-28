@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 
 import CardContainer from '../../containers/CardContainer';
-import Card from '../Card';
+import ClickableCard from '../ClickableCard';
 import EmptyCardSpace from '../EmptyCardSpace';
 
 import { HORIZONTAL, VERTICAL } from '../../constants/cards';
@@ -45,7 +45,7 @@ export default class SpreadPile extends React.PureComponent {
           <CardContainer id={id} key={index}>
             {data =>
               <View style={index !== pile.length - 1 && (data.isFaceUp ? largeOffsetStyle : smallOffsetStyle)}>
-                <Card {...this.props} {...data} />
+                <ClickableCard {...this.props} {...data} />
               </View>
             }
           </CardContainer>

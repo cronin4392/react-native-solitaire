@@ -24,11 +24,22 @@ const INITIAL_STATE = {
   foundation_4: [],
 
   // state
-  faceup: {},
+  faceup: {}, // { id: true }
   selected: {},
 
   // settings
   wasteSize: 3,
+};
+
+// Pile with top 3 cards face up
+const INITIAL_STATE2 = {
+  ...INITIAL_STATE,
+  pile_6: [0,1,2,3,4],
+  faceup: {
+    2: true,
+    3: true,
+    4: true
+  }
 };
 
 const createPiles = ([deck, ...rest], pileSize) => {
@@ -154,6 +165,24 @@ const solitaire = (state = INITIAL_STATE, action) => {
         selected: {
           ...selected,
           [id]: null, // TODO: unset this entirely
+        }
+      }
+    }
+    case 'UPDATE_SELECTED_POSITION': {
+      const { selected } = state;
+      const { id, width, height, px, py } = action;
+
+      return {
+        ...state,
+        selected: {
+          ...selected,
+          [id]: {
+            ...selected[id],
+            width,
+            height,
+            px,
+            py,
+          }
         }
       }
     }

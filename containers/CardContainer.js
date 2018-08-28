@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { cardClicked } from '../actions';
+import { cardClicked, updateSelectedPosition } from '../actions';
 
 const CardContainer = (props) => props.children(props)
 
@@ -21,7 +21,8 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onCardClick: payload => dispatch(cardClicked(payload))
+  onCardClick: payload => dispatch(cardClicked(payload)),
+  updateSelectedPosition: payload => dispatch(updateSelectedPosition(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardContainer);
