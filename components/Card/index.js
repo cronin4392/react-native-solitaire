@@ -46,7 +46,7 @@ export default class Card extends React.PureComponent {
 
     if (!isFaceUp) {
       return (
-        <TouchableOpacity onPress={this._onClick} activeOpacity={1}>
+        <TouchableOpacity onPressIn={this._onClick} activeOpacity={1}>
           <View style={[dimensions, styles.card]}>
             <View style={[styles.selectedOverlay, selectedStyles]}></View>
             <CardBack dimensions={dimensions} />
@@ -59,7 +59,7 @@ export default class Card extends React.PureComponent {
     const cardTextStyle = [styles.cardText, isRed && styles.redCardText];
 
     return (
-      <TouchableOpacity onPress={this._onClick} activeOpacity={1}>
+      <TouchableOpacity onPressIn={this._onClick} activeOpacity={1}>
         <View style={cardStyle}>
           <View style={[styles.selectedOverlay, selectedStyles]}></View>
           <View style={styles.cardSuitTop}>

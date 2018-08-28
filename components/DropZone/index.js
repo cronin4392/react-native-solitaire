@@ -18,7 +18,7 @@ export default class DropZone extends React.PureComponent {
       >
         <TouchableOpacity
           style={styles.dropZoneButton}
-          onPress={this._onDropZoneClick}
+          onPressIn={this._onDropZoneClick}
           activeOpacity={1}
         ></TouchableOpacity>
       </View>

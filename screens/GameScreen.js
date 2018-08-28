@@ -12,11 +12,18 @@ const GameScreen = ({ navigation }) =>
     {/* <ScrollView style={{ flex: 1 }} alwaysBounceVertical={false}> */}
     <SetDragContainer>
       {({ panStyle }) => (
-        <Animated.View style={panStyle}>
+        <Fragment>
           <Nav navigation={navigation} />
           <OffField />
           <PlayField />
-        </Animated.View>
+          <Animated.View style={{
+            ...panStyle,
+            height: 100,
+            width: 100,
+            backgroundColor: 'red'
+          }}>
+          </Animated.View>
+        </Fragment>
       )}
     </SetDragContainer>
     {/* </ScrollView> */}

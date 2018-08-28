@@ -27,8 +27,9 @@ class SetDragContainer extends React.PureComponent {
       this.props.dragger.y.addListener((value) => this._animatedValueY = value.value);
 
       const panResponder = PanResponder.create({
-        onMoveShouldSetResponderCapture: () => true, //Tell iOS that we are allowing the movement
-        onMoveShouldSetPanResponderCapture: () => true, // Same here, tell iOS that we allow dragging
+        // onMoveShouldSetResponderCapture: () => true, //Tell iOS that we are allowing the movement
+        // onMoveShouldSetPanResponderCapture: () => true, // Same here, tell iOS that we allow dragging
+        onMoveShouldSetPanResponder: () => true,
         onPanResponderGrant: () => {
           this.props.dragger.setOffset({x: this._animatedValueX, y: this._animatedValueY});
           this.props.dragger.setValue({x: 0, y: 0});
@@ -45,7 +46,7 @@ class SetDragContainer extends React.PureComponent {
         }
       });
 
-      this.setState({ panResponder })
+      this.setState({ panResponder });
     }
   }
 
@@ -63,6 +64,7 @@ class SetDragContainer extends React.PureComponent {
     return (
       <View
         {...panResponder.panHandlers}
+        style={{ backgroundColor: 'transparent' }}
       >
         { this.props.children({ panStyle }) }
       </View>
