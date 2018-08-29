@@ -7,10 +7,6 @@ import DropZone from '../components/DropZone';
 import { moveSelectedToLocation, registerDropZone } from '../actions';
 
 class DropZoneContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   onChildLayout = (ref) => {
     const { location, registerDropZone } = this.props;
     const node = ref.current;
@@ -20,8 +16,8 @@ class DropZoneContainer extends React.Component {
         location,
         width,
         height,
-        px,
-        py
+        x: px,
+        y: py,
       });
     });
   }

@@ -14,12 +14,13 @@ const dragger = (state = INITIAL_STATE, action) => {
     }
     case 'REGISTER_DROPZONE': {
       const { dropZones } = state;
+
       const {
         location,
         width,
         height,
-        px,
-        py
+        x,
+        y
       } = action;
 
       return {
@@ -30,8 +31,8 @@ const dragger = (state = INITIAL_STATE, action) => {
             location,
             width,
             height,
-            px,
-            py,
+            x,
+            y,
           },
         },
       };

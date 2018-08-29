@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import {
   createDragger,
+  draggerReleased,
 } from '../actions';
 
 class SetDragContainer extends React.PureComponent {
@@ -19,6 +20,8 @@ class SetDragContainer extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
+    // Create a new PanResponder instance if one didn't exist
+    // Cannot happen on componentDidMount since createDragger hasn't updated values yet
     if (!prevProps.dragger && this.props.dragger) {
       this._animatedValueX = 0;
       this._animatedValueY = 0;
@@ -35,9 +38,14 @@ class SetDragContainer extends React.PureComponent {
           this.props.dragger.setValue({x: 0, y: 0});
         },
         onPanResponderMove: Animated.event([
-          null, {dx: this.props.dragger.x, dy: this.props.dragger.y}
+          null, { dx: this.props.dragger.x, dy: this.props.dragger.y }
         ]),
-        onPanResponderRelease: () => {
+        onPanResponderRelease: (evt, gestureState) => {
+          const { moveX, moveY } = gestureState;
+          this.props.draggerReleased({
+            x: moveX,
+            y: moveY,
+          });
           this.props.dragger.flattenOffset();
           Animated.spring(
             this.props.dragger,
@@ -83,6 +91,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => ({
   createDragger: dragger => dispatch(createDragger(dragger)),
+  draggerReleased: position => dispatch(draggerReleased(position)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetDragContainer);
