@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 
 import Card from '../Card';
 
-import { MONOSPACE_FONT } from '../../constants/styles';
-
 export default class ClickableCard extends React.PureComponent {
   static propTypes = {
     card: PropTypes.shape({
