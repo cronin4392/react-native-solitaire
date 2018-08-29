@@ -12,9 +12,9 @@ const GameScreen = ({ navigation }) =>
   <Fragment>
     <Layout>
       {/* <ScrollView style={{ flex: 1 }} alwaysBounceVertical={false}> */}
+      <Nav navigation={navigation} />
       <SetDragContainer>
         <Fragment>
-          <Nav navigation={navigation} />
           <OffField />
           <PlayField />
         </Fragment>
