@@ -18,7 +18,7 @@ class Nav extends React.PureComponent {
       <View style={styles.container}>
         <GameStateContainer>
           {({ pauseGame }) => (
-            <TouchableOpacity onPress={() => this._menuOnClick({ pauseGame })} style={styles.button}>
+            <TouchableOpacity onPressOut={() => this._menuOnClick({ pauseGame })} style={styles.button}>
               <Text style={styles.buttonText}> {'←'} MENU</Text>
             </TouchableOpacity>
           )}
