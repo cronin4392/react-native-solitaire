@@ -7,7 +7,27 @@ export default class Column extends React.Component {
     padding: 0,
   };
 
+  state = {
+    windowWidth: null,
+  };
+
+  componentDidMount() {
+    this.updateWindowWidth();
+    Dimensions.addEventListener('change', this.updateWindowWidth);
+  }
+
+  componentWillUnmount() {
+    Dimensions.removeEventListener('change', this.updateWindowWidth);
+  }
+
+  updateWindowWidth = () => {
+    this.setState({
+      windowWidth: Dimensions.get('window').width
+    });
+  }
+
   render() {
+    const { windowWidth } = this.state;
     const {
       columns,
       columnSpan,
@@ -15,7 +35,7 @@ export default class Column extends React.Component {
       ...props
     } = this.props;
 
-    const columnWidth = (Dimensions.get('window').width / columns) - 0.000001;
+    const columnWidth = (windowWidth / columns) - 0.000001;
 
     const styles = {
       width: columnWidth * columnSpan,
