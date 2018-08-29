@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
 
-export const MONOSPACE_FONT = Platform.OS === 'ios' ? 'Menlo-Regular' : 'monospace';
+export const MONOSPACE_FONT = 'Menlo';
 
-export const PADDING = 12;
+export const PADDING = 4;
