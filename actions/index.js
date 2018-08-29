@@ -189,7 +189,6 @@ export const moveWasteIntoPickup = () => (dispatch, getState) => {
 const isValidMove = ({
   cards,
   fromCards,
-  fromLocation,
   toLocation,
   toCards
 }) => {
@@ -240,16 +239,13 @@ export const moveSelectedToLocation = location => (dispatch, getState) => {
     .sort((a, b) => a.order - b.order)
     .map(item => item.id);
 
-  if (Object.keys(selected).length < 1) {
+  if(selectedArray.length === 0) {
     return;
   }
-
-  const fromLocation = selected[Object.keys(selected)[0]].location;
 
   if ( !isValidMove({
     cards,
     fromCards: selectedArray,
-    fromLocation: fromLocation,
     toLocation: location,
     toCards: solitaire[location],
   }) ) {

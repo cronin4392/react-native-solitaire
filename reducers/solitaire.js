@@ -34,11 +34,11 @@ const INITIAL_STATE = {
 // Pile with top 3 cards face up
 const INITIAL_STATE2 = {
   ...INITIAL_STATE,
-  pile_6: [0,1,2,3,4],
+  pile_6: [0,15,27,4,42],
   faceup: {
-    2: true,
-    3: true,
-    4: true
+    27: true,
+    4: true,
+    42: true
   }
 };
 
@@ -142,7 +142,7 @@ const solitaire = (state = INITIAL_STATE, action) => {
     }
     case 'SELECT_CARD': {
       const { selected } = state;
-      const { id } = action;
+      const { id, location } = action;
       const selectedLength = Object.keys(selected).length;
 
       return {
@@ -151,7 +151,8 @@ const solitaire = (state = INITIAL_STATE, action) => {
           ...selected,
           [id]: {
             order: selectedLength,
-            ...action,
+            id,
+            location,
           }
         }
       }
@@ -171,6 +172,12 @@ const solitaire = (state = INITIAL_STATE, action) => {
     case 'UPDATE_SELECTED_POSITION': {
       const { selected } = state;
       const { id, width, height, px, py } = action;
+
+      if (!selected[id]) {
+        return {
+          ...state,
+        };
+      }
 
       return {
         ...state,
