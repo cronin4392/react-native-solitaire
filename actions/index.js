@@ -264,6 +264,11 @@ export const moveSelectedToLocation = location => (dispatch, getState) => {
   dispatch(deselectAllCards());
 }
 
+export const registerDropZone = payload => ({
+  type: 'REGISTER_DROPZONE',
+  ...payload
+});
+
 /* ADD REMOVE CARDS */
 
 export const addCardLocation = (id, location) => dispatch => dispatch(addCardsLocation([id], location));

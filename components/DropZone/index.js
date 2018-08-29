@@ -1,11 +1,22 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-export default class DropZone extends React.PureComponent {
+export default class DropZone extends React.Component {
+  constructor(props) {
+    super(props);
+    this.dropZoneRef = React.createRef();
+  }
+
   _onDropZoneClick = () => {
     const { location, onDropzoneClick } = this.props;
 
     onDropzoneClick(location);
+  }
+
+  _onLayout = () => {
+    const { onLayout } = this.props;
+
+    onLayout(this.dropZoneRef);
   }
 
   render() {
@@ -15,6 +26,8 @@ export default class DropZone extends React.PureComponent {
       <View
         pointerEvents={active ? 'auto' : 'none'}
         style={styles.dropZone}
+        ref={this.dropZoneRef}
+        onLayout={this._onLayout}
       >
         <TouchableOpacity
           style={styles.dropZoneButton}
