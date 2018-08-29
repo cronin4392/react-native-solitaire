@@ -88,11 +88,7 @@ class DotPattern extends React.PureComponent {
 const CardBack = () => {
   return (
     <View style={styles.container}>
-      <OnLayout style={{ ...StyleSheet.absoluteFillObject }}>
-        {({ width, height }) => (
-          <DotPattern width={width} height={height} />
-        )}
-      </OnLayout>
+      
     </View>
   );
 };
