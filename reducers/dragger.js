@@ -5,7 +5,7 @@ const INITIAL_STATE = {
 
 const dragger = (state = INITIAL_STATE, action) => {
   switch(action.type) {
-    case 'CREATE_DRAGGER': {
+    case 'SET_DRAGGER': {
       const { dragger } = action;
       return {
         ...state,

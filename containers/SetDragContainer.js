@@ -3,7 +3,7 @@ import { Animated, PanResponder, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import {
-  createDragger,
+  setDragger,
   draggerReleased,
 } from '../actions';
 
@@ -11,17 +11,24 @@ class SetDragContainer extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const { createDragger } = this.props;
-
     this.state = {
       panResponder: null,
     };
-    createDragger(new Animated.ValueXY());
+  }
+
+  componentDidMount() {
+    const { setDragger } = this.props;
+    setDragger(new Animated.ValueXY());
+  }
+
+  componentWillUnmount() {
+    const { setDragger } = this.props;
+    setDragger(null);
   }
 
   componentDidUpdate(prevProps) {
     // Create a new PanResponder instance if one didn't exist
-    // Cannot happen on componentDidMount since createDragger hasn't updated values yet
+    // Cannot happen on componentDidMount since setDragger hasn't updated values yet
     if (!prevProps.dragger && this.props.dragger) {
       this._animatedValueX = 0;
       this._animatedValueY = 0;
@@ -65,10 +72,6 @@ class SetDragContainer extends React.PureComponent {
       return null;
     }
 
-    const panStyle = {
-      transform: this.props.dragger.getTranslateTransform()
-    };
-
     return (
       <View
         {...panResponder.panHandlers}
@@ -90,7 +93,7 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  createDragger: dragger => dispatch(createDragger(dragger)),
+  setDragger: dragger => dispatch(setDragger(dragger)),
   draggerReleased: position => dispatch(draggerReleased(position)),
 });
 

@@ -306,8 +306,8 @@ export const setGameState = gameState => ({
 
 /* DRAGGER */
 
-export const createDragger = dragger => ({
-  type: 'CREATE_DRAGGER',
+export const setDragger = dragger => ({
+  type: 'SET_DRAGGER',
   dragger
 });
 
