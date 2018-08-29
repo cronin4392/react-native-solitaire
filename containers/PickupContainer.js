@@ -9,7 +9,7 @@ import {
 } from '../actions';
 
 const PickupContainer = ({ columnWidth, pickup, movePickupIntoWaste }) => (
-  <TouchableOpacity onPress={movePickupIntoWaste} activeOpacity={1}>
+  <TouchableOpacity onPressOut={movePickupIntoWaste} activeOpacity={1}>
     <View pointerEvents={'none'}>
       <StackedPile pile={pickup} columnWidth={columnWidth} />
     </View>
