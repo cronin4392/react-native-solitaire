@@ -53,6 +53,7 @@ export const continueGame = () => dispatch => {
 
 export const startNewGame = () => dispatch => {
   dispatch(clearState());
+  dispatch(resetSecondsPassed());
   dispatch(generateDeck());
   dispatch(shuffleDeck());
   dispatch(generatePiles());
@@ -287,6 +288,14 @@ export const removeAllCardsLocation = location => ({
 export const setGameState = gameState => ({
   type: 'SET_GAME_STATE',
   gameState
+});
+
+export const resetSecondsPassed = () => ({
+  type: 'RESET_SECONDS_PASSED'
+});
+
+export const incrementSecondsPassed = () => ({
+  type: 'INCREMENT_SECONDS_PASSED'
 });
 
 /* DRAGGER */

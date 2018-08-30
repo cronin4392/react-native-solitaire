@@ -4,11 +4,12 @@ import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react
 import Column from '../Column';
 
 import GameStateContainer from '../../containers/GameStateContainer';
+import TimeContainer from '../../containers/TimeContainer';
 
+import { displayTime } from '../../helpers/game';
 import { FONT_STYLE } from '../../constants/styles';
 
 import KingLogoImage from '../../assets/images/KingLogo.png';
-
 
 class Nav extends React.PureComponent {
   _menuOnClick = ({ pauseGame }) => {
@@ -53,7 +54,11 @@ class Nav extends React.PureComponent {
         >
           {() =>
             <Fragment>
-              <View><Text style={FONT_STYLE}>0:00 </Text></View>
+              <TimeContainer>
+                {({ secondsPassed }) =>
+                  <View><Text style={FONT_STYLE}>{displayTime(secondsPassed)} </Text></View>
+                }
+              </TimeContainer>
               <View><Text style={FONT_STYLE}>  $0 </Text></View>
             </Fragment>
           }
