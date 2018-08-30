@@ -8,7 +8,6 @@ import SelectedContainer from '../../containers/SelectedContainer';
 
 import SpreadPile from '../SpreadPile';
 import StackedPile from '../StackedPile';
-
 import Column from '../Column';
 
 import {
