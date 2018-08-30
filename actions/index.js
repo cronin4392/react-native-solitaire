@@ -317,6 +317,8 @@ export const draggerReleased = position => (dispatch, getState) => {
     });
 
   if (dropZonesInRelease.length > 0) {
-    dispatch(moveSelectedToLocation(dropZonesInRelease[0]));
+    return dispatch(moveSelectedToLocation(dropZonesInRelease[0]));
   }
+
+  return dispatch(deselectAllCards());
 }
