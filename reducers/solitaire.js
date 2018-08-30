@@ -55,6 +55,27 @@ const INITIAL_STATE3 = {
   }
 }
 
+// Set up with a large pile
+const INITIAL_STATE4 = {
+  ...INITIAL_STATE,
+  pile_6: [12, 37, 10, 35, 8, 33, 6, 31, 4, 29, 2, 27, 0],
+  faceup: {
+    0: true,
+    2: true,
+    4: true,
+    6: true,
+    8: true,
+    10: true,
+    12: true,
+    27: true,
+    29: true,
+    31: true,
+    33: true,
+    35: true,
+    37: true,
+  }
+}
+
 const createPiles = ([deck, ...rest], pileSize) => {
   if (pileSize <= 0) {
     return [deck, ...rest];

@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import DropZoneContainer from '../../containers/DropZoneContainer';
 import LocationContainer from '../../containers/LocationContainer';
-import SelectedContainer from '../../containers/SelectedContainer';
+import SelectedLengthContainer from '../../containers/SelectedLengthContainer';
 
 import Column from '../Column';
 import SpreadPile from '../SpreadPile';
@@ -25,10 +25,10 @@ export default class PlayField extends React.PureComponent {
             {({ columnWidth }) =>
               <LocationContainer location={location}>
                 {({ cards }) =>
-                  <SelectedContainer>
-                    {({ selected }) =>
+                  <SelectedLengthContainer>
+                    {({ length }) =>
                       <Fragment>
-                        <DropZoneContainer active={selected.length > 0} location={location} />
+                        <DropZoneContainer active={length > 0} location={location} />
                         <SpreadPile
                           pile={cards}
                           columnWidth={columnWidth}
@@ -36,7 +36,7 @@ export default class PlayField extends React.PureComponent {
                         />
                       </Fragment>
                     }
-                  </SelectedContainer>
+                  </SelectedLengthContainer>
                 }
               </LocationContainer>
             }
