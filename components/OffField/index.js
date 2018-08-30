@@ -4,7 +4,6 @@ import { StyleSheet, View } from 'react-native';
 import DropZoneContainer from '../../containers/DropZoneContainer';
 import LocationContainer from '../../containers/LocationContainer';
 import PickupContainer from '../../containers/PickupContainer';
-import SelectedLengthContainer from '../../containers/SelectedLengthContainer';
 
 import SpreadPile from '../SpreadPile';
 import StackedPile from '../StackedPile';
@@ -60,19 +59,14 @@ export default class OffField extends React.PureComponent {
             {({ columnWidth }) =>
               <LocationContainer location={location}>
                 {({ cards }) =>
-                  <SelectedLengthContainer>
-                    {({ length }) =>
-                      <Fragment>
-                        <DropZoneContainer active={length > 0} location={location} />
-                        <StackedPile
-                          pile={cards}
-                          columnWidth={columnWidth}
-                          location={location}
-                        />
-                      </Fragment>
-                    }
-                  </SelectedLengthContainer>
-
+                  <Fragment>
+                    <DropZoneContainer location={location} />
+                    <StackedPile
+                      pile={cards}
+                      columnWidth={columnWidth}
+                      location={location}
+                    />
+                  </Fragment>
                 }
               </LocationContainer>
             }

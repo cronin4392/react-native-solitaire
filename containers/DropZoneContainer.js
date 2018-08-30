@@ -25,16 +25,26 @@ class DropZoneContainer extends React.Component {
   render() {
     return (
       <Fragment>
-        <View ref={this.testRef} />
         <DropZone {...this.props} ref={this.dropZoneRef} onLayout={this.onChildLayout} />
       </Fragment>
     );
   }
 }
 
+const mapStateToProps = (state, props) => {
+  const { solitaire } = state;
+  const { selected } = solitaire;
+  const selectedArray = Object.keys(selected);
+
+  return ({
+    ...props,
+    active: selectedArray.length > 0,
+  });
+};
+
 const mapDispatchToProps = (dispatch) => ({
   registerDropZone: data => dispatch(registerDropZone(data)),
   onDropzoneClick: zone => dispatch(moveSelectedToLocation(zone))
 });
 
-export default connect(null, mapDispatchToProps)(DropZoneContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DropZoneContainer);
