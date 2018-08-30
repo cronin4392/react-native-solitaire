@@ -7,24 +7,27 @@ import CardContainer from '../../containers/CardContainer';
 import GetDragContainer from '../../containers/GetDragContainer';
 import SelectedContainer from '../../containers/SelectedContainer';
 
-const SelectedCard = ({ id, width, px, py }) => {
-  if (!px || !py || !width) {
-    return null;
-  }
+class SelectedCard extends React.PureComponent {
+  render() {
+    const { id, width, px, py } = this.props;
+    if (!px || !py || !width) {
+      return null;
+    }
 
-  return (
-    <View style={{
-      position: 'absolute',
-      left: px,
-      top: py,
-    }}>
-      <CardContainer id={id}>
-        {cardData =>
-          <Card {...cardData} columnWidth={width} />
-        }
-      </CardContainer>
-    </View>
-  );
+    return (
+      <View style={{
+        position: 'absolute',
+        left: px,
+        top: py,
+      }}>
+        <CardContainer id={id}>
+          {cardData =>
+            <Card {...cardData} columnWidth={width} />
+          }
+        </CardContainer>
+      </View>
+    );
+  }
 }
 
 const SelectedCards = () => (
