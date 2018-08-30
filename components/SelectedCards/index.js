@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 
-import ClickableCard from '../ClickableCard';
+import Card from '../Card';
 
 import CardContainer from '../../containers/CardContainer';
 import GetDragContainer from '../../containers/GetDragContainer';
@@ -20,7 +20,7 @@ const SelectedCard = ({ id, width, px, py }) => {
     }}>
       <CardContainer id={id}>
         {cardData =>
-          <ClickableCard {...cardData} columnWidth={width} />
+          <Card {...cardData} columnWidth={width} />
         }
       </CardContainer>
     </View>

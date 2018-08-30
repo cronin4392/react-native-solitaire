@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import StackedPile from '../components/StackedPile';
 
+import { PICKUP } from '../constants/cards';
+
 import {
   movePickupIntoWaste,
 } from '../actions';
@@ -11,7 +13,7 @@ import {
 const PickupContainer = ({ columnWidth, pickup, movePickupIntoWaste }) => (
   <TouchableOpacity onPressOut={movePickupIntoWaste} activeOpacity={1}>
     <View pointerEvents={'none'}>
-      <StackedPile pile={pickup} columnWidth={columnWidth} />
+      <StackedPile pile={pickup} columnWidth={columnWidth} location={PICKUP} />
     </View>
   </TouchableOpacity>
 );

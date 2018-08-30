@@ -1,10 +1,18 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
+import PropTypes from 'prop-types';
 import OnLayout from 'react-native-on-layout';
 
 export default class Column extends React.Component {
+  static propTypes = {
+    columns: PropTypes.number.isRequired,
+    columnSpan: PropTypes.number,
+    padding: PropTypes.number,
+  };
+
   static defaultProps = {
     padding: 0,
+    columnSpan: 1,
   };
 
   state = {

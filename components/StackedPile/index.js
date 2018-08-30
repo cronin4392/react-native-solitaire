@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import PropTypes from 'prop-types';
 
 import CardContainer from '../../containers/CardContainer';
 import ClickableCard from '../ClickableCard';
@@ -12,8 +13,17 @@ export default class StackedPile extends React.PureComponent {
     columnWidth: null,
   };
 
+  static propTypes = {
+    pile: PropTypes.arrayOf(PropTypes.number),
+  };
+
   render() {
     const { columnWidth, pile } = this.props;
+
+    if(!columnWidth) {
+      return null;
+    }
+
     return (
       <View style={styles.pile}>
         {/*<View style={styles.debugOverlay} pointerEvents={'none'}>

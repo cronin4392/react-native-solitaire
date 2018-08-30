@@ -10,8 +10,11 @@ export default class ClickableCard extends React.PureComponent {
       suit: PropTypes.string.isRequired,
       pip: PropTypes.string.isRequired,
     }).isRequired,
+    isSelected: PropTypes.bool,
     isFaceUp: PropTypes.bool,
     columnWidth: PropTypes.number.isRequired,
+    onCardClick: PropTypes.func,
+    location: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
@@ -29,6 +32,7 @@ export default class ClickableCard extends React.PureComponent {
     const { id, isSelected, updateSelectedPosition } = this.props;
     const node = this.cardRef.current;
 
+    /* if card becomes selected measure it */
     if (!prevProps.isSelected && isSelected) {
       if (!isSelected.px) {
         node.measure( (fx, fy, width, height, px, py) => {

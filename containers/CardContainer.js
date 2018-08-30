@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 
 import { cardClicked, updateSelectedPosition } from '../actions';
@@ -10,7 +9,7 @@ const mapStateToProps = (state, props) => {
   const { solitaire } = state;
   const card = solitaire.cards[id];
   const isFaceUp = solitaire.faceup[id] === true;
-  const isSelected = solitaire.selected[id];
+  const isSelected = !!solitaire.selected[id];
 
   return ({
     ...props,
