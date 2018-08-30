@@ -1,9 +1,13 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { Fragment } from 'react';
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import Column from '../Column';
 
 import GameStateContainer from '../../containers/GameStateContainer';
 
-import { MONOSPACE_FONT } from '../../constants/styles';
+import { FONT_STYLE } from '../../constants/styles';
+
+import KingLogoImage from '../../assets/images/KingLogo.png';
 
 
 class Nav extends React.PureComponent {
@@ -16,13 +20,44 @@ class Nav extends React.PureComponent {
   render() {
     return (
       <View style={styles.container}>
-        <GameStateContainer>
-          {({ pauseGame }) => (
-            <TouchableOpacity onPress={() => this._menuOnClick({ pauseGame })} style={styles.button}>
-              <Text style={styles.buttonText}> {'←'} MENU</Text>
-            </TouchableOpacity>
-          )}
-        </GameStateContainer>
+        <Column
+          columns={3}
+          columnSpan={1}
+          style={{ flexDirection: 'row', }}
+        >
+          {() => 
+            <GameStateContainer>
+              {({ pauseGame }) => (
+                <TouchableOpacity onPress={() => this._menuOnClick({ pauseGame })} style={styles.button}>
+                  <Text style={FONT_STYLE}> {'←'} MENU </Text>
+                </TouchableOpacity>
+              )}
+            </GameStateContainer>
+          }
+        </Column>
+        <Column
+          columns={3}
+          columnSpan={1}
+          style={{ flexDirection: 'row', justifyContent: 'center' }}
+        >
+          {() =>
+            <View style={styles.logo}>
+              <ImageBackground source={KingLogoImage} style={{ width: '100%', height: '100%' }} />
+            </View>
+          }
+        </Column>
+        <Column
+          columns={3}
+          columnSpan={1}
+          style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}
+        >
+          {() =>
+            <Fragment>
+              <View><Text style={FONT_STYLE}>0:00 </Text></View>
+              <View><Text style={FONT_STYLE}>  $0 </Text></View>
+            </Fragment>
+          }
+        </Column>
       </View>
     );
   }
@@ -32,16 +67,19 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd'
+    borderBottomColor: '#ddd',
+    flexDirection: 'row',
+    height: 60,
   },
   button: {
-    paddingTop: 12,
-    paddingBottom: 12,
+    justifyContent: 'center',
+    flex: 1,
   },
-  buttonText: {
-    fontFamily: MONOSPACE_FONT,
-    fontSize: 11,
-    lineHeight: 11,
+  logo: {
+    width: 40,
+    flex: 1,
+    paddingTop: 2,
+    paddingBottom: 4,
   }
 });
 

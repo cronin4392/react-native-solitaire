@@ -46,6 +46,7 @@ export default class Column extends React.Component {
     const columnWidth = (windowWidth / columns) - 0.000001;
 
     const styles = {
+      ...props.style,
       width: columnWidth * columnSpan,
       padding: padding / 2,
     };
