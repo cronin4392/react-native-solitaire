@@ -14,12 +14,9 @@ import {
   rank
 } from '../helpers/cards';
 
-const applyToArray = (array, func) => array.map(item => func(item));
-
 /* Card Helpers */
 
 const isTopCard = (id, pile) => ( id === pile[pile.length - 1] );
-const isBottomCard = (id, pile) => ( id === pile[0] );
 
 /*
   CREATION ACTIONS
@@ -70,29 +67,25 @@ export const startNewGame = () => dispatch => {
 export const flipFirstCardUpInPiles = () => (dispatch, getState) => {
   const { solitaire } = getState();
 
-  PILES.map(location => {
+  const cards = PILES.map(location => {
     const pile = solitaire[location];
-    return dispatch(flipCardUp(pile[pile.length - 1]))
+    return pile[pile.length - 1];
   });
+
+  dispatch(flipCardsUp(cards));
 };
 
-export const flipAllCardsUpInPiles = () => (dispatch, getState) => {
-  const { solitaire } = getState();
-
-  PILES.map(location => solitaire[location].map(card => dispatch(flipCardUp(card))));
-};
-
-export const flipCardsUp = ids => dispatch => applyToArray(ids, (id => dispatch(flipCardUp(id))));
-export const flipCardUp = id => ({
-  type: 'FLIP_CARD_UP',
-  id,
+export const flipCardsUp = ids => ({
+  type: 'FLIP_CARDS_UP',
+  ids,
 });
+export const flipCardUp = (id) => (dispatch) => dispatch(flipCardsUp([id]));
 
-export const flipCardsDown = ids => dispatch => applyToArray(ids, (id => dispatch(flipCardDown(id))));
-export const flipCardDown = id => ({
-  type: 'FLIP_CARD_DOWN',
-  id,
+export const flipCardsDown = ids => ({
+  type: 'FLIP_CARDS_DOWN',
+  ids,
 });
+export const flipCardDown = (id) => (dispatch) => dispatch(flipCardsDown([id]));
 
 /* SELECT CARDS */
 
@@ -137,11 +130,11 @@ export const updateSelectedPosition = payload => ({
 });
 
 // TODO: this recieves and object while other functions like addCardLocation recieve a list
-export const selectCards = ({ ids, location }) => dispatch => applyToArray(ids, (id => dispatch(selectCard({ id, location }))));
-export const selectCard = payload => ({
-  type: 'SELECT_CARD',
+export const selectCards = payload => ({
+  type: 'SELECT_CARDS',
   ...payload
 });
+export const selectCard = ({ id, location }) => (dispatch) => dispatch(selectCards({ ids: [id], location }));
 
 // export const deselectCard = ({ id, location }) => ({
 //   type: 'DESELECT_CARD',
@@ -274,12 +267,12 @@ export const addCardsLocation = (ids, location) => ({
   location,
 });
 
-export const removeCardsLocation = (ids, location) => dispatch => applyToArray(ids, (id => dispatch(removeCardLocation(id, location))));
-export const removeCardLocation = (id, location) => ({
-  type: 'REMOVE_CARD_LOCATION',
-  id,
+export const removeCardsLocation = (ids, location) => ({
+  type: 'REMOVE_CARDS_LOCATION',
+  ids,
   location,
 });
+export const removeCardLocation = (id, location) => (dispatch) => dispatch(removeCardsLocation([id], location));
 
 export const removeAllCardsLocation = location => ({
   type: 'REMOVE_ALL_CARDS_LOCATION',

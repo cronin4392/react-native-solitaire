@@ -58,6 +58,7 @@ const INITIAL_STATE3 = {
 // Set up with a large pile
 const INITIAL_STATE4 = {
   ...INITIAL_STATE,
+  pile_1: [25, 50],
   pile_6: [12, 37, 10, 35, 8, 33, 6, 31, 4, 29, 2, 27, 0],
   faceup: {
     0: true,
@@ -73,6 +74,8 @@ const INITIAL_STATE4 = {
     33: true,
     35: true,
     37: true,
+    25: true,
+    50: true,
   }
 }
 
@@ -124,25 +127,37 @@ const solitaire = (state = INITIAL_STATE, action) => {
         deck: shuffle(state.deck),
       }
     }
-    case 'FLIP_CARD_UP': {
+    case 'FLIP_CARDS_UP': {
+      const { ids } = action;
       const { faceup } = state;
-      const { id } = action;
+
+      const newFaceUp = ids.reduce((acc, id) =>({
+        ...acc,
+        [id]: true,
+      }), {});
+
       return {
         ...state,
         faceup: {
           ...faceup,
-          [id]: true,
+          ...newFaceUp
         }
       }
     }
-    case 'FLIP_CARD_DOWN': {
+    case 'FLIP_CARDS_DOWN': {
+      const { ids } = action;
       const { faceup } = state;
-      const { id } = action;
+
+      const newFaceUp = ids.reduce((acc, id) =>({
+        ...acc,
+        [id]: false,
+      }), {});
+
       return {
         ...state,
         faceup: {
           ...faceup,
-          [id]: false,
+          ...newFaceUp
         }
       }
     }
@@ -158,13 +173,13 @@ const solitaire = (state = INITIAL_STATE, action) => {
         ],
       }
     }
-    case 'REMOVE_CARD_LOCATION': {
-      const { id, location } = action;
+    case 'REMOVE_CARDS_LOCATION': {
+      const { ids, location } = action;
       const existingIds = state[location];
 
       return {
         ...state,
-        [location]: existingIds.filter(item => item !== id),
+        [location]: existingIds.filter(item => ids.indexOf(item) < 0),
       }
     }
     case 'REMOVE_ALL_CARDS_LOCATION': {
@@ -174,20 +189,27 @@ const solitaire = (state = INITIAL_STATE, action) => {
         [location]: [],
       }
     }
-    case 'SELECT_CARD': {
+    case 'SELECT_CARDS': {
+      const { ids, location } = action;
       const { selected } = state;
-      const { id, location } = action;
       const selectedLength = Object.keys(selected).length;
+
+      const newSelected = ids.reduce((acc, id, index) => {
+        return {
+          ...acc,
+          [id]: {
+            order: selectedLength + index,
+            id,
+            location,
+          },
+        };
+      }, {});
 
       return {
         ...state,
         selected: {
           ...selected,
-          [id]: {
-            order: selectedLength,
-            id,
-            location,
-          }
+          ...newSelected,
         }
       }
     }
