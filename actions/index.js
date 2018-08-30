@@ -117,10 +117,6 @@ export const cardClicked = payload => (dispatch, getState) => {
     }
   }
 
-  if (AREAS[location] === FOUNDATION) {
-    return;
-  }
-
   if (AREAS[location] === WASTE) {
     if (!isTopCard(id, pile)) {
       return;

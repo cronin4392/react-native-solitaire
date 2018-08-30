@@ -42,6 +42,19 @@ const INITIAL_STATE2 = {
   }
 };
 
+// Set up with cards in foundation that can be dragged back to the board
+const INITIAL_STATE3 = {
+  ...INITIAL_STATE,
+  foundation_1: [0,1,2,3],
+  pile_6: [30],
+  faceup: {
+    1: true,
+    2: true,
+    3: true,
+    30: true,
+  }
+}
+
 const createPiles = ([deck, ...rest], pileSize) => {
   if (pileSize <= 0) {
     return [deck, ...rest];
