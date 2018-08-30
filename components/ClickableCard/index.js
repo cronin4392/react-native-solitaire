@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import PropTypes from 'prop-types';
 
 import Card from '../Card';
@@ -72,27 +72,16 @@ export default class ClickableCard extends React.PureComponent {
       isSelected,
     } = this.props;
 
-    const selectedStyles = [
-      styles.selectedOverlay,
-      {
-        opacity: isSelected ? 0.2 : 0
-      }
-    ];
+    const selectedStyles = {
+      opacity: isSelected ? 0 : 1,
+    };
 
     return (
       <TouchableOpacity onPressIn={this._onClick} activeOpacity={1} ref={this.cardRef}>
-        <View style={selectedStyles}></View>
-        <Card card={card} isFaceUp={isFaceUp} columnWidth={columnWidth} />
+        <View style={selectedStyles}>
+          <Card card={card} isFaceUp={isFaceUp} columnWidth={columnWidth} />
+        </View>
       </TouchableOpacity>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  selectedOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#000',
-    opacity: 0,
-    zIndex: 2,
-  }
-});
