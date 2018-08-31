@@ -6,7 +6,6 @@ const INITIAL_STATE = {
   cards: DECK,
 
   // locations
-  deck: [],
   pickup: [],
   waste: [],
 
@@ -79,6 +78,10 @@ const INITIAL_STATE4 = {
   }
 }
 
+const INITIAL_STATE5 = {
+  ...INITIAL_STATE,
+}
+
 const createPiles = ([deck, ...rest], pileSize) => {
   if (pileSize <= 0) {
     return [deck, ...rest];
@@ -91,23 +94,17 @@ const createPiles = ([deck, ...rest], pileSize) => {
   ], pileSize - 1);
 }
 
-const solitaire = (state = INITIAL_STATE, action) => {
+const solitaire = (state = INITIAL_STATE5, action) => {
   switch(action.type) {
     case 'CLEAR_STATE': {
       return {
         ...INITIAL_STATE
       }
     }
-    case 'GENERATE_DECK': {
-      const deck = state.cards.map((card, index) => index);
-
-      return {
-        ...state,
-        deck
-      }
-    }
     case 'GENERATE_PILES': {
-      const [pickup, ...piles] = createPiles([state.deck], 7);
+      const cards = state.cards.map((_card, index) => index);
+      const shuffledCards = shuffle(cards);
+      const [pickup, ...piles] = createPiles([shuffledCards], 7);
 
       return {
         ...state,
@@ -119,12 +116,6 @@ const solitaire = (state = INITIAL_STATE, action) => {
         pile_5: piles[4],
         pile_6: piles[5],
         pile_7: piles[6],
-      }
-    }
-    case 'SHUFFLE_DECK': {
-      return {
-        ...state,
-        deck: shuffle(state.deck),
       }
     }
     case 'FLIP_CARDS_UP': {

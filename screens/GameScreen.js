@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+
 import Layout from './Layout';
 
 import SetDragContainer from '../containers/SetDragContainer';
@@ -8,18 +9,16 @@ import OffField from '../components/OffField';
 import PlayField from '../components/PlayField';
 import SelectedCards from '../components/SelectedCards';
 
-const GameScreen = ({ navigation }) =>
+const GameScreen = () =>
   <Fragment>
     <Layout>
-      {/* <ScrollView style={{ flex: 1 }} alwaysBounceVertical={false}> */}
-      <Nav navigation={navigation} />
+      <Nav />
       <SetDragContainer>
         <Fragment>
           <OffField />
           <PlayField />
         </Fragment>
       </SetDragContainer>
-      {/* </ScrollView> */}
     </Layout>
     <SelectedCards />
   </Fragment>

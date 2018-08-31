@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
 
 import {
-  continueGame,
-  pauseGame,
+  setGameState,
   startNewGame,
 } from '../actions';
 
@@ -19,9 +18,8 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  continueGame: () => dispatch(continueGame()),
-  pauseGame: () => dispatch(pauseGame()),
   startNewGame: () => dispatch(startNewGame()),
+  setGameState: (state) => dispatch(setGameState(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameStateContainer);

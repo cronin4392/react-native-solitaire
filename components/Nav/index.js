@@ -1,21 +1,22 @@
 import React, { Fragment } from 'react';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import NavigationService from '../../NavigationService.js';
 import Column from '../Column';
 
 import GameStateContainer from '../../containers/GameStateContainer';
 import TimeContainer from '../../containers/TimeContainer';
 
 import { displayTime } from '../../helpers/game';
+import { PAUSED } from '../../constants/game';
 import { FONT_STYLE } from '../../constants/styles';
 
 import KingLogoImage from '../../assets/images/KingLogo.png';
 
 class Nav extends React.PureComponent {
-  _menuOnClick = ({ pauseGame }) => {
-    const { navigation } = this.props;
-    pauseGame();
-    navigation.navigate('Start');
+  _menuOnClick = ({ setGameState }) => {
+    setGameState(PAUSED);
+    NavigationService.navigate('Start');
   }
 
   render() {
@@ -28,8 +29,8 @@ class Nav extends React.PureComponent {
         >
           {() => 
             <GameStateContainer>
-              {({ pauseGame }) => (
-                <TouchableOpacity onPress={() => this._menuOnClick({ pauseGame })} style={styles.button}>
+              {({ setGameState }) => (
+                <TouchableOpacity onPress={() => this._menuOnClick({ setGameState })} style={styles.button}>
                   <Text style={FONT_STYLE}> {'←'} MENU </Text>
                 </TouchableOpacity>
               )}
