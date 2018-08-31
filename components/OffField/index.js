@@ -20,10 +20,13 @@ import { PADDING } from '../../constants/styles';
 
 export default class OffField extends React.PureComponent {
   render() {
+    const { orientation } = this.props;
+    const columnCount = orientation === 'portrait' ? 7 : 9;
+
     return (
       <View style={styles.offField}>
         <Column
-          columns={7}
+          columns={columnCount}
           columnSpan={1}
           padding={PADDING}
         >
@@ -32,7 +35,7 @@ export default class OffField extends React.PureComponent {
           }
         </Column>
         <Column
-          columns={7}
+          columns={columnCount}
           columnSpan={2}
           padding={PADDING}
         >
@@ -51,7 +54,7 @@ export default class OffField extends React.PureComponent {
         </Column>
         {[FOUNDATION_1, FOUNDATION_2, FOUNDATION_3, FOUNDATION_4].map(location =>
           <Column
-            columns={7}
+            columns={columnCount}
             columnSpan={1}
             padding={PADDING}
             key={location}
@@ -79,6 +82,7 @@ export default class OffField extends React.PureComponent {
 
 const styles = StyleSheet.create({
   offField: {
+    backgroundColor: 'red',
     flexDirection: 'row',
     flexWrap: 'wrap',
   },

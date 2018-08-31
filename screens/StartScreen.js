@@ -6,6 +6,7 @@ import NavigationService from '../NavigationService.js';
 import GameStateContainer from '../containers/GameStateContainer';
 
 import Card from '../components/Card';
+import OrientationLayout from '../components/OrientationLayout';
 
 import { DIAMONDS, KING } from '../constants/cards';
 import { PLAYING, PAUSED } from '../constants/game';
@@ -14,10 +15,12 @@ import { MONOSPACE_FONT } from '../constants/styles';
 class StartGameButton extends React.Component {
   // FOR DEBUGGING
   componentDidMount() {
-    return;
-    const { startNewGame } = this.props;
-    startNewGame();
-    NavigationService.navigate('Game');
+    // return;
+    window.requestAnimationFrame(() => {
+      const { startNewGame } = this.props;
+      startNewGame();
+      NavigationService.navigate('Game');
+    });
   }
 
   _onClick = () => {
@@ -52,10 +55,10 @@ class ContinueGameButton extends React.Component {
 }
 
 class StartScreen extends React.Component {
-  render() {
+  renderPortrait() {
     return (
       <Layout>
-        <View style={styles.container}>
+        <View style={styles.portraitContainer}>
           <View style={styles.card}>
             <Card
               card={{
@@ -83,13 +86,57 @@ class StartScreen extends React.Component {
       </Layout>
     );
   }
+
+  renderLandscape() {
+    return (
+      <Layout>
+        <View style={styles.landscapeContainer}>
+          <View style={styles.portraitContainer}>
+            <View style={styles.card}>
+              <Card
+                card={{
+                  suit: DIAMONDS,
+                  pip: KING,
+                }}
+                isFaceUp={true}
+                columnWidth={100}
+              />
+            </View>
+            <View style={styles.header}>
+              <Text style={styles.headerText}>SOLITAIRE</Text>
+            </View>
+          </View>
+          <View style={styles.portraitContainer}>
+            <View style={styles.buttonContainer}>
+              <GameStateContainer>
+                {({ setGameState, startNewGame, gameState }) => (
+                  <Fragment>
+                    { gameState === PAUSED && <ContinueGameButton setGameState={setGameState} /> }
+                    <StartGameButton startNewGame={startNewGame} />
+                  </Fragment>
+                )}
+              </GameStateContainer>
+            </View>
+          </View>
+        </View>
+      </Layout>
+    );
+  }
+
+  render() {
+    return <OrientationLayout landscape={this.renderLandscape} portrait={this.renderPortrait} />;
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  portraitContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  landscapeContainer: {
+    flex: 1,
+    flexDirection: 'row',
   },
   card: {
     width: 100,

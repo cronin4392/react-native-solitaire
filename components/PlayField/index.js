@@ -17,7 +17,7 @@ export default class PlayField extends React.PureComponent {
         {PILES.map(location =>
           <Column
             key={location}
-            columns={7}
+            columns={9}
             columnSpan={1}
             padding={PADDING}
           >
