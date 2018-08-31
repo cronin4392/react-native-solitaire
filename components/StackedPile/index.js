@@ -32,8 +32,8 @@ export default class StackedPile extends React.PureComponent {
           </View>
         </View>*/}
         <EmptyCardSpace absolute={pile.length > 0} columnWidth={columnWidth} />
-        {pile.slice(pile.length - 1).map((id, index) =>
-          <View key={index}>
+        {pile.slice(pile.length - 2).map((id, index) =>
+          <View key={index} style={index > 0 && styles.pileCard}>
             <CardContainer id={id}>
               {data => <ClickableCard {...this.props} {...data} />}
             </CardContainer>
@@ -48,6 +48,9 @@ const styles = StyleSheet.create({
   pile: {
     flexDirection: 'column',
     overflow: 'hidden',
+  },
+  pileCard: {
+    ...StyleSheet.absoluteFillObject,
   },
   debugOverlay: {
     ...StyleSheet.absoluteFillObject,

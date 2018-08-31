@@ -1,29 +1,29 @@
 import React, { Fragment } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Layout from './Layout';
+import NavigationService from '../NavigationService.js';
 
 import GameStateContainer from '../containers/GameStateContainer';
 
 import Card from '../components/Card';
 
 import { DIAMONDS, KING } from '../constants/cards';
+import { PLAYING, PAUSED } from '../constants/game';
 import { MONOSPACE_FONT } from '../constants/styles';
 
 class StartGameButton extends React.Component {
   // FOR DEBUGGING
   componentDidMount() {
     return;
-    const { navigation, startNewGame } = this.props;
-    const { navigate } = navigation;
+    const { startNewGame } = this.props;
     startNewGame();
-    navigate('Game');
+    NavigationService.navigate('Game');
   }
 
   _onClick = () => {
-    const { navigation, startNewGame } = this.props;
-    const { navigate } = navigation;
+    const { startNewGame } = this.props;
     startNewGame();
-    navigate('Game');
+    NavigationService.navigate('Game');
   }
 
   render() {
@@ -37,10 +37,9 @@ class StartGameButton extends React.Component {
 
 class ContinueGameButton extends React.Component {
   _onClick = () => {
-    const { navigation, continueGame } = this.props;
-    const { navigate } = navigation;
-    continueGame();
-    navigate('Game');
+    const { setGameState } = this.props;
+    setGameState(PLAYING);
+    NavigationService.navigate('Game');
   }
 
   render() {
@@ -72,10 +71,10 @@ class StartScreen extends React.Component {
           </View>
           <View style={styles.buttonContainer}>
             <GameStateContainer>
-              {({ continueGame, startNewGame, gameState }) => (
+              {({ setGameState, startNewGame, gameState }) => (
                 <Fragment>
-                  { gameState === 'PAUSED' && <ContinueGameButton navigation={this.props.navigation} continueGame={continueGame} /> }
-                  <StartGameButton navigation={this.props.navigation} startNewGame={startNewGame} />
+                  { gameState === PAUSED && <ContinueGameButton setGameState={setGameState} /> }
+                  <StartGameButton startNewGame={startNewGame} />
                 </Fragment>
               )}
             </GameStateContainer>

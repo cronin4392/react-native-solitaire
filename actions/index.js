@@ -10,6 +10,12 @@ import {
 } from '../constants/cards';
 
 import {
+  PLAYING,
+  PAUSED,
+  WIN,
+} from '../constants/game';
+
+import {
   color,
   rank
 } from '../helpers/cards';
@@ -35,30 +41,24 @@ export const generatePiles = () => ({
   type: 'GENERATE_PILES'
 });
 
-export const generateDeck = () => ({
-  type: 'GENERATE_DECK'
-});
-
-export const shuffleDeck = () => ({
-  type: 'SHUFFLE_DECK'
-});
-
 export const pauseGame = () => dispatch => {
-  dispatch(setGameState('PAUSED'));
+  dispatch(setGameState(PAUSED));
 }
 
 export const continueGame = () => dispatch => {
-  dispatch(setGameState('PLAYING'));
+  dispatch(setGameState(PLAYING));
+}
+
+export const winGame = () => dispatch => {
+  dispatch(setGameState(WIN));
 }
 
 export const startNewGame = () => dispatch => {
   dispatch(clearState());
   dispatch(resetSecondsPassed());
-  dispatch(generateDeck());
-  dispatch(shuffleDeck());
   dispatch(generatePiles());
   dispatch(flipFirstCardUpInPiles());
-  dispatch(setGameState('PLAYING'));
+  dispatch(setGameState(PLAYING));
 }
 
 /*
