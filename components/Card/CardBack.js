@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import OnLayout from 'react-native-on-layout';
+import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+
+import CardBackImage from '../../assets/images/CardBack.png';
 
 const BACK_OFFSET = 2;
 
@@ -88,7 +89,7 @@ class DotPattern extends React.PureComponent {
 const CardBack = () => {
   return (
     <View style={styles.container}>
-      
+      <ImageBackground source={CardBackImage} style={{ width: '100%', height: '100%' }} />
     </View>
   );
 };
