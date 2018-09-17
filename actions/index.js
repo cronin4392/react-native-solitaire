@@ -117,10 +117,6 @@ export const cardClicked = payload => (dispatch, getState) => {
     }
   }
 
-  // if (selected[id]) {
-  //   return dispatch(deselectAllCards());
-  // }
-
   dispatch(deselectAllCards());
   dispatch(selectCard(payload));
 };
@@ -135,13 +131,10 @@ export const selectCards = payload => ({
   type: 'SELECT_CARDS',
   ...payload
 });
-export const selectCard = ({ id, location }) => (dispatch) => dispatch(selectCards({ ids: [id], location }));
-
-// export const deselectCard = ({ id, location }) => ({
-//   type: 'DESELECT_CARD',
-//   id,
-//   location,
-// });
+export const selectCard = payload => ({
+  type: 'SELECT_CARD',
+  ...payload
+});
 
 export const deselectAllCards = () => ({
   type: 'DESELECT_ALL_CARDS',

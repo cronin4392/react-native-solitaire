@@ -78,10 +78,6 @@ const INITIAL_STATE4 = {
   }
 }
 
-const INITIAL_STATE5 = {
-  ...INITIAL_STATE,
-}
-
 const createPiles = ([deck, ...rest], pileSize) => {
   if (pileSize <= 0) {
     return [deck, ...rest];
@@ -94,7 +90,7 @@ const createPiles = ([deck, ...rest], pileSize) => {
   ], pileSize - 1);
 }
 
-const solitaire = (state = INITIAL_STATE5, action) => {
+const solitaire = (state = INITIAL_STATE, action) => {
   switch(action.type) {
     case 'CLEAR_STATE': {
       return {
@@ -178,6 +174,34 @@ const solitaire = (state = INITIAL_STATE5, action) => {
       return {
         ...state,
         [location]: [],
+      }
+    }
+    case 'SELECT_CARD': {
+      const {
+        id,
+        location,
+        width,
+        height,
+        px,
+        py,
+      } = action;
+      const { selected } = state;
+      const selectedLength = Object.keys(selected).length;
+
+      return {
+        ...state,
+        selected: {
+          ...selected,
+          [id]: {
+            order: selectedLength + 1,
+            id,
+            location,
+            width,
+            height,
+            px,
+            py,
+          },
+        }
       }
     }
     case 'SELECT_CARDS': {
