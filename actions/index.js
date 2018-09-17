@@ -93,9 +93,7 @@ export const flipCardDown = (id) => (dispatch) => dispatch(flipCardsDown([id]));
 export const cardClicked = payload => (dispatch, getState) => {
   const { id, location } = payload;
   const { solitaire } = getState();
-  const {
-    faceup,
-  } = solitaire;
+  const { faceup } = solitaire;
   const pile = solitaire[location];
 
   if (AREAS[location] === PILE) {
@@ -213,8 +211,9 @@ const isValidMove = ({
 };
 
 export const moveSelectedToLocation = location => (dispatch, getState) => {
-  const { solitaire } = getState();
-  const { cards, selected } = solitaire;
+  const { dragger, solitaire } = getState();
+  const { selected } = dragger;
+  const { cards } = solitaire;
   const selectedArray = Object.keys(selected)
     .reduce((acc, key) => (
       [...acc, selected[key]]
