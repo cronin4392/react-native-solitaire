@@ -6,10 +6,10 @@ const CardContainer = (props) => props.children(props)
 
 const mapStateToProps = (state, props) => {
   const { id } = props;
-  const { solitaire } = state;
+  const { dragger, solitaire } = state;
   const card = solitaire.cards[id];
   const isFaceUp = solitaire.faceup[id] === true;
-  const isSelected = !!solitaire.selected[id];
+  const isSelected = !!dragger.selected[id];
 
   return ({
     ...props,
