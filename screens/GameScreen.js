@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 import Layout from './Layout';
 
-import SetDragContainer from '../containers/SetDragContainer';
+import DragContainer from '../containers/DragContainer';
 import DropZonesContainer from '../containers/DropZonesContainer';
 
 import Nav from '../components/Nav';
@@ -16,10 +16,10 @@ const GameScreen = () =>
       <Nav />
       <DropZonesContainer>
         {({ detectDropZoneRelease, registerDropZone }) => (
-          <SetDragContainer detectDropZoneRelease={detectDropZoneRelease}>
+          <DragContainer detectDropZoneRelease={detectDropZoneRelease}>
             <OffField registerDropZone={registerDropZone} detectDropZoneRelease={detectDropZoneRelease} />
             <PlayField registerDropZone={registerDropZone} detectDropZoneRelease={detectDropZoneRelease} />
-          </SetDragContainer>
+          </DragContainer>
         )}
       </DropZonesContainer>
     </Layout>

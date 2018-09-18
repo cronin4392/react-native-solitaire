@@ -1,6 +1,5 @@
 const INITIAL_STATE = {
   dragger: null,
-  dropZones: {}, // { id: { width, height, x, y } }
   selected: {},
 };
 
@@ -12,31 +11,6 @@ const dragger = (state = INITIAL_STATE, action) => {
         ...state,
         dragger,
       }
-    }
-    case 'REGISTER_DROPZONE': {
-      const { dropZones } = state;
-
-      const {
-        location,
-        width,
-        height,
-        x,
-        y
-      } = action;
-
-      return {
-        ...state,
-        dropZones: {
-          ...dropZones,
-          [location]: {
-            location,
-            width,
-            height,
-            x,
-            y,
-          },
-        },
-      };
     }
     case 'SELECT_CARD': {
       const {

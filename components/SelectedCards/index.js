@@ -31,26 +31,25 @@ class SelectedCard extends React.PureComponent {
 }
 
 const SelectedCards = () => (
-    <GetDragContainer>
-      {({ dragger }) => (
-        <Animated.View
-          pointerEvents='none'
-          style={[
-            styles.container,
-            { transform: dragger.getTranslateTransform() }
-          ]
-        }>
-          <SelectedContainer>
-            {({ selected }) => (
-              <Fragment>
-                {selected.map(data => <SelectedCard key={data.id} {...data} />)}
-              </Fragment>
-            )}
-          </SelectedContainer>
-        </Animated.View>
-      )}
-    </GetDragContainer>
-
+  <GetDragContainer>
+    {({ dragger }) => (
+      <Animated.View
+        pointerEvents='none'
+        style={[
+          styles.container,
+          { transform: dragger.getTranslateTransform() }
+        ]
+      }>
+        <SelectedContainer>
+          {({ selected }) => (
+            <Fragment>
+              {selected.map(data => <SelectedCard key={data.id} {...data} />)}
+            </Fragment>
+          )}
+        </SelectedContainer>
+      </Animated.View>
+    )}
+  </GetDragContainer>
 );
 
 const styles = StyleSheet.create({
