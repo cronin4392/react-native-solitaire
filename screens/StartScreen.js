@@ -15,9 +15,11 @@ class StartGameButton extends React.Component {
   // FOR DEBUGGING
   componentDidMount() {
     return;
-    const { startNewGame } = this.props;
-    startNewGame();
-    NavigationService.navigate('Game');
+    setTimeout(() => {
+      const { startNewGame } = this.props;
+      startNewGame();
+      NavigationService.navigate('Game');
+    }, 10);
   }
 
   _onClick = () => {

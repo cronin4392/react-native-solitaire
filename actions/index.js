@@ -246,11 +246,6 @@ export const moveSelectedToLocation = location => (dispatch, getState) => {
   dispatch(deselectAllCards());
 }
 
-export const registerDropZone = payload => ({
-  type: 'REGISTER_DROPZONE',
-  ...payload
-});
-
 /* ADD REMOVE CARDS */
 
 export const addCardLocation = (id, location) => dispatch => dispatch(addCardsLocation([id], location));
@@ -296,30 +291,3 @@ export const setDragger = dragger => ({
   type: 'SET_DRAGGER',
   dragger
 });
-
-export const draggerReleased = position => (dispatch, getState) => {
-  const { dragger } = getState();
-  const { dropZones } = dragger;
-
-  const dropZonesInRelease = Object.keys(dropZones)
-    .filter(key => {
-      const zone = dropZones[key];
-      const { width, height, x, y } = zone;
-
-      const top = y;
-      const right = x + width;
-      const bottom = y + height;
-      const left = x;
-
-      const inXBounds = position.x >= left && position.x <= right;
-      const inYBounds = position.y >= top && position.y <= bottom;
-
-      return inXBounds && inYBounds;
-    });
-
-  if (dropZonesInRelease.length > 0) {
-    return dispatch(moveSelectedToLocation(dropZonesInRelease[0]));
-  }
-
-  return dispatch(deselectAllCards());
-}

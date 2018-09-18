@@ -12,6 +12,7 @@ import { PADDING } from '../../constants/styles';
 
 export default class PlayField extends React.PureComponent {
   render() {
+    const { registerDropZone } = this.props;
     return (
       <View style={styles.playField}>
         {PILES.map(location =>
@@ -25,7 +26,7 @@ export default class PlayField extends React.PureComponent {
               <LocationContainer location={location}>
                 {({ cards }) =>
                   <Fragment>
-                    <DropZoneContainer location={location} />
+                    <DropZoneContainer location={location} registerDropZone={registerDropZone} />
                     <SpreadPile
                       pile={cards}
                       columnWidth={columnWidth}

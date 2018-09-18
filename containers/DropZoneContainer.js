@@ -1,10 +1,9 @@
-import React, { Fragment } from 'react';
-import { View } from 'react-native';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import DropZone from '../components/DropZone';
 
-import { moveSelectedToLocation, registerDropZone } from '../actions';
+import { moveSelectedToLocation } from '../actions';
 
 class DropZoneContainer extends React.Component {
   onChildLayout = (ref) => {
@@ -24,9 +23,7 @@ class DropZoneContainer extends React.Component {
 
   render() {
     return (
-      <Fragment>
-        <DropZone {...this.props} ref={this.dropZoneRef} onLayout={this.onChildLayout} />
-      </Fragment>
+      <DropZone {...this.props} onLayout={this.onChildLayout} />
     );
   }
 }
@@ -43,8 +40,7 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  registerDropZone: data => dispatch(registerDropZone(data)),
-  onDropzoneClick: zone => dispatch(moveSelectedToLocation(zone))
+  moveSelectedToLocation: payload => dispatch(moveSelectedToLocation(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropZoneContainer);

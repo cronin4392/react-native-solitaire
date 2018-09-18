@@ -8,9 +8,9 @@ export default class DropZone extends React.Component {
   }
 
   _onDropZoneClick = () => {
-    const { location, onDropzoneClick } = this.props;
+    const { location, moveSelectedToLocation } = this.props;
 
-    onDropzoneClick(location);
+    moveSelectedToLocation(location);
   }
 
   _onLayout = () => {
@@ -22,6 +22,7 @@ export default class DropZone extends React.Component {
   render() {
     const { active } = this.props;
 
+    /* pointerEvents allows the dropzone to be clicked while elements are selected */
     return (
       <View
         pointerEvents={active ? 'auto' : 'none'}

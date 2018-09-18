@@ -20,6 +20,7 @@ import { PADDING } from '../../constants/styles';
 
 export default class OffField extends React.PureComponent {
   render() {
+    const { registerDropZone } = this.props;
     return (
       <View style={styles.offField}>
         <Column
@@ -60,7 +61,7 @@ export default class OffField extends React.PureComponent {
               <LocationContainer location={location}>
                 {({ cards }) =>
                   <Fragment>
-                    <DropZoneContainer location={location} />
+                    <DropZoneContainer location={location} registerDropZone={registerDropZone} />
                     <StackedPile
                       pile={cards}
                       columnWidth={columnWidth}

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import {
   setDragger,
-  draggerReleased,
 } from '../actions';
 
 class SetDragContainer extends React.PureComponent {
@@ -49,7 +48,7 @@ class SetDragContainer extends React.PureComponent {
         ]),
         onPanResponderRelease: (evt, gestureState) => {
           const { moveX, moveY } = gestureState;
-          this.props.draggerReleased({
+          this.props.detectDropZoneRelease({
             x: moveX,
             y: moveY,
           });
@@ -94,7 +93,6 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => ({
   setDragger: dragger => dispatch(setDragger(dragger)),
-  draggerReleased: position => dispatch(draggerReleased(position)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetDragContainer);
