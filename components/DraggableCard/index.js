@@ -1,7 +1,10 @@
 import React from 'react';
-import { Animated, PanResponder, View } from 'react-native';
+import { Animated, PanResponder } from 'react-native';
+import PropTypes from 'prop-types';
 
-class DragContainer extends React.PureComponent {
+import Card from '../Card';
+
+export default class ClickableCard extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -39,7 +42,7 @@ class DragContainer extends React.PureComponent {
 
       onPanResponderRelease: (e, {vx, vy}) => {
         this.state.position.flattenOffset();
-        this.props.onRelease();
+        this.props.onRelease(this.props.card.id);
         this.setState({
           checkAnimation: true
         });
@@ -52,13 +55,12 @@ class DragContainer extends React.PureComponent {
       <Animated.View
         {...this._panResponder.panHandlers}
         style={{
-          transform: this.state.position.getTranslateTransform()
+          transform: this.state.position.getTranslateTransform(),
+          position: 'absolute',
         }}
       >
-        { this.props.children }
+        <Card card={this.props.card} isFaceUp={this.props.card.faceUp} columnWidth={this.props.columnWidth} />
       </Animated.View>
     )
   }
 }
-
-export default DragContainer;

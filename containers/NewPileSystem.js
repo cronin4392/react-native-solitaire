@@ -1,9 +1,30 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { connect } from 'react-redux';
 
-import NewDragContainer from './NewDragContainer';
+import DraggableCard from '../components/DraggableCard';
 
-class NewPileSystem extends React.PureComponent {
+import {
+  moveCardToLocation
+} from '../actions/solitaire2';
+
+import {
+  FOUNDATION_1,
+  WASTE
+} from '../constants/cards';
+
+const getCardPosition = (card) => {
+  const {
+    location,
+  } = card;
+
+  if (location === WASTE) {
+    return { x: 0, y: 0};
+  }
+
+  return { x: 100, y: 100 };
+}
+
+class NewPileSystem extends React.Component {
   constructor(props) {
     super(props);
 
@@ -15,22 +36,36 @@ class NewPileSystem extends React.PureComponent {
     };
   }
 
-  onRelease = () => {
-    this.setState({
-      position: {
-        x: 100,
-        y: 100,
-      },
-    });
+  onRelease = (id) => {
+    this.props.moveCardToLocation(id, FOUNDATION_1);
   }
 
   render() {
-    return (
-      <NewDragContainer position={this.state.position} onRelease={this.onRelease}>
-        <View style={{ padding: 50, backgroundColor: 'red', position: 'absolute' }}><Text>YO!</Text></View>
-      </NewDragContainer>
-    );
+    const { cards } = this.props;
+
+    return cards.map((card, index) => (
+      <DraggableCard key={index} onRelease={this.onRelease} position={getCardPosition(card)} card={card} columnWidth={44} />
+    ));
   }
 };
 
-export default NewPileSystem;
+const mapStateToProps = (state, props) => {
+  const { solitaire2 } = state;
+  const { cards } = solitaire2;
+
+  const cardsArray = Object.keys(cards)
+    .reduce((acc, key) => (
+      [...acc, cards[key]]
+    ), []);
+
+  return ({
+    ...props,
+    cards: cardsArray,
+  });
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  moveCardToLocation: (id, location) => dispatch(moveCardToLocation(id, location)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewPileSystem);

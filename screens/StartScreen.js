@@ -12,16 +12,6 @@ import { PLAYING, PAUSED } from '../constants/game';
 import { MONOSPACE_FONT } from '../constants/styles';
 
 class StartGameButton extends React.Component {
-  // FOR DEBUGGING
-  componentDidMount() {
-    return;
-    setTimeout(() => {
-      const { startNewGame } = this.props;
-      startNewGame();
-      NavigationService.navigate('Game');
-    }, 10);
-  }
-
   _onClick = () => {
     const { startNewGame } = this.props;
     startNewGame();
