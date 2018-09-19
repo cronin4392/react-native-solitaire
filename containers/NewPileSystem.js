@@ -12,6 +12,10 @@ import {
   WASTE
 } from '../constants/cards';
 
+import {
+  toArray
+} from '../helpers/cards';
+
 const getCardPosition = (card) => {
   const {
     location,
@@ -53,10 +57,7 @@ const mapStateToProps = (state, props) => {
   const { solitaire2 } = state;
   const { cards } = solitaire2;
 
-  const cardsArray = Object.keys(cards)
-    .reduce((acc, key) => (
-      [...acc, cards[key]]
-    ), []);
+  const cardsArray = toArray(cards);
 
   return ({
     ...props,

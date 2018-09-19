@@ -16,6 +16,12 @@ export const shuffle = (a) => {
   return b;
 }
 
+export const toArray = (object) => 
+  Object.keys(object)
+    .reduce((acc, key) => (
+      [...acc, object[key]]
+    ), []);
+
 export const symbol = (name) => SYMBOLS[name] || name;
 export const rank = (pip) => RANKS[pip] || -1;
 export const color = (suit) => SUIT_COLOR[suit];

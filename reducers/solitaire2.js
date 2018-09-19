@@ -1,4 +1,4 @@
-import { shuffle } from '../helpers/cards';
+import { shuffle, toArray } from '../helpers/cards';
 
 import { DECK, WASTE } from '../constants/cards';
 
@@ -41,6 +41,9 @@ const solitaire2 = (state = INITIAL_STATE, action) => {
       const { cards } = state;
       const card = cards[id];
 
+      // get count of cards in location
+      const existingCount = toArray(cards).filter(card => card.location === location).length;
+
       return {
         ...state,
         cards: {
@@ -48,6 +51,7 @@ const solitaire2 = (state = INITIAL_STATE, action) => {
           [id]: {
             ...card,
             location,
+            locationIndex: existingCount,
           }
         }
       };
