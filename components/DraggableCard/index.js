@@ -1,10 +1,9 @@
 import React from 'react';
 import { Animated, PanResponder } from 'react-native';
-import PropTypes from 'prop-types';
 
 import Card from '../Card';
 
-export default class ClickableCard extends React.PureComponent {
+export default class DraggableCard extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -14,7 +13,7 @@ export default class ClickableCard extends React.PureComponent {
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     if (this.state.checkAnimation === true) {
       this.setState({
         checkAnimation: false
