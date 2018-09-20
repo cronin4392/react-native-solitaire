@@ -22,6 +22,12 @@ export const toArray = (object) =>
       [...acc, object[key]]
     ), []);
 
+export const toObject = (array) =>
+  array.reduce((acc, val) => {
+    acc[val.id] = val;
+    return acc;
+  }, {})
+
 export const symbol = (name) => SYMBOLS[name] || name;
 export const rank = (pip) => RANKS[pip] || -1;
 export const color = (suit) => SUIT_COLOR[suit];

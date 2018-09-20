@@ -1,11 +1,14 @@
-import { shuffle, toArray } from '../helpers/cards';
+import { shuffle, toArray, toObject } from '../helpers/cards';
 
 import { DECK, WASTE } from '../constants/cards';
+
+const getCardsInLocationAsArray = (cards, location) => toArray(cards).filter(card => card.location === location);
 
 const INITIAL_STATE = {
   cards: {
     /*
     [id]: {
+      id: 0,
       pip: DECK[0],
       suit: DECK[0],
       faceUp: false,
@@ -41,18 +44,34 @@ const solitaire2 = (state = INITIAL_STATE, action) => {
       const { cards } = state;
       const card = cards[id];
 
-      // get count of cards in location
-      const existingCount = toArray(cards).filter(card => card.location === location).length;
+      const oldLocation = card.location;
+      const oldLocationIndex = card.locationIndex;
+
+      // card did not move to new location
+      if (location === oldLocation) {
+        return {
+          ...state
+        };
+      }
+
+      // index to start incrementing new cards being placed
+      const startIndex = toArray(cards).filter(card => card.location === location).length;
+
+      // get card to move and any under it and update their location and locationIndex
+      const cardsToMove = toArray(cards)
+        .filter(card => card.location === oldLocation && card.locationIndex >= oldLocationIndex)
+        .sort((a, b) => a.locationIndex - b.locationIndex)
+        .map((card, index) => ({
+          ...card,
+          location,
+          locationIndex: index + startIndex,
+        }));
 
       return {
         ...state,
         cards: {
           ...cards,
-          [id]: {
-            ...card,
-            location,
-            locationIndex: existingCount,
-          }
+          ...toObject(cardsToMove)
         }
       };
     }
