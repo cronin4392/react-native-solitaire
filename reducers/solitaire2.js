@@ -9,8 +9,8 @@ const INITIAL_STATE = {
     /*
     [id]: {
       id: 0,
-      pip: DECK[0],
-      suit: DECK[0],
+      pip: "ACE",
+      suit: "SPADES",
       faceUp: false,
       location: "WASTE",
       locationIndex: 0,

@@ -1,21 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-import DraggableCard from '../components/DraggableCard';
-
-import {
-  moveCardToLocation
-} from '../actions/solitaire2';
+import DraggableCard from '../DraggableCard';
 
 import {
   FOUNDATION_1,
   FOUNDATION_2,
   WASTE
-} from '../constants/cards';
-
-import {
-  toArray
-} from '../helpers/cards';
+} from '../../constants/cards';
 
 const getCardPosition = (card) => {
   const {
@@ -38,7 +29,7 @@ const getCardPosition = (card) => {
   return { x: 0, y: 0 };
 }
 
-class NewPileSystem extends React.Component {
+class PlayField extends React.Component {
   constructor(props) {
     super(props);
 
@@ -71,20 +62,4 @@ class NewPileSystem extends React.Component {
   }
 };
 
-const mapStateToProps = (state, props) => {
-  const { solitaire2 } = state;
-  const { cards } = solitaire2;
-
-  const cardsArray = toArray(cards);
-
-  return ({
-    ...props,
-    cards: cardsArray,
-  });
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  moveCardToLocation: (id, location) => dispatch(moveCardToLocation(id, location)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewPileSystem);
+export default PlayField;

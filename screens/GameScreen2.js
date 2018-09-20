@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Text, View } from 'react-native';
 
 import Layout from './Layout';
-
-import NewPileSystem from '../containers/NewPileSystem';
+import PlayField from '../components/PlayField2';
+import CardsContainer from '../containers/CardsContainer2';
 
 import { startNewGame } from '../actions/solitaire2';
 
@@ -18,7 +18,11 @@ class GameScreen extends React.PureComponent {
         <Fragment>
         <Layout>
           <View>
-            <NewPileSystem />
+            <CardsContainer>
+              {(props) => (
+                <PlayField {...props} />
+              )}
+            </CardsContainer>
           </View>
         </Layout>
       </Fragment>
