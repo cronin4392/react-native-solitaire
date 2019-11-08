@@ -9,7 +9,7 @@ export default class DraggableCard extends React.Component {
 
     this.state = {
       position: new Animated.ValueXY(props.position),
-      isDragging: false,
+      isAnimating: false,
       checkAnimation: false // used so this.props.onRelease() can be called, update position, and then Animation Spring will occur
     };
   }
@@ -25,7 +25,11 @@ export default class DraggableCard extends React.Component {
       });
       Animated.spring(this.state.position, {
         toValue: { x: this.props.position.x, y: this.props.position.y }
-      }).start();
+      }).start(() => {
+        this.setState({
+          isAnimating: false
+        });
+      });
     }
   }
 
@@ -41,7 +45,7 @@ export default class DraggableCard extends React.Component {
         });
         this.state.position.setValue({ x: 0, y: 0 });
         this.setState({
-          isDragging: true
+          isAnimating: true
         });
       },
 
@@ -54,15 +58,14 @@ export default class DraggableCard extends React.Component {
         this.state.position.flattenOffset();
         this.props.onRelease(this.props.card.id);
         this.setState({
-          checkAnimation: true,
-          isDragging: false
+          checkAnimation: true
         });
       }
     });
   }
 
   render() {
-    const dragZPosition = this.state.isDragging ? 500 : 0;
+    const dragZPosition = this.state.isAnimating ? 500 : 0;
     return (
       <Animated.View
         {...this._panResponder.panHandlers}
