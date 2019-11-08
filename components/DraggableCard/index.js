@@ -21,7 +21,8 @@ export default class DraggableCard extends React.Component {
       this.state.checkAnimation === true
     ) {
       this.setState({
-        checkAnimation: false
+        checkAnimation: false,
+        isAnimating: true
       });
       Animated.spring(this.state.position, {
         toValue: { x: this.props.position.x, y: this.props.position.y }

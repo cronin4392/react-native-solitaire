@@ -24,3 +24,9 @@ export const toObject = array =>
 export const symbol = name => SYMBOLS[name] || name;
 export const rank = pip => RANKS[pip] || -1;
 export const color = suit => SUIT_COLOR[suit];
+
+export const getCardsAtLocation = (cards, location) =>
+  cards.filter(card => card.location === location);
+
+export const sortCardsByLocationIndex = cards =>
+  cards.sort((cardA, cardB) => cardA.locationIndex - cardB.locationIndex);

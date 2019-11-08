@@ -1,4 +1,6 @@
-import { shuffle, toArray, toObject } from "../helpers/cards";
+import { shuffle } from "../helpers/cards";
+
+import { toArray, toObject } from "../helpers/cards";
 
 import { DECK, PICKUP } from "../constants/cards";
 
@@ -22,15 +24,21 @@ const INITIAL_STATE = {
 
 const solitaire2 = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case "CLEAR_STATE": {
+      return {
+        ...INITIAL_STATE
+      };
+    }
     case "GENERATE_CARDS": {
+      const shuffledLocationIndexes = shuffle([...Array(52).keys()]);
       const cards = DECK.reduce((acc, { pip, suit }, index) => {
         acc[index] = {
           id: index,
           pip,
           suit,
           location: PICKUP,
-          locationIndex: index,
-          faceUp: true
+          locationIndex: shuffledLocationIndexes[index],
+          faceUp: false
         };
         return acc;
       }, {});
@@ -79,6 +87,22 @@ const solitaire2 = (state = INITIAL_STATE, action) => {
         cards: {
           ...cards,
           ...toObject(cardsToMove)
+        }
+      };
+    }
+    case "FLIP_CARD_UP": {
+      const { id } = action;
+      const { cards } = state;
+      const card = cards[id];
+
+      return {
+        ...state,
+        cards: {
+          ...cards,
+          [id]: {
+            ...card,
+            faceUp: true
+          }
         }
       };
     }
