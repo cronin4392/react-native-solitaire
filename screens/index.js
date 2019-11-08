@@ -1,13 +1,15 @@
-import { createSwitchNavigator } from 'react-navigation';
+import { createSwitchNavigator, createAppContainer } from "react-navigation";
 
-import GameScreen from './GameScreen';
-import GameOverScreen from './GameOverScreen';
-import StartScreen from './StartScreen';
+import GameScreen from "./GameScreen";
+import GameOverScreen from "./GameOverScreen";
+import StartScreen from "./StartScreen";
 
-const Screens = createSwitchNavigator({
-  Start: StartScreen,
-  Game: GameScreen,
-  GameOver: GameOverScreen,
-});
+const Screens = createAppContainer(
+  createSwitchNavigator({
+    Start: StartScreen,
+    Game: GameScreen,
+    GameOver: GameOverScreen
+  })
+);
 
 export default Screens;
