@@ -75,8 +75,7 @@ const dealCards = () => (dispatch, getState) => {
       dispatch(
         moveCardToLocation(sortedCards[index].id, dealOrder[flippedIndex])
       );
-      dealCardsIterate(index - 1);
-      // setTimeout(() => dealCardsIterate(index - 1), 100);
+      setTimeout(() => dealCardsIterate(index - 1), 100);
     };
 
     dealCardsIterate(sortedCards.length - 1);
@@ -87,13 +86,24 @@ const flipBottomCards = () => (dispatch, getState) => {
   const { solitaire2 } = getState();
   const { cards } = solitaire2;
 
-  [PILE_1, PILE_2, PILE_3, PILE_4, PILE_5, PILE_6, PILE_7].map(location => {
+  const flipOrder = [PILE_1, PILE_2, PILE_3, PILE_4, PILE_5, PILE_6, PILE_7];
+
+  const flipBottomCardsIterate = index => {
+    if (index < 0) {
+      return;
+    }
+
+    const location = flipOrder[index];
     const cardsInLocation = sortCardsByLocationIndex(
       getCardsAtLocation(toArray(cards), location)
     );
     const bottomCard = cardsInLocation[cardsInLocation.length - 1];
     dispatch(flipCardUp(bottomCard.id));
-  });
+
+    setTimeout(() => flipBottomCardsIterate(index - 1), 100);
+  };
+
+  flipBottomCardsIterate(flipOrder.length - 1);
 };
 
 export const generateCards = () => ({
