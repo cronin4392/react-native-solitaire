@@ -1,16 +1,16 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-const LocationContainer = (props) => props.children(props);
+const LocationContainer = props => props.children(props);
 
 const mapStateToProps = (state, props) => {
   const { location } = props;
   const { solitaire } = state;
   const cards = solitaire[location] || [];
 
-  return ({
+  return {
     ...props,
-    cards,
-  });
+    cards
+  };
 };
 
 export default connect(mapStateToProps)(LocationContainer);

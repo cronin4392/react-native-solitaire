@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import React from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default class DropZone extends React.Component {
   constructor(props) {
@@ -11,13 +11,13 @@ export default class DropZone extends React.Component {
     const { location, moveSelectedToLocation } = this.props;
 
     moveSelectedToLocation(location);
-  }
+  };
 
   _onLayout = () => {
     const { onLayout } = this.props;
 
     onLayout(this.dropZoneRef);
-  }
+  };
 
   render() {
     const { active } = this.props;
@@ -25,7 +25,7 @@ export default class DropZone extends React.Component {
     /* pointerEvents allows the dropzone to be clicked while elements are selected */
     return (
       <View
-        pointerEvents={active ? 'auto' : 'none'}
+        pointerEvents={active ? "auto" : "none"}
         style={styles.dropZone}
         ref={this.dropZoneRef}
         onLayout={this._onLayout}
@@ -36,17 +36,17 @@ export default class DropZone extends React.Component {
           activeOpacity={1}
         ></TouchableOpacity>
       </View>
-    )
+    );
   }
 }
 
 const styles = StyleSheet.create({
   dropZone: {
     ...StyleSheet.absoluteFillObject,
-    zIndex: 2,
+    zIndex: 2
     // backgroundColor: 'rgba(255,0,0,0.3)',
   },
   dropZoneButton: {
-    ...StyleSheet.absoluteFillObject,
-  },
+    ...StyleSheet.absoluteFillObject
+  }
 });

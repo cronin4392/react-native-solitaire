@@ -1,8 +1,9 @@
-import { shuffle, toArray, toObject } from '../helpers/cards';
+import { shuffle, toArray, toObject } from "../helpers/cards";
 
-import { DECK, WASTE } from '../constants/cards';
+import { DECK, WASTE } from "../constants/cards";
 
-const getCardsInLocationAsArray = (cards, location) => toArray(cards).filter(card => card.location === location);
+const getCardsInLocationAsArray = (cards, location) =>
+  toArray(cards).filter(card => card.location === location);
 
 const INITIAL_STATE = {
   cards: {
@@ -20,8 +21,8 @@ const INITIAL_STATE = {
 };
 
 const solitaire2 = (state = INITIAL_STATE, action) => {
-  switch(action.type) {
-    case 'GENERATE_CARDS': {
+  switch (action.type) {
+    case "GENERATE_CARDS": {
       const cards = DECK.reduce((acc, { pip, suit }, index) => {
         acc[index] = {
           id: index,
@@ -29,17 +30,17 @@ const solitaire2 = (state = INITIAL_STATE, action) => {
           suit,
           location: WASTE,
           locationIndex: index,
-          faceUp: true,
+          faceUp: true
         };
         return acc;
       }, {});
 
       return {
         ...state,
-        cards,
+        cards
       };
     }
-    case 'MOVE_CARD_TO_LOCATION': {
+    case "MOVE_CARD_TO_LOCATION": {
       const { id, location } = action;
       const { cards } = state;
       const card = cards[id];
@@ -55,16 +56,22 @@ const solitaire2 = (state = INITIAL_STATE, action) => {
       }
 
       // index to start incrementing new cards being placed
-      const startIndex = toArray(cards).filter(card => card.location === location).length;
+      const startIndex = toArray(cards).filter(
+        card => card.location === location
+      ).length;
 
       // get card to move and any under it and update their location and locationIndex
       const cardsToMove = toArray(cards)
-        .filter(card => card.location === oldLocation && card.locationIndex >= oldLocationIndex)
+        .filter(
+          card =>
+            card.location === oldLocation &&
+            card.locationIndex >= oldLocationIndex
+        )
         .sort((a, b) => a.locationIndex - b.locationIndex)
         .map((card, index) => ({
           ...card,
           location,
-          locationIndex: index + startIndex,
+          locationIndex: index + startIndex
         }));
 
       return {

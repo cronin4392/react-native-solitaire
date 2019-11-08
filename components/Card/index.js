@@ -1,34 +1,30 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import PropTypes from 'prop-types';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import PropTypes from "prop-types";
 
-import CardBack from './CardBack';
+import CardBack from "./CardBack";
 
-import { RED, SUIT_COLOR } from '../../constants/cards';
-import { MONOSPACE_FONT } from '../../constants/styles';
-import { symbol } from '../../helpers/cards';
+import { RED, SUIT_COLOR } from "../../constants/cards";
+import { MONOSPACE_FONT } from "../../constants/styles";
+import { symbol } from "../../helpers/cards";
 
 export default class Card extends React.PureComponent {
   static propTypes = {
     card: PropTypes.shape({
       suit: PropTypes.string.isRequired,
-      pip: PropTypes.string.isRequired,
+      pip: PropTypes.string.isRequired
     }).isRequired,
     isFaceUp: PropTypes.bool,
-    columnWidth: PropTypes.number.isRequired,
+    columnWidth: PropTypes.number.isRequired
   };
 
   render() {
-    const {
-      card,
-      columnWidth,
-      isFaceUp,
-    } = this.props;
+    const { card, columnWidth, isFaceUp } = this.props;
     const { pip, suit } = card;
     const isRed = SUIT_COLOR[suit] === RED;
     const dimensions = {
       width: columnWidth,
-      height: columnWidth * 1.5,
+      height: columnWidth * 1.5
     };
     const styles = generateStyles(dimensions);
 
@@ -61,7 +57,7 @@ export default class Card extends React.PureComponent {
           <Text style={cardTextStyle}>{symbol(suit)}</Text>
         </View>
       </View>
-    )
+    );
   }
 }
 
@@ -72,45 +68,47 @@ const generateStyles = ({ width }) => {
 
   return StyleSheet.create({
     card: {
-      backgroundColor: '#fff',
-      borderColor: '#000',
+      backgroundColor: "#fff",
+      borderColor: "#000",
       borderWidth: 1,
-      overflow: 'hidden',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 3,
+      overflow: "hidden",
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: 3
     },
     redCard: {
-      borderColor: '#f00'
+      borderColor: "#f00"
     },
     cardSuitTop: {
-      position: 'absolute',
+      position: "absolute",
       top: textSpacingFromEdge,
       left: textSpacingFromEdge,
-      alignItems: 'center',
+      alignItems: "center"
     },
     cardSuitBottom: {
-      position: 'absolute',
+      position: "absolute",
       right: textSpacingFromEdge,
       bottom: textSpacingFromEdge,
-      alignItems: 'center',
-      transform: [{
-        rotate: '180deg'
-      }],
+      alignItems: "center",
+      transform: [
+        {
+          rotate: "180deg"
+        }
+      ]
     },
     cardText: {
       fontFamily: MONOSPACE_FONT,
       fontSize: fontSize,
-      lineHeight: fontSize,
+      lineHeight: fontSize
     },
     redCardText: {
-      color: '#f00'
+      color: "#f00"
     },
     selectedOverlay: {
       ...StyleSheet.absoluteFillObject,
-      backgroundColor: '#000',
+      backgroundColor: "#000",
       opacity: 0,
-      zIndex: 2,
+      zIndex: 2
     }
   });
 };

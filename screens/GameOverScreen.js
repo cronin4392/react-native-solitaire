@@ -1,26 +1,26 @@
-import React, { Fragment } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { Fragment } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import NavigationService from '../NavigationService';
-import Layout from './Layout';
+import NavigationService from "../NavigationService";
+import Layout from "./Layout";
 
-import Card from '../components/Card';
+import Card from "../components/Card";
 
-import GameStateContainer from '../containers/GameStateContainer';
-import TimeContainer from '../containers/TimeContainer';
+import GameStateContainer from "../containers/GameStateContainer";
+import TimeContainer from "../containers/TimeContainer";
 
-import { displayTime } from '../helpers/game';
+import { displayTime } from "../helpers/game";
 
-import { SPADES, FOUR } from '../constants/cards';
-import { ENDED } from '../constants/game';
-import { MONOSPACE_FONT, FONT_STYLE } from '../constants/styles';
+import { SPADES, FOUR } from "../constants/cards";
+import { ENDED } from "../constants/game";
+import { MONOSPACE_FONT, FONT_STYLE } from "../constants/styles";
 
 class BackToMenuButton extends React.Component {
   _onClick = () => {
     const { setGameState } = this.props;
     setGameState(ENDED);
-    NavigationService.navigate('Start');
-  }
+    NavigationService.navigate("Start");
+  };
 
   render() {
     return (
@@ -31,7 +31,7 @@ class BackToMenuButton extends React.Component {
   }
 }
 
-const GameScreen = () =>
+const GameScreen = () => (
   <Layout>
     <GameStateContainer>
       {({ setGameState }) => (
@@ -40,7 +40,7 @@ const GameScreen = () =>
             <Card
               card={{
                 suit: SPADES,
-                pip: FOUR,
+                pip: FOUR
               }}
               isFaceUp={true}
               columnWidth={100}
@@ -51,9 +51,11 @@ const GameScreen = () =>
           </View>
           <View style={styles.buttonContainer}>
             <TimeContainer>
-              {({ secondsPassed }) =>
-                <Text style={FONT_STYLE}>TIME: {displayTime(secondsPassed)} </Text>
-              }
+              {({ secondsPassed }) => (
+                <Text style={FONT_STYLE}>
+                  TIME: {displayTime(secondsPassed)}{" "}
+                </Text>
+              )}
             </TimeContainer>
           </View>
           <View style={styles.buttonContainer}>
@@ -63,39 +65,40 @@ const GameScreen = () =>
       )}
     </GameStateContainer>
   </Layout>
+);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center"
   },
   card: {
-    width: 100,
+    width: 100
   },
   header: {
     marginTop: 54,
-    marginBottom: 54,
+    marginBottom: 54
   },
   headerText: {
     fontFamily: MONOSPACE_FONT,
     fontSize: 36,
-    lineHeight: 42,
+    lineHeight: 42
   },
   buttonContainer: {
-    marginBottom: 54,
+    marginBottom: 54
   },
   button: {
     padding: 11,
     paddingBottom: 8,
     borderWidth: 1,
-    marginBottom: 10,
+    marginBottom: 10
   },
   buttonText: {
     fontFamily: MONOSPACE_FONT,
     fontSize: 11,
     lineHeight: 11,
-    textAlign: 'center',
+    textAlign: "center"
   }
 });
 

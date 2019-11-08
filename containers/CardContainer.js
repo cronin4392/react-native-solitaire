@@ -1,8 +1,8 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { cardClicked, updateSelectedPosition } from '../actions';
+import { cardClicked, updateSelectedPosition } from "../actions";
 
-const CardContainer = (props) => props.children(props)
+const CardContainer = props => props.children(props);
 
 const mapStateToProps = (state, props) => {
   const { id } = props;
@@ -11,17 +11,20 @@ const mapStateToProps = (state, props) => {
   const isFaceUp = solitaire.faceup[id] === true;
   const isSelected = !!dragger.selected[id];
 
-  return ({
+  return {
     ...props,
     card,
     isFaceUp,
-    isSelected,
-  });
+    isSelected
+  };
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   onCardClick: payload => dispatch(cardClicked(payload)),
-  updateSelectedPosition: payload => dispatch(updateSelectedPosition(payload)),
+  updateSelectedPosition: payload => dispatch(updateSelectedPosition(payload))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CardContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CardContainer);

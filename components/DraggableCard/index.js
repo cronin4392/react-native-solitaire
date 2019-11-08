@@ -1,7 +1,7 @@
-import React from 'react';
-import { Animated, PanResponder } from 'react-native';
+import React from "react";
+import { Animated, PanResponder } from "react-native";
 
-import Card from '../Card';
+import Card from "../Card";
 
 export default class DraggableCard extends React.Component {
   constructor(props) {
@@ -10,7 +10,7 @@ export default class DraggableCard extends React.Component {
     this.state = {
       position: new Animated.ValueXY(props.position),
       isDragging: false,
-      checkAnimation: false, // used so this.props.onRelease() can be called, update position, and then Animation Spring will occur
+      checkAnimation: false // used so this.props.onRelease() can be called, update position, and then Animation Spring will occur
     };
   }
 
@@ -23,10 +23,9 @@ export default class DraggableCard extends React.Component {
       this.setState({
         checkAnimation: false
       });
-      Animated.spring(
-        this.state.position,
-        {toValue:{x:this.props.position.x,y:this.props.position.y}}
-      ).start();
+      Animated.spring(this.state.position, {
+        toValue: { x: this.props.position.x, y: this.props.position.y }
+      }).start();
     }
   }
 
@@ -36,23 +35,27 @@ export default class DraggableCard extends React.Component {
       onMoveShouldSetPanResponderCapture: () => true,
 
       onPanResponderGrant: (e, gestureState) => {
-        this.state.position.setOffset({x: this.state.position.x._value, y: this.state.position.y._value});
-        this.state.position.setValue({x: 0, y: 0});
+        this.state.position.setOffset({
+          x: this.state.position.x._value,
+          y: this.state.position.y._value
+        });
+        this.state.position.setValue({ x: 0, y: 0 });
         this.setState({
-          isDragging: true,
+          isDragging: true
         });
       },
 
       onPanResponderMove: Animated.event([
-        null, {dx: this.state.position.x, dy: this.state.position.y},
+        null,
+        { dx: this.state.position.x, dy: this.state.position.y }
       ]),
 
-      onPanResponderRelease: (e, {vx, vy}) => {
+      onPanResponderRelease: (e, { vx, vy }) => {
         this.state.position.flattenOffset();
         this.props.onRelease(this.props.card.id);
         this.setState({
           checkAnimation: true,
-          isDragging: false,
+          isDragging: false
         });
       }
     });
@@ -65,12 +68,16 @@ export default class DraggableCard extends React.Component {
         {...this._panResponder.panHandlers}
         style={{
           transform: this.state.position.getTranslateTransform(),
-          position: 'absolute',
+          position: "absolute",
           zIndex: this.props.card.locationIndex + dragZPosition
         }}
       >
-        <Card card={this.props.card} isFaceUp={this.props.card.faceUp} columnWidth={this.props.columnWidth} />
+        <Card
+          card={this.props.card}
+          isFaceUp={this.props.card.faceUp}
+          columnWidth={this.props.columnWidth}
+        />
       </Animated.View>
-    )
+    );
   }
 }

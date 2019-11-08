@@ -1,6 +1,6 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-const GetDragContainer = (props) => {
+const GetDragContainer = props => {
   if (props.dragger) {
     return props.children(props);
   }
@@ -11,10 +11,10 @@ const GetDragContainer = (props) => {
 const mapStateToProps = (state, props) => {
   const { dragger } = state;
 
-  return ({
+  return {
     ...props,
-    dragger: dragger.dragger,
-  });
+    dragger: dragger.dragger
+  };
 };
 
 export default connect(mapStateToProps)(GetDragContainer);
