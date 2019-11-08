@@ -10,7 +10,7 @@
     "test": "node_modules/.bin/jest"
   },
   "dependencies": {
-    "expo": "^29.0.0",
+    "expo": "^35.0.0",
     "jest-expo": "^35.0.0",
     "prop-types": "^15.6.2",
     "react": "16.8.3",
