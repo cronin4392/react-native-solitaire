@@ -1,9 +1,10 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import { Text, View } from "react-native";
 
 import Layout from "./Layout";
+import Nav from "../components/Nav";
 import PlayField from "../components/PlayField2";
+
 import CardsContainer from "../containers/CardsContainer2";
 
 import { startNewGame } from "../actions/solitaire2";
@@ -17,9 +18,8 @@ class GameScreen extends React.PureComponent {
     return (
       <Fragment>
         <Layout>
-          <View>
-            <CardsContainer>{props => <PlayField {...props} />}</CardsContainer>
-          </View>
+          <Nav />
+          <CardsContainer>{props => <PlayField {...props} />}</CardsContainer>
         </Layout>
       </Fragment>
     );

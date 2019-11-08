@@ -1,6 +1,6 @@
 import { shuffle, toArray, toObject } from "../helpers/cards";
 
-import { DECK, WASTE } from "../constants/cards";
+import { DECK, PICKUP } from "../constants/cards";
 
 const getCardsInLocationAsArray = (cards, location) =>
   toArray(cards).filter(card => card.location === location);
@@ -28,7 +28,7 @@ const solitaire2 = (state = INITIAL_STATE, action) => {
           id: index,
           pip,
           suit,
-          location: WASTE,
+          location: PICKUP,
           locationIndex: index,
           faceUp: true
         };

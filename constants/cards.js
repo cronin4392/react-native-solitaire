@@ -105,13 +105,13 @@ export const WASTE = "waste";
 export const PICKUP = "pickup";
 
 export const PILE = "pile";
-const PILE_1 = "pile_1";
-const PILE_2 = "pile_2";
-const PILE_3 = "pile_3";
-const PILE_4 = "pile_4";
-const PILE_5 = "pile_5";
-const PILE_6 = "pile_6";
-const PILE_7 = "pile_7";
+export const PILE_1 = "pile_1";
+export const PILE_2 = "pile_2";
+export const PILE_3 = "pile_3";
+export const PILE_4 = "pile_4";
+export const PILE_5 = "pile_5";
+export const PILE_6 = "pile_6";
+export const PILE_7 = "pile_7";
 export const PILES = [PILE_1, PILE_2, PILE_3, PILE_4, PILE_5, PILE_6, PILE_7];
 
 export const FOUNDATION = "foundation";

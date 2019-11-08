@@ -1,57 +1,105 @@
 import React from "react";
+import { View } from "react-native";
 
 import DraggableCard from "../DraggableCard";
 
-import { FOUNDATION_1, FOUNDATION_2, WASTE } from "../../constants/cards";
+import {
+  PILE_1,
+  PILE_2,
+  PILE_3,
+  PILE_4,
+  PILE_5,
+  PILE_6,
+  PILE_7,
+  PILE_8,
+  PILE_9
+} from "../../constants/cards";
+import { subtract, getLocation, XY_POSITIONS } from "../../helpers/position";
 
 const getCardPosition = card => {
   const { location, locationIndex } = card;
+  const xyPosition = XY_POSITIONS[location];
 
-  if (location === WASTE) {
-    return { x: 0, y: 0 };
+  if (
+    [
+      PILE_1,
+      PILE_2,
+      PILE_3,
+      PILE_4,
+      PILE_5,
+      PILE_6,
+      PILE_7,
+      PILE_8,
+      PILE_9
+    ].includes(location)
+  ) {
+    return {
+      x: xyPosition.x,
+      y: xyPosition.y + locationIndex * 10
+    };
   }
-
-  if (location === FOUNDATION_1) {
-    return { x: 50, y: locationIndex * 10 };
-  }
-
-  if (location === FOUNDATION_2) {
-    return { x: 100, y: locationIndex * 10 };
-  }
-
-  return { x: 0, y: 0 };
+  return {
+    x: xyPosition.x,
+    y: xyPosition.y
+  };
 };
 
 class PlayField extends React.Component {
   constructor(props) {
     super(props);
+    this.ref = React.createRef();
 
     this.state = {
-      position: {
-        x: 0,
-        y: 300
-      }
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0
     };
   }
 
-  onRelease = id => {
-    const random = Math.floor(Math.random() * 2);
-    const randomLocation = [FOUNDATION_1, FOUNDATION_2][random];
-    this.props.moveCardToLocation(id, randomLocation);
+  onLayout = () => {
+    const node = this.ref.current;
+    node.measure((x, y, width, height) => {
+      this.setState({
+        width,
+        height,
+        x,
+        y
+      });
+    });
+  };
+
+  onCardRelease = ({ id, x, y }) => {
+    const location = getLocation(
+      subtract({ x, y }, { x: this.state.x, y: this.state.y })
+    );
+    if (location) {
+      this.props.moveCardToLocation(id, location);
+    }
   };
 
   render() {
     const { cards } = this.props;
 
-    return cards.map((card, index) => (
-      <DraggableCard
-        key={index}
-        onRelease={this.onRelease}
-        position={getCardPosition(card)}
-        card={card}
-        columnWidth={44}
-      />
-    ));
+    return (
+      <View
+        ref={this.ref}
+        onLayout={this.onLayout}
+        style={{
+          flex: 1
+        }}
+      >
+        {cards.map((card, index) => (
+          <DraggableCard
+            key={index}
+            onRelease={this.onCardRelease}
+            position={getCardPosition(card)}
+            card={card}
+            columnWidth={44}
+          />
+        ))}
+      </View>
+    );
   }
 }
 

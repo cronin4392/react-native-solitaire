@@ -54,9 +54,13 @@ export default class DraggableCard extends React.Component {
         { dx: this.state.position.x, dy: this.state.position.y }
       ]),
 
-      onPanResponderRelease: (e, { vx, vy }) => {
+      onPanResponderRelease: (e, { moveX, moveY }) => {
         this.state.position.flattenOffset();
-        this.props.onRelease(this.props.card.id);
+        this.props.onRelease({
+          id: this.props.card.id,
+          x: moveX,
+          y: moveY
+        });
         this.setState({
           checkAnimation: true
         });
