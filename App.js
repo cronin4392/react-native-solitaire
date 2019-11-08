@@ -1,28 +1,24 @@
-import React from 'react';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
-import { Font } from 'expo';
+import React from "react";
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
+import * as Font from "expo-font";
 
-import NavigationService from './NavigationService';
+import NavigationService from "./NavigationService";
 
-import { winGame } from './actions';
-import reducers from './reducers';
+import { winGame } from "./actions";
+import reducers from "./reducers";
 
-import Screens from './screens';
+import Screens from "./screens";
 
-import { PLAYING } from './constants/game';
+import { PLAYING } from "./constants/game";
 
-const middleware = [
-  thunk,
-];
+const middleware = [thunk];
 
 const store = createStore(
   reducers,
-  composeWithDevTools(
-    applyMiddleware(...middleware),
-  ),
+  composeWithDevTools(applyMiddleware(...middleware))
 );
 
 store.subscribe(() => {
@@ -30,12 +26,7 @@ store.subscribe(() => {
   const currentState = store.getState();
 
   const { solitaire, game } = currentState;
-  const {
-    foundation_1,
-    foundation_2,
-    foundation_3,
-    foundation_4
-  } = solitaire;
+  const { foundation_1, foundation_2, foundation_3, foundation_4 } = solitaire;
   const { gameState } = game;
 
   if (
@@ -46,18 +37,18 @@ store.subscribe(() => {
     gameState === PLAYING
   ) {
     store.dispatch(winGame());
-    NavigationService.navigate('GameOver');
+    NavigationService.navigate("GameOver");
   }
 });
 
 export default class App extends React.Component {
   state = {
-    fontLoaded: false,
+    fontLoaded: false
   };
 
   async componentDidMount() {
     await Font.loadAsync({
-      'Menlo': require('./assets/fonts/Menlo-Regular.ttf'),
+      Menlo: require("./assets/fonts/Menlo-Regular.ttf")
     });
 
     this.setState({
