@@ -1,21 +1,32 @@
-import {
-  RANKS,
-  SUIT_COLOR,
-  SYMBOLS
-} from '../constants/cards';
+import { RANKS, SUIT_COLOR, SYMBOLS } from "../constants/cards";
 
-export const shuffle = (a) => {
+export const shuffle = a => {
   const b = [...a];
   let j, x, i;
   for (i = b.length - 1; i > 0; i--) {
-      j = Math.floor(Math.random() * (i + 1));
-      x = b[i];
-      b[i] = b[j];
-      b[j] = x;
+    j = Math.floor(Math.random() * (i + 1));
+    x = b[i];
+    b[i] = b[j];
+    b[j] = x;
   }
   return b;
-}
+};
 
-export const symbol = (name) => SYMBOLS[name] || name;
-export const rank = (pip) => RANKS[pip] || -1;
-export const color = (suit) => SUIT_COLOR[suit];
+export const toArray = object =>
+  Object.keys(object).reduce((acc, key) => [...acc, object[key]], []);
+
+export const toObject = array =>
+  array.reduce((acc, val) => {
+    acc[val.id] = val;
+    return acc;
+  }, {});
+
+export const symbol = name => SYMBOLS[name] || name;
+export const rank = pip => RANKS[pip] || -1;
+export const color = suit => SUIT_COLOR[suit];
+
+export const getCardsAtLocation = (cards, location) =>
+  cards.filter(card => card.location === location);
+
+export const sortCardsByLocationIndex = cards =>
+  cards.sort((cardA, cardB) => cardA.locationIndex - cardB.locationIndex);

@@ -1,18 +1,16 @@
-import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import { connect } from 'react-redux';
+import React from "react";
+import { TouchableOpacity, View } from "react-native";
+import { connect } from "react-redux";
 
-import StackedPile from '../components/StackedPile';
+import StackedPile from "../components/StackedPile";
 
-import { PICKUP } from '../constants/cards';
+import { PICKUP } from "../constants/cards";
 
-import {
-  movePickupIntoWaste,
-} from '../actions';
+import { movePickupIntoWaste } from "../actions";
 
 const PickupContainer = ({ columnWidth, pickup, movePickupIntoWaste }) => (
   <TouchableOpacity onPressOut={movePickupIntoWaste} activeOpacity={1}>
-    <View pointerEvents={'none'}>
+    <View pointerEvents={"none"}>
       <StackedPile pile={pickup} columnWidth={columnWidth} location={PICKUP} />
     </View>
   </TouchableOpacity>
@@ -22,14 +20,17 @@ const mapStateToProps = (state, props) => {
   const { solitaire } = state;
   const { pickup } = solitaire;
 
-  return ({
+  return {
     ...props,
-    pickup,
-  });
+    pickup
+  };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  movePickupIntoWaste: () => dispatch(movePickupIntoWaste()),
+const mapDispatchToProps = dispatch => ({
+  movePickupIntoWaste: () => dispatch(movePickupIntoWaste())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PickupContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PickupContainer);

@@ -1,12 +1,12 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import DropZone from '../components/DropZone';
+import DropZone from "../components/DropZone";
 
-import { moveSelectedToLocation } from '../actions';
+import { moveSelectedToLocation } from "../actions";
 
 class DropZoneContainer extends React.Component {
-  onChildLayout = (ref) => {
+  onChildLayout = ref => {
     const { location, registerDropZone } = this.props;
     const node = ref.current;
 
@@ -16,15 +16,13 @@ class DropZoneContainer extends React.Component {
         width,
         height,
         x: px,
-        y: py,
+        y: py
       });
     });
-  }
+  };
 
   render() {
-    return (
-      <DropZone {...this.props} onLayout={this.onChildLayout} />
-    );
+    return <DropZone {...this.props} onLayout={this.onChildLayout} />;
   }
 }
 
@@ -33,14 +31,17 @@ const mapStateToProps = (state, props) => {
   const { selected } = dragger;
   const selectedArray = Object.keys(selected);
 
-  return ({
+  return {
     ...props,
-    active: selectedArray.length > 0,
-  });
+    active: selectedArray.length > 0
+  };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  moveSelectedToLocation: payload => dispatch(moveSelectedToLocation(payload)),
+const mapDispatchToProps = dispatch => ({
+  moveSelectedToLocation: payload => dispatch(moveSelectedToLocation(payload))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DropZoneContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DropZoneContainer);

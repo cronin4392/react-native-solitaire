@@ -1,17 +1,15 @@
-import React from 'react';
-import { Animated, PanResponder, View } from 'react-native';
-import { connect } from 'react-redux';
+import React from "react";
+import { Animated, PanResponder, View } from "react-native";
+import { connect } from "react-redux";
 
-import {
-  setDragger,
-} from '../actions';
+import { setDragger } from "../actions";
 
-class SetDragContainer extends React.PureComponent {
+class DragContainer extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      panResponder: null,
+      panResponder: null
     };
   }
 
@@ -29,34 +27,36 @@ class SetDragContainer extends React.PureComponent {
     // Create a new PanResponder instance if one didn't exist
     // Cannot happen on componentDidMount since setDragger hasn't updated values yet
     if (!prevProps.dragger && this.props.dragger) {
+      const { dragger } = this.props;
       this._animatedValueX = 0;
       this._animatedValueY = 0;
 
-      this.props.dragger.x.addListener((value) => this._animatedValueX = value.value);
-      this.props.dragger.y.addListener((value) => this._animatedValueY = value.value);
+      dragger.x.addListener(value => (this._animatedValueX = value.value));
+      dragger.y.addListener(value => (this._animatedValueY = value.value));
 
       const panResponder = PanResponder.create({
         // onMoveShouldSetResponderCapture: () => true, //Tell iOS that we are allowing the movement
         // onMoveShouldSetPanResponderCapture: () => true, // Same here, tell iOS that we allow dragging
         onMoveShouldSetPanResponder: () => true,
         onPanResponderGrant: () => {
-          this.props.dragger.setOffset({x: this._animatedValueX, y: this._animatedValueY});
-          this.props.dragger.setValue({x: 0, y: 0});
+          dragger.setOffset({
+            x: this._animatedValueX,
+            y: this._animatedValueY
+          });
+          dragger.setValue({ x: 0, y: 0 });
         },
         onPanResponderMove: Animated.event([
-          null, { dx: this.props.dragger.x, dy: this.props.dragger.y }
+          null,
+          { dx: dragger.x, dy: dragger.y }
         ]),
         onPanResponderRelease: (evt, gestureState) => {
           const { moveX, moveY } = gestureState;
           this.props.detectDropZoneRelease({
             x: moveX,
-            y: moveY,
+            y: moveY
           });
-          this.props.dragger.flattenOffset();
-          Animated.spring(
-            this.props.dragger,
-            {toValue:{x:0,y:0}}
-          ).start();
+          dragger.flattenOffset();
+          Animated.spring(dragger, { toValue: { x: 0, y: 0 } }).start();
         }
       });
 
@@ -74,25 +74,31 @@ class SetDragContainer extends React.PureComponent {
     return (
       <View
         {...panResponder.panHandlers}
-        style={{ backgroundColor: 'transparent', flex: 1 }} /* TODO: move these styles out of the component? */
+        style={{
+          backgroundColor: "transparent",
+          flex: 1
+        }} /* TODO: move these styles out of the component? */
       >
-        { this.props.children }
+        {this.props.children}
       </View>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state, props) => {
   const { dragger } = state;
 
-  return ({
+  return {
     ...props,
-    dragger: dragger.dragger,
-  });
+    dragger: dragger.dragger
+  };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  setDragger: dragger => dispatch(setDragger(dragger)),
+const mapDispatchToProps = dispatch => ({
+  setDragger: dragger => dispatch(setDragger(dragger))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SetDragContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DragContainer);

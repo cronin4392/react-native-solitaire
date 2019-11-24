@@ -1,6 +1,6 @@
-import { shuffle } from '../helpers/cards';
+import { shuffle } from "../helpers/cards";
 
-import { DECK } from '../constants/cards';
+import { DECK } from "../constants/cards";
 
 const INITIAL_STATE = {
   cards: DECK,
@@ -26,13 +26,13 @@ const INITIAL_STATE = {
   faceup: {}, // { id: true }
 
   // settings
-  wasteSize: 3,
+  wasteSize: 3
 };
 
 // Pile with top 3 cards face up
 const INITIAL_STATE2 = {
   ...INITIAL_STATE,
-  pile_6: [0,15,27,4,42],
+  pile_6: [0, 15, 27, 4, 42],
   faceup: {
     27: true,
     4: true,
@@ -43,15 +43,15 @@ const INITIAL_STATE2 = {
 // Set up with cards in foundation that can be dragged back to the board
 const INITIAL_STATE3 = {
   ...INITIAL_STATE,
-  foundation_1: [0,1,2,3],
+  foundation_1: [0, 1, 2, 3],
   pile_6: [30],
   faceup: {
     1: true,
     2: true,
     3: true,
-    30: true,
+    30: true
   }
-}
+};
 
 // Set up with a large pile
 const INITIAL_STATE4 = {
@@ -73,30 +73,29 @@ const INITIAL_STATE4 = {
     35: true,
     37: true,
     25: true,
-    50: true,
+    50: true
   }
-}
+};
 
 const createPiles = ([deck, ...rest], pileSize) => {
   if (pileSize <= 0) {
     return [deck, ...rest];
   }
 
-  return createPiles([
-    deck.slice(pileSize),
-    deck.slice(0, pileSize),
-    ...rest
-  ], pileSize - 1);
-}
+  return createPiles(
+    [deck.slice(pileSize), deck.slice(0, pileSize), ...rest],
+    pileSize - 1
+  );
+};
 
 const solitaire = (state = INITIAL_STATE, action) => {
-  switch(action.type) {
-    case 'CLEAR_STATE': {
+  switch (action.type) {
+    case "CLEAR_STATE": {
       return {
         ...INITIAL_STATE
-      }
+      };
     }
-    case 'GENERATE_PILES': {
+    case "GENERATE_PILES": {
       const cards = state.cards.map((_card, index) => index);
       const shuffledCards = shuffle(cards);
       const [pickup, ...piles] = createPiles([shuffledCards], 7);
@@ -110,17 +109,20 @@ const solitaire = (state = INITIAL_STATE, action) => {
         pile_4: piles[3],
         pile_5: piles[4],
         pile_6: piles[5],
-        pile_7: piles[6],
-      }
+        pile_7: piles[6]
+      };
     }
-    case 'FLIP_CARDS_UP': {
+    case "FLIP_CARDS_UP": {
       const { ids } = action;
       const { faceup } = state;
 
-      const newFaceUp = ids.reduce((acc, id) =>({
-        ...acc,
-        [id]: true,
-      }), {});
+      const newFaceUp = ids.reduce(
+        (acc, id) => ({
+          ...acc,
+          [id]: true
+        }),
+        {}
+      );
 
       return {
         ...state,
@@ -128,16 +130,19 @@ const solitaire = (state = INITIAL_STATE, action) => {
           ...faceup,
           ...newFaceUp
         }
-      }
+      };
     }
-    case 'FLIP_CARDS_DOWN': {
+    case "FLIP_CARDS_DOWN": {
       const { ids } = action;
       const { faceup } = state;
 
-      const newFaceUp = ids.reduce((acc, id) =>({
-        ...acc,
-        [id]: false,
-      }), {});
+      const newFaceUp = ids.reduce(
+        (acc, id) => ({
+          ...acc,
+          [id]: false
+        }),
+        {}
+      );
 
       return {
         ...state,
@@ -145,35 +150,32 @@ const solitaire = (state = INITIAL_STATE, action) => {
           ...faceup,
           ...newFaceUp
         }
-      }
+      };
     }
-    case 'ADD_CARDS_LOCATION': {
+    case "ADD_CARDS_LOCATION": {
       const { ids, location } = action;
       const existingIds = state[location];
 
       return {
         ...state,
-        [location]: [
-          ...existingIds,
-          ...ids,
-        ],
-      }
+        [location]: [...existingIds, ...ids]
+      };
     }
-    case 'REMOVE_CARDS_LOCATION': {
+    case "REMOVE_CARDS_LOCATION": {
       const { ids, location } = action;
       const existingIds = state[location];
 
       return {
         ...state,
-        [location]: existingIds.filter(item => ids.indexOf(item) < 0),
-      }
+        [location]: existingIds.filter(item => ids.indexOf(item) < 0)
+      };
     }
-    case 'REMOVE_ALL_CARDS_LOCATION': {
+    case "REMOVE_ALL_CARDS_LOCATION": {
       const { location } = action;
       return {
         ...state,
-        [location]: [],
-      }
+        [location]: []
+      };
     }
     default: {
       return state;

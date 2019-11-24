@@ -6,52 +6,45 @@ import {
   PICKUP,
   PILE,
   PILES,
-  WASTE,
-} from '../constants/cards';
+  WASTE
+} from "../constants/cards";
 
-import {
-  PLAYING,
-  PAUSED,
-  WIN,
-} from '../constants/game';
+import { PLAYING, PAUSED, WIN } from "../constants/game";
 
-import {
-  color,
-  rank
-} from '../helpers/cards';
+import { color, rank } from "../helpers/cards";
 
 /* Card Helpers */
 
-const isTopCard = (id, pile) => ( id === pile[pile.length - 1] );
+const isTopCard = (id, pile) => id === pile[pile.length - 1];
 
 /*
   CREATION ACTIONS
 */
 
 export const clearState = () => ({
-  type: 'CLEAR_STATE'
+  type: "CLEAR_STATE"
 });
 
 export const createCards = cards => ({
-  type: 'CREATE_CARDS',
-  cards,
+  type: "CREATE_CARDS",
+  cards
 });
 
 export const generatePiles = () => ({
-  type: 'GENERATE_PILES'
+  type: "GENERATE_PILES"
 });
 
 export const pauseGame = () => dispatch => {
   dispatch(setGameState(PAUSED));
-}
+};
 
 export const continueGame = () => dispatch => {
   dispatch(setGameState(PLAYING));
-}
+};
 
 export const winGame = () => dispatch => {
   dispatch(setGameState(WIN));
-}
+};
 
 export const startNewGame = () => dispatch => {
   dispatch(clearState());
@@ -59,7 +52,7 @@ export const startNewGame = () => dispatch => {
   dispatch(generatePiles());
   dispatch(flipFirstCardUpInPiles());
   dispatch(setGameState(PLAYING));
-}
+};
 
 /*
   FLIP CARDS
@@ -77,16 +70,16 @@ export const flipFirstCardUpInPiles = () => (dispatch, getState) => {
 };
 
 export const flipCardsUp = ids => ({
-  type: 'FLIP_CARDS_UP',
-  ids,
+  type: "FLIP_CARDS_UP",
+  ids
 });
-export const flipCardUp = (id) => (dispatch) => dispatch(flipCardsUp([id]));
+export const flipCardUp = id => dispatch => dispatch(flipCardsUp([id]));
 
 export const flipCardsDown = ids => ({
-  type: 'FLIP_CARDS_DOWN',
-  ids,
+  type: "FLIP_CARDS_DOWN",
+  ids
 });
-export const flipCardDown = (id) => (dispatch) => dispatch(flipCardsDown([id]));
+export const flipCardDown = id => dispatch => dispatch(flipCardsDown([id]));
 
 /* SELECT CARDS */
 
@@ -120,22 +113,22 @@ export const cardClicked = payload => (dispatch, getState) => {
 };
 
 export const updateSelectedPosition = payload => ({
-  type: 'UPDATE_SELECTED_POSITION',
+  type: "UPDATE_SELECTED_POSITION",
   ...payload
 });
 
 // TODO: this recieves and object while other functions like addCardLocation recieve a list
 export const selectCards = payload => ({
-  type: 'SELECT_CARDS',
+  type: "SELECT_CARDS",
   ...payload
 });
 export const selectCard = payload => ({
-  type: 'SELECT_CARD',
+  type: "SELECT_CARD",
   ...payload
 });
 
 export const deselectAllCards = () => ({
-  type: 'DESELECT_ALL_CARDS',
+  type: "DESELECT_ALL_CARDS"
 });
 
 /*
@@ -146,7 +139,7 @@ export const movePickupIntoWaste = () => (dispatch, getState) => {
   const { solitaire } = getState();
   const { pickup, wasteSize } = solitaire;
 
-  if(pickup.length === 0) {
+  if (pickup.length === 0) {
     dispatch(moveWasteIntoPickup());
     return;
   }
@@ -167,12 +160,7 @@ export const moveWasteIntoPickup = () => (dispatch, getState) => {
   dispatch(addCardsLocation(waste, PICKUP));
 };
 
-const isValidMove = ({
-  cards,
-  fromCards,
-  toLocation,
-  toCards
-}) => {
+const isValidMove = ({ cards, fromCards, toLocation, toCards }) => {
   const topFromCard = cards[fromCards[0]];
   const bottomToCard = cards[toCards[toCards.length - 1]];
 
@@ -181,8 +169,7 @@ const isValidMove = ({
       if (topFromCard.pip === KING) {
         return true;
       }
-    }
-    else {
+    } else {
       if (
         rank(topFromCard.pip) - rank(bottomToCard.pip) === -1 &&
         color(topFromCard.suit) !== color(bottomToCard.suit)
@@ -196,8 +183,7 @@ const isValidMove = ({
       if (topFromCard.pip === ACE) {
         return true;
       }
-    }
-    else {
+    } else {
       if (
         rank(topFromCard.pip) - rank(bottomToCard.pip) === 1 &&
         topFromCard.suit === bottomToCard.suit
@@ -215,22 +201,22 @@ export const moveSelectedToLocation = location => (dispatch, getState) => {
   const { selected } = dragger;
   const { cards } = solitaire;
   const selectedArray = Object.keys(selected)
-    .reduce((acc, key) => (
-      [...acc, selected[key]]
-    ), [])
+    .reduce((acc, key) => [...acc, selected[key]], [])
     .sort((a, b) => a.order - b.order)
     .map(item => item.id);
 
-  if(selectedArray.length === 0) {
+  if (selectedArray.length === 0) {
     return;
   }
 
-  if ( !isValidMove({
-    cards,
-    fromCards: selectedArray,
-    toLocation: location,
-    toCards: solitaire[location],
-  }) ) {
+  if (
+    !isValidMove({
+      cards,
+      fromCards: selectedArray,
+      toLocation: location,
+      toCards: solitaire[location]
+    })
+  ) {
     dispatch(deselectAllCards());
     return;
   }
@@ -244,50 +230,51 @@ export const moveSelectedToLocation = location => (dispatch, getState) => {
   dispatch(addCardsLocation(selectedArray, location));
 
   dispatch(deselectAllCards());
-}
+};
 
 /* ADD REMOVE CARDS */
 
-export const addCardLocation = (id, location) => dispatch => dispatch(addCardsLocation([id], location));
+export const addCardLocation = (id, location) => dispatch =>
+  dispatch(addCardsLocation([id], location));
 export const addCardsLocation = (ids, location) => ({
-  type: 'ADD_CARDS_LOCATION',
+  type: "ADD_CARDS_LOCATION",
   ids,
-  location,
-});
-
-export const removeCardsLocation = (ids, location) => ({
-  type: 'REMOVE_CARDS_LOCATION',
-  ids,
-  location,
-});
-export const removeCardLocation = (id, location) => (dispatch) => dispatch(removeCardsLocation([id], location));
-
-export const removeAllCardsLocation = location => ({
-  type: 'REMOVE_ALL_CARDS_LOCATION',
   location
 });
 
+export const removeCardsLocation = (ids, location) => ({
+  type: "REMOVE_CARDS_LOCATION",
+  ids,
+  location
+});
+export const removeCardLocation = (id, location) => dispatch =>
+  dispatch(removeCardsLocation([id], location));
+
+export const removeAllCardsLocation = location => ({
+  type: "REMOVE_ALL_CARDS_LOCATION",
+  location
+});
 
 // TODO: Everything below should be broken out to own files
 
 /* GAME STATE */
 
 export const setGameState = gameState => ({
-  type: 'SET_GAME_STATE',
+  type: "SET_GAME_STATE",
   gameState
 });
 
 export const resetSecondsPassed = () => ({
-  type: 'RESET_SECONDS_PASSED'
+  type: "RESET_SECONDS_PASSED"
 });
 
 export const incrementSecondsPassed = () => ({
-  type: 'INCREMENT_SECONDS_PASSED'
+  type: "INCREMENT_SECONDS_PASSED"
 });
 
 /* DRAGGER */
 
 export const setDragger = dragger => ({
-  type: 'SET_DRAGGER',
+  type: "SET_DRAGGER",
   dragger
 });

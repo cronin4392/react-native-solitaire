@@ -22,6 +22,7 @@ const store = createStore(
 );
 
 store.subscribe(() => {
+  return;
   prevState = currentState;
   const currentState = store.getState();
 

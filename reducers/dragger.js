@@ -1,52 +1,19 @@
 const INITIAL_STATE = {
   dragger: null,
-  dropZones: {}, // { id: { width, height, x, y } }
-  selected: {},
+  selected: {}
 };
 
 const dragger = (state = INITIAL_STATE, action) => {
-  switch(action.type) {
-    case 'SET_DRAGGER': {
+  switch (action.type) {
+    case "SET_DRAGGER": {
       const { dragger } = action;
       return {
         ...state,
-        dragger,
-      }
-    }
-    case 'REGISTER_DROPZONE': {
-      const { dropZones } = state;
-
-      const {
-        location,
-        width,
-        height,
-        x,
-        y
-      } = action;
-
-      return {
-        ...state,
-        dropZones: {
-          ...dropZones,
-          [location]: {
-            location,
-            width,
-            height,
-            x,
-            y,
-          },
-        },
+        dragger
       };
     }
-    case 'SELECT_CARD': {
-      const {
-        id,
-        location,
-        width,
-        height,
-        px,
-        py,
-      } = action;
+    case "SELECT_CARD": {
+      const { id, location, width, height, px, py } = action;
       const { selected } = state;
       const selectedLength = Object.keys(selected).length;
 
@@ -61,12 +28,12 @@ const dragger = (state = INITIAL_STATE, action) => {
             width,
             height,
             px,
-            py,
-          },
+            py
+          }
         }
-      }
+      };
     }
-    case 'SELECT_CARDS': {
+    case "SELECT_CARDS": {
       const { ids, location } = action;
       const { selected } = state;
       const selectedLength = Object.keys(selected).length;
@@ -77,8 +44,8 @@ const dragger = (state = INITIAL_STATE, action) => {
           [id]: {
             order: selectedLength + index,
             id,
-            location,
-          },
+            location
+          }
         };
       }, {});
 
@@ -86,11 +53,11 @@ const dragger = (state = INITIAL_STATE, action) => {
         ...state,
         selected: {
           ...selected,
-          ...newSelected,
+          ...newSelected
         }
-      }
+      };
     }
-    case 'DESELECT_CARD': {
+    case "DESELECT_CARD": {
       const { selected } = state;
       const { id } = action;
 
@@ -98,17 +65,17 @@ const dragger = (state = INITIAL_STATE, action) => {
         ...state,
         selected: {
           ...selected,
-          [id]: null, // TODO: unset this entirely
+          [id]: null // TODO: unset this entirely
         }
-      }
+      };
     }
-    case 'UPDATE_SELECTED_POSITION': {
+    case "UPDATE_SELECTED_POSITION": {
       const { selected } = state;
       const { id, width, height, px, py } = action;
 
       if (!selected[id]) {
         return {
-          ...state,
+          ...state
         };
       }
 
@@ -121,16 +88,16 @@ const dragger = (state = INITIAL_STATE, action) => {
             width,
             height,
             px,
-            py,
+            py
           }
         }
-      }
+      };
     }
-    case 'DESELECT_ALL_CARDS': {
+    case "DESELECT_ALL_CARDS": {
       return {
         ...state,
         selected: {}
-      }
+      };
     }
     default: {
       return state;

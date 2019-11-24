@@ -1,32 +1,22 @@
-import React, { Fragment } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Layout from './Layout';
-import NavigationService from '../NavigationService.js';
+import React, { Fragment } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Layout from "./Layout";
+import NavigationService from "../NavigationService.js";
 
-import GameStateContainer from '../containers/GameStateContainer';
+import GameStateContainer from "../containers/GameStateContainer";
 
-import Card from '../components/Card';
+import Card from "../components/Card";
 
-import { DIAMONDS, KING } from '../constants/cards';
-import { PLAYING, PAUSED } from '../constants/game';
-import { MONOSPACE_FONT } from '../constants/styles';
+import { DIAMONDS, KING } from "../constants/cards";
+import { PLAYING, PAUSED } from "../constants/game";
+import { MONOSPACE_FONT } from "../constants/styles";
 
 class StartGameButton extends React.Component {
-  // FOR DEBUGGING
-  componentDidMount() {
-    return;
-    setTimeout(() => {
-      const { startNewGame } = this.props;
-      startNewGame();
-      NavigationService.navigate('Game');
-    }, 10);
-  }
-
   _onClick = () => {
     const { startNewGame } = this.props;
     startNewGame();
-    NavigationService.navigate('Game');
-  }
+    NavigationService.navigate("Game");
+  };
 
   render() {
     return (
@@ -41,8 +31,8 @@ class ContinueGameButton extends React.Component {
   _onClick = () => {
     const { setGameState } = this.props;
     setGameState(PLAYING);
-    NavigationService.navigate('Game');
-  }
+    NavigationService.navigate("Game");
+  };
 
   render() {
     return (
@@ -62,7 +52,7 @@ class StartScreen extends React.Component {
             <Card
               card={{
                 suit: DIAMONDS,
-                pip: KING,
+                pip: KING
               }}
               isFaceUp={true}
               columnWidth={100}
@@ -75,7 +65,9 @@ class StartScreen extends React.Component {
             <GameStateContainer>
               {({ setGameState, startNewGame, gameState }) => (
                 <Fragment>
-                  { gameState === PAUSED && <ContinueGameButton setGameState={setGameState} /> }
+                  {gameState === PAUSED && (
+                    <ContinueGameButton setGameState={setGameState} />
+                  )}
                   <StartGameButton startNewGame={startNewGame} />
                 </Fragment>
               )}
@@ -90,35 +82,35 @@ class StartScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center"
   },
   card: {
-    width: 100,
+    width: 100
   },
   header: {
     marginTop: 54,
-    marginBottom: 54,
+    marginBottom: 54
   },
   headerText: {
     fontFamily: MONOSPACE_FONT,
     fontSize: 36,
-    lineHeight: 42,
+    lineHeight: 42
   },
   buttonContainer: {
-    marginBottom: 54,
+    marginBottom: 54
   },
   button: {
     padding: 11,
     paddingBottom: 8,
     borderWidth: 1,
-    marginBottom: 10,
+    marginBottom: 10
   },
   buttonText: {
     fontFamily: MONOSPACE_FONT,
     fontSize: 11,
     lineHeight: 11,
-    textAlign: 'center',
+    textAlign: "center"
   }
 });
 

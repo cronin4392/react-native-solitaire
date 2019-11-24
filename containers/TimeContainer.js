@@ -1,7 +1,7 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import { incrementSecondsPassed } from '../actions';
+import { incrementSecondsPassed } from "../actions";
 
 class TimeContainer extends React.Component {
   state = {
@@ -22,13 +22,13 @@ class TimeContainer extends React.Component {
   incrementSecondsPassed = () => {
     const { gameState, incrementSecondsPassed } = this.props;
 
-    if (gameState === 'PLAYING') {
+    if (gameState === "PLAYING") {
       incrementSecondsPassed();
     }
-  }
+  };
 
   render() {
-    return (this.props.children(this.props));
+    return this.props.children(this.props);
   }
 }
 
@@ -36,15 +36,18 @@ const mapStateToProps = (state, props) => {
   const { game } = state;
   const { secondsPassed, gameState } = game;
 
-  return ({
+  return {
     ...props,
     gameState,
-    secondsPassed,
-  });
+    secondsPassed
+  };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  incrementSecondsPassed: () => dispatch(incrementSecondsPassed()),
+const mapDispatchToProps = dispatch => ({
+  incrementSecondsPassed: () => dispatch(incrementSecondsPassed())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TimeContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TimeContainer);
