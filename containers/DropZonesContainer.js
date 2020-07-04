@@ -48,7 +48,7 @@ class DropZonesContainer extends React.Component {
       return moveSelectedToLocation(dropZonesInRelease[0]);
     }
 
-    return deselectAllCards();
+    return this.props.deselectAllCards();
   }
 
   render() {
