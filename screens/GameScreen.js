@@ -9,7 +9,7 @@ import Nav from '../components/Nav';
 import OffField from '../components/OffField';
 import PlayField from '../components/PlayField';
 import SelectedCards from '../components/SelectedCards';
-
+import { connect } from 'react-redux'
 const GameScreen = () =>
   <Fragment>
     <Layout>
@@ -25,5 +25,6 @@ const GameScreen = () =>
     </Layout>
     <SelectedCards />
   </Fragment>
-
-export default GameScreen;
+const mapStateToProps = state => {return {}}
+const mapDispatchToProps = dispatch => {return {dispatch: dispatch}}
+export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);
